@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <Graphics/D3D12/Meshes/Primitives.cpp>
 
 using namespace std;
 using namespace winrt;
@@ -143,7 +144,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .DepthStencilDescriptorHeap = &depthStencilDescriptorHeap
     };
 
-    ImmutableMesh cubeMesh{ immutableAllocationContext, CreateCube() };
+    ImmutableMesh planeMesh{ immutableAllocationContext, CreateMeshlet(3.0f)};
     ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"image.jpeg" };
 
     groupedResourceAllocator.Build();
@@ -177,7 +178,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       auto resolution = swapChain.Resolution();
       {
         auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
-        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.002f), 1.5f * sin(i * 0.002f), 1.5f * cos(i * 0.0005f), 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.002f), 1.5f * sin(i * 0.002f), 1.5f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
@@ -230,7 +231,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
         allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
         simplePipelineState.Apply(allocator);
-        cubeMesh.Draw(allocator);
+        planeMesh.Draw(allocator);
       }
 
       //Post processing
