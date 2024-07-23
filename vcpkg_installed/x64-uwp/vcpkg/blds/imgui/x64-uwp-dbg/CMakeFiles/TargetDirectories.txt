@@ -1,0 +1,6 @@
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/imgui.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/edit_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/rebuild_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/list_install_components.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/install.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/imgui/x64-uwp-dbg/CMakeFiles/install/local.dir

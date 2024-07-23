@@ -1,6 +1,11 @@
 #include "pch.h"
 #include <Graphics/D3D12/Meshes/Primitives.cpp>
 
+// ImGUI
+#include "imgui.h"
+#include "imgui_impl_uwp.h"
+// -----
+
 using namespace std;
 using namespace winrt;
 
