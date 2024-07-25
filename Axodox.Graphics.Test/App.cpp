@@ -4,6 +4,13 @@
 // ImGUI
 #include "imgui.h"
 #include "imgui_impl_uwp.h"
+#include <imgui_impl_dx12.h>
+
+#include "Windows.h"
+
+#include <winrt/Windows.Graphics.Display.h>
+
+
 // -----
 
 using namespace std;
@@ -12,6 +19,7 @@ using namespace winrt;
 using namespace Windows;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation::Numerics;
+using namespace Windows::Graphics::Display;
 using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Composition;
@@ -100,13 +108,21 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     XMFLOAT4X4 WorldViewProjection;
   };
 
+  #pragma region ImGui constants
+  static int const NUM_BACK_BUFFERS = 3;
+  static const int NUM_FRAMES_IN_FLIGHT = 3;
+  bool m_windowClosed = false;
+  com_ptr<ID3D12DescriptorHeap> m_pd3dRtvDescHeap;
+  com_ptr<ID3D12DescriptorHeap> m_pd3dSrvDescHeap;
+  #pragma endregion
+
   void Run()
   {
     CoreWindow window = CoreWindow::GetForCurrentThread();
+    CoreDispatcher dispatcher = window.Dispatcher();
     window.Activate();
 
-    CoreDispatcher dispatcher = window.Dispatcher();
-
+    #pragma region Setup
     GraphicsDevice device{};
     CommandQueue directQueue{ device };
     CoreSwapChain swapChain{ directQueue, window, SwapChainFlags::IsShaderResource };
@@ -165,8 +181,57 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       commonDescriptorHeap.Clean();
       });
 
+    #pragma endregion
+    
+    #pragma region ImGui Setup
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+    // High DPI scaling
+    DisplayInformation currentDisplayInformation = DisplayInformation::GetForCurrentView();
+    float dpi = currentDisplayInformation.LogicalDpi() / 96.0f;
+    io.DisplayFramebufferScale = { dpi, dpi };                // TODO: Handle DPI change
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsLight();
+    {
+      D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+      desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+      desc.NumDescriptors = NUM_BACK_BUFFERS;
+      desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+      desc.NodeMask = 1;
+      winrt::check_hresult(device.get()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&m_pd3dRtvDescHeap)));
+    }
+
+    {
+      D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+      desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+      desc.NumDescriptors = 1;
+      desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+      winrt::check_hresult(device.get()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&m_pd3dSrvDescHeap)));
+    }
+    // Setup Platform/Renderer backends
+    // com_ptr<ID3D12DescriptorHeap> m_pd3dSrvDescHeap;
+    // ImGui_ImplUwp_InitForCurrentView();
+    ImGui_ImplDX12_Init(device.get(), NUM_FRAMES_IN_FLIGHT,
+      DXGI_FORMAT_R8G8B8A8_UNORM, m_pd3dSrvDescHeap.get(),
+      m_pd3dSrvDescHeap->GetCPUDescriptorHandleForHeapStart(),
+      m_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart());
+
+    // Our state
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    DirectX::XMFLOAT4 clear_color = { 0.05f, 0.25f, 0.60f, 1.00f };
+    #pragma endregion
+
     auto i = 0u;
-    while (true)
+    auto ct = 0u;
+    while (!m_windowClosed)
     {
       //Process user input
       dispatcher.ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
@@ -182,7 +247,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       Constants constants{};
       auto resolution = swapChain.Resolution();
       {
+        // ImGUI
+        io.DisplaySize = ImVec2(resolution.x, resolution.y);
+        // -----
+        // Látószög
         auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
+        // Nézett vektorok
         auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.002f), 1.5f * sin(i * 0.002f), 1.5f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
@@ -211,6 +281,59 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         resources.PostProcessingBuffer.Allocate(postProcessingDefinition);
       }
 
+      // ImGui
+      ImGui_ImplDX12_NewFrame();
+      // ImGui_ImplUwp_NewFrame();
+      ImGui::NewFrame();
+      // -----
+      
+      // ImGui Draws
+      {
+        if (show_demo_window)
+          ImGui::ShowDemoWindow(&show_demo_window);
+
+        {
+          static float f = 0.0f;
+          static int counter = 0;
+
+          ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+          ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+          ImGui::Text("Update Counter : " + ct);
+          ImGui::Button("Test", { 200,20 });
+          bool isHovered = ImGui::IsItemHovered();
+          bool isFocused = ImGui::IsItemFocused();
+          ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
+          ImVec2 screenPositionAbsolute = ImGui::GetItemRectMin();
+          ImVec2 mousePositionRelative = ImVec2(mousePositionAbsolute.x - screenPositionAbsolute.x, mousePositionAbsolute.y - screenPositionAbsolute.y);
+
+          ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
+          ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
+          ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
+          ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
+
+          ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+          ImGui::Checkbox("Another Window", &show_another_window);
+
+          ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+          ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+          if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+            counter++;
+          ImGui::SameLine();
+          ImGui::Text("counter = %d", counter);
+
+          ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+          ImGui::End();
+        }
+      }
+      
+      // ImGui Rendering
+      ImGui::Render();
+
+      frames;
+      // FrameContext* frameCtx = WaitForNextFrameResources();
+
       //Begin frame command list
       auto& allocator = resources.Allocator;
       {
@@ -224,9 +347,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         commonDescriptorHeap.Build();
         commonDescriptorHeap.Set(allocator);
 
-        renderTargetView->Clear(allocator, { sin(0.01f * i++), sin(0.01f * i++ + XM_2PI * 0.33f), sin(0.01f * i++ + XM_2PI * 0.66f), 0.f });
+        renderTargetView->Clear(allocator, clear_color);
         resources.DepthBuffer.DepthStencil()->Clear(allocator);
       }
+
 
       //Draw objects
       {
@@ -237,6 +361,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
         simplePipelineState.Apply(allocator);
         planeMesh.Draw(allocator);
+
+        ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), allocator.operator->());
       }
 
       //Post processing
@@ -282,6 +408,14 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
       //Present frame
       swapChain.Present();
+      ct++;
+    }
+
+    // ImGui Cleanup
+    {
+      ImGui_ImplDX12_Shutdown();
+      // ImGui_ImplUwp_Shutdown();
+      ImGui::DestroyContext();
     }
   }
 
@@ -289,6 +423,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
   {
 
   }
+
+  #pragma region Events
+  #pragma endregion
+
 };
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
