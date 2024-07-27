@@ -144,7 +144,21 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .DepthStencilDescriptorHeap = &depthStencilDescriptorHeap
     };
 
-    ImmutableMesh planeMesh{ immutableAllocationContext, CreateMeshlet(3.0f)};
+    // Creation of meshlets
+    int meshindex = 0;
+    ImmutableMesh* meshlist[1024];
+
+    // Create Mesh at x,y coords
+    for (int i = -4; i < 4; i++)
+    {
+      for (int j = -4; j < 4; j++)
+      {
+        Meshlet testMeshlet = testMeshlet.CreateTestMeshlet(i, j);
+        meshlist[meshindex] = new ImmutableMesh(immutableAllocationContext, CreateMeshlet(testMeshlet));
+        meshindex++;
+      }
+    }
+
     ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"image.jpeg" };
 
     groupedResourceAllocator.Build();
@@ -225,13 +239,16 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
       //Draw objects
       {
-        auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
-        mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
-        mask.Texture = texture;
+        for (int i = 0; i < meshindex; i++)
+        {
+          auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
+          mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
+          mask.Texture = texture;
 
-        allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
-        simplePipelineState.Apply(allocator);
-        planeMesh.Draw(allocator);
+          allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
+          simplePipelineState.Apply(allocator);
+          meshlist[i]->Draw(allocator);
+        }
       }
 
       //Post processing
@@ -278,6 +295,11 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       //Present frame
       swapChain.Present();
     }
+  }
+
+  USHORT* ReadHeightData(USHORT arr[])
+  {
+    return arr;
   }
 
   void SetWindow(CoreWindow const& /*window*/)
