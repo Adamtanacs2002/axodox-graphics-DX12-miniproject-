@@ -20,7 +20,7 @@ namespace Axodox::Graphics::D3D12
     DirectX::XMINT2 pos;
     MeshletVertex vertices[8][8];
 
-    Meshlet CreateTestMeshlet(INT32 x, INT32 y)
+    Meshlet CreateTestMeshlet(INT32 x, INT32 y /*float heights[64]*/)
     {
       Meshlet rt;
       rt.pos = { x, y};
@@ -30,6 +30,23 @@ namespace Axodox::Graphics::D3D12
         {
           MeshletVertex vtx;
           vtx.attitude = 1.f;// ((i % 2) * 0.1f) + ((j % 2) * 0.1f);
+          rt.vertices[i][j] = vtx;
+        }
+      }
+
+      return rt;
+    }
+
+    Meshlet CreateTestMeshlet(INT32 x, INT32 y, float* heights)
+    {
+      Meshlet rt;
+      rt.pos = { x, y };
+      for (int i = 0; i < 8; i++)
+      {
+        for (int j = 0; j < 8; j++)
+        {
+          MeshletVertex vtx;
+          vtx.attitude = heights[(i * 8) + j] - 4.f;
           rt.vertices[i][j] = vtx;
         }
       }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <Graphics/D3D12/Meshes/Primitives.cpp>
+#include <HeightmapReader.h>
 
 using namespace std;
 using namespace winrt;
@@ -144,16 +145,30 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .DepthStencilDescriptorHeap = &depthStencilDescriptorHeap
     };
 
+    // Read height data
+    Miniproject::HeightmapReader reader{ app_folder() / L"test.txt"};
+    reader.ReadHeightmap();
+
+    float heights[64];
     // Creation of meshlets
     int meshindex = 0;
+    std::vector<Meshlet> lst;
     ImmutableMesh* meshlist[1024];
 
     // Create Mesh at x,y coords
-    for (int i = -4; i < 4; i++)
+    int meshX = 10, meshY = 10;
+    for (int i = 0; i < meshX; i++)
     {
-      for (int j = -4; j < 4; j++)
+      for (int j = 0; j < meshY; j++)
       {
-        Meshlet testMeshlet = testMeshlet.CreateTestMeshlet(i, j);
+        reader.GetMeshletHeigths(i, j, heights);
+        float cp[64];
+        for (int k = 0; k < 64; k++)
+        {
+          memcpy(cp, heights, sizeof(float) * 64);
+        }
+        Meshlet testMeshlet = testMeshlet.CreateTestMeshlet(i - floor(meshX / 2), j - floor(meshY / 2), cp);
+        lst.push_back(testMeshlet);
         meshlist[meshindex] = new ImmutableMesh(immutableAllocationContext, CreateMeshlet(testMeshlet));
         meshindex++;
       }
@@ -192,7 +207,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       auto resolution = swapChain.Resolution();
       {
         auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
-        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.002f), 1.5f * sin(i * 0.002f), 1.5f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.003f), 1.5f * sin(i * 0.003f), 1.75f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
@@ -233,7 +248,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         commonDescriptorHeap.Build();
         commonDescriptorHeap.Set(allocator);
 
-        renderTargetView->Clear(allocator, { sin(0.01f * i++), sin(0.01f * i++ + XM_2PI * 0.33f), sin(0.01f * i++ + XM_2PI * 0.66f), 0.f });
+        renderTargetView->Clear(allocator, { 0.0f, 0.33f, 0.66f, 0.f });
         resources.DepthBuffer.DepthStencil()->Clear(allocator);
       }
 
@@ -295,11 +310,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       //Present frame
       swapChain.Present();
     }
-  }
-
-  USHORT* ReadHeightData(USHORT arr[])
-  {
-    return arr;
   }
 
   void SetWindow(CoreWindow const& /*window*/)

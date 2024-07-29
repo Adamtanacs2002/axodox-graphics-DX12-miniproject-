@@ -8,9 +8,11 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="HeightmapReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="HeightmapReader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -31,10 +33,16 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+    <Text Include="..\..\heighmap data\output\test.txt">
+      <Filter>Miniproject\TestInputs</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Miniproject">
       <UniqueIdentifier>{28adcd1c-1732-4267-820d-38043866c288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\TestInputs">
+      <UniqueIdentifier>{0bf42aec-27b7-462b-b21f-6e9ae535f4ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
