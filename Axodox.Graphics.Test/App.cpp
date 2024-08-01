@@ -198,6 +198,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
+    ImGui_ImplUwp_InitForCurrentView();
     //ImGui::StyleColorsLight();
     {
       D3D12_DESCRIPTOR_HEAP_DESC desc = {};
@@ -217,7 +218,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     }
     // Setup Platform/Renderer backends
     // com_ptr<ID3D12DescriptorHeap> m_pd3dSrvDescHeap;
-    // ImGui_ImplUwp_InitForCurrentView();
     ImGui_ImplDX12_Init(device.get(), NUM_FRAMES_IN_FLIGHT,
       DXGI_FORMAT_R8G8B8A8_UNORM, m_pd3dSrvDescHeap.get(),
       m_pd3dSrvDescHeap->GetCPUDescriptorHandleForHeapStart(),
