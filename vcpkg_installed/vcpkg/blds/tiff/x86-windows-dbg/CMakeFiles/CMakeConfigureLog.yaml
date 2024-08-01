@@ -1,0 +1,957 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      The system is: Windows - 10.0.22631 - x86
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x86/cl.exe 
+      Build flags: /nologo;/DWIN32;/D_WINDOWS;/W3;/utf-8;/MP
+      Id flags:  
+      
+      The output was:
+      0
+      CMakeCCompilerId.c
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+      
+      The C compiler identification is MSVC, found in:
+        E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/3.30.0/CompilerIdC/CMakeCCompilerId.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1243 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:250 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Detecting C compiler /showIncludes prefix:
+        main.c
+        Note: including file: E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x86/cl.exe 
+      Build flags: /nologo;/DWIN32;/D_WINDOWS;/W3;/utf-8;/GR;/EHsc;/MP
+      Id flags:  
+      
+      The output was:
+      0
+      CMakeCXXCompilerId.cpp
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+      
+      The CXX compiler identification is MSVC, found in:
+        E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/3.30.0/CompilerIdCXX/CMakeCXXCompilerId.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1243 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:250 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Detecting CXX compiler /showIncludes prefix:
+        main.c
+        Note: including file: E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-80umml"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-80umml"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP "
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-80umml'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_e50c2
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP   /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_e50c2.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_e50c2.dir\\ /FS -c "C:\\Program Files\\CMake\\share\\cmake-3.30\\Modules\\CMakeCCompilerABI.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_e50c2.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_e50c2.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_e50c2.exe /implib:cmTC_e50c2.lib /pdb:cmTC_e50c2.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/PROGRA~1/MICROS~2/2022/ENTERP~1/VC/Tools/MSVC/1440~1.338/bin/Hostx64/x86/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Running the C compiler's linker: "C:/PROGRA~1/MICROS~2/2022/ENTERP~1/VC/Tools/MSVC/1440~1.338/bin/Hostx64/x86/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.40.33812.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-w9o5jq"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-w9o5jq"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /GR /EHsc /MP "
+      CMAKE_CXX_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-w9o5jq'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_d3e80
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo /TP   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /GR /EHsc /MP   /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_d3e80.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_d3e80.dir\\ /FS -c "C:\\Program Files\\CMake\\share\\cmake-3.30\\Modules\\CMakeCXXCompilerABI.cpp"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_d3e80.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_d3e80.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_d3e80.exe /implib:cmTC_d3e80.lib /pdb:cmTC_d3e80.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/PROGRA~1/MICROS~2/2022/ENTERP~1/VC/Tools/MSVC/1440~1.338/bin/Hostx64/x86/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:41 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/PROGRA~1/MICROS~2/2022/ENTERP~1/VC/Tools/MSVC/1440~1.338/bin/Hostx64/x86/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.40.33812.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "cmake/CompilerChecks.cmake:120 (CHECK_C_COMPILER_FLAG)"
+      - "CMakeLists.txt:70 (include)"
+    checks:
+      - "Performing Test C_FLAG_W3"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9x9d5d"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9x9d5d"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP "
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "C_FLAG_W3"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9x9d5d'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_2cf70
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo -DC_FLAG_W3  /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP   /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1    /W3 /showIncludes /FoCMakeFiles\\cmTC_2cf70.dir\\src.c.obj /FdCMakeFiles\\cmTC_2cf70.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9x9d5d\\src.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_2cf70.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_2cf70.dir\\src.c.obj  /out:cmTC_2cf70.exe /implib:cmTC_2cf70.lib /pdb:cmTC_2cf70.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "cmake/LinkerChecks.cmake:43 (check_c_source_compiles)"
+      - "CMakeLists.txt:73 (include)"
+    checks:
+      - "Performing Test HAVE_LD_VERSION_SCRIPT"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wlrlpv"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wlrlpv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_LD_VERSION_SCRIPT"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wlrlpv'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_3b6ce
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo -DHAVE_LD_VERSION_SCRIPT  /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3 -Wl,--version-script=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/conftest.map /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_3b6ce.dir\\src.c.obj /FdCMakeFiles\\cmTC_3b6ce.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-wlrlpv\\src.c"
+        FAILED: CMakeFiles/cmTC_3b6ce.dir/src.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo -DHAVE_LD_VERSION_SCRIPT  /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3 -Wl,--version-script=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/conftest.map /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_3b6ce.dir\\src.c.obj /FdCMakeFiles\\cmTC_3b6ce.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-wlrlpv\\src.c"
+        cl : Command line error D8021 : invalid numeric argument '/Wl,--version-script=E:/Egyetem/Nyári'
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:30 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for assert.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5qtvz0"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5qtvz0"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_ASSERT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5qtvz0'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_766ab
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_766ab.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_766ab.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-5qtvz0\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_766ab.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_766ab.dir\\CheckIncludeFile.c.obj  /out:cmTC_766ab.exe /implib:cmTC_766ab.lib /pdb:cmTC_766ab.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:31 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for fcntl.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-n0r6nf"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-n0r6nf"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_FCNTL_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-n0r6nf'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_60575
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_60575.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_60575.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-n0r6nf\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_60575.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_60575.dir\\CheckIncludeFile.c.obj  /out:cmTC_60575.exe /implib:cmTC_60575.lib /pdb:cmTC_60575.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:32 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for io.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-8ouz9a"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-8ouz9a"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_IO_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-8ouz9a'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_1b818
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_1b818.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_1b818.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-8ouz9a\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_1b818.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_1b818.dir\\CheckIncludeFile.c.obj  /out:cmTC_1b818.exe /implib:cmTC_1b818.lib /pdb:cmTC_1b818.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:33 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for strings.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-eieub5"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-eieub5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_STRINGS_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-eieub5'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_711cb
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_711cb.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_711cb.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-eieub5\\CheckIncludeFile.c"
+        FAILED: CMakeFiles/cmTC_711cb.dir/CheckIncludeFile.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_711cb.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_711cb.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-eieub5\\CheckIncludeFile.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-eieub5\\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'strings.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:34 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for sys/time.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-qlzt7x"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-qlzt7x"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SYS_TIME_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-qlzt7x'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_f32b0
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_f32b0.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_f32b0.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-qlzt7x\\CheckIncludeFile.c"
+        FAILED: CMakeFiles/cmTC_f32b0.dir/CheckIncludeFile.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_f32b0.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_f32b0.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-qlzt7x\\CheckIncludeFile.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-qlzt7x\\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'sys/time.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:35 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-zec5m4"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-zec5m4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-zec5m4'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_1c8a9
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_1c8a9.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_1c8a9.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-zec5m4\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_1c8a9.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_1c8a9.dir\\CheckIncludeFile.c.obj  /out:cmTC_1c8a9.exe /implib:cmTC_1c8a9.lib /pdb:cmTC_1c8a9.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "cmake/IncludeChecks.cmake:36 (check_include_file)"
+      - "CMakeLists.txt:79 (include)"
+    checks:
+      - "Looking for unistd.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5fcfgs"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5fcfgs"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-5fcfgs'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_336e6
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_336e6.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_336e6.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-5fcfgs\\CheckIncludeFile.c"
+        FAILED: CMakeFiles/cmTC_336e6.dir/CheckIncludeFile.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_336e6.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_336e6.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-5fcfgs\\CheckIncludeFile.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-5fcfgs\\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:154 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/SymbolChecks.cmake:31 (check_symbol_exists)"
+      - "CMakeLists.txt:82 (include)"
+    checks:
+      - "Looking for getopt"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-r5y6kx"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-r5y6kx"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_GETOPT"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-r5y6kx'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_4ec17
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_4ec17.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_4ec17.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-r5y6kx\\CheckSymbolExists.c"
+        FAILED: CMakeFiles/cmTC_4ec17.dir/CheckSymbolExists.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_4ec17.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_4ec17.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-r5y6kx\\CheckSymbolExists.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-r5y6kx\\CheckSymbolExists.c(2): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:154 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/SymbolChecks.cmake:32 (check_symbol_exists)"
+      - "CMakeLists.txt:82 (include)"
+    checks:
+      - "Looking for optarg"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wdatkz"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wdatkz"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_DECL_OPTARG"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-wdatkz'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_8d3a4
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_8d3a4.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_8d3a4.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-wdatkz\\CheckSymbolExists.c"
+        FAILED: CMakeFiles/cmTC_8d3a4.dir/CheckSymbolExists.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_8d3a4.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_8d3a4.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-wdatkz\\CheckSymbolExists.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-wdatkz\\CheckSymbolExists.c(2): fatal error C1083: Cannot open include file: 'getopt.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:154 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/SymbolChecks.cmake:40 (check_symbol_exists)"
+      - "CMakeLists.txt:82 (include)"
+    checks:
+      - "Looking for mmap"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-bvyunx"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-bvyunx"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_MMAP"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-bvyunx'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_7615b
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_7615b.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_7615b.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-bvyunx\\CheckSymbolExists.c"
+        FAILED: CMakeFiles/cmTC_7615b.dir/CheckSymbolExists.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_7615b.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_7615b.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-bvyunx\\CheckSymbolExists.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-bvyunx\\CheckSymbolExists.c(2): fatal error C1083: Cannot open include file: 'sys/mman.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:154 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/SymbolChecks.cmake:43 (check_symbol_exists)"
+      - "CMakeLists.txt:82 (include)"
+    checks:
+      - "Looking for setmode"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-myipnq"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-myipnq"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SETMODE"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-myipnq'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9d8da
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9d8da.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_9d8da.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-myipnq\\CheckSymbolExists.c"
+        FAILED: CMakeFiles/cmTC_9d8da.dir/CheckSymbolExists.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9d8da.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_9d8da.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-myipnq\\CheckSymbolExists.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-myipnq\\CheckSymbolExists.c(2): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckTypeSize.cmake:252 (check_include_file)"
+      - "cmake/TypeSizeChecks.cmake:31 (check_type_size)"
+      - "CMakeLists.txt:93 (include)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-cqyxc0"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-cqyxc0"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-cqyxc0'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_a8a26
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_a8a26.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_a8a26.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-cqyxc0\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_a8a26.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_a8a26.dir\\CheckIncludeFile.c.obj  /out:cmTC_a8a26.exe /implib:cmTC_a8a26.lib /pdb:cmTC_a8a26.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckTypeSize.cmake:253 (check_include_file)"
+      - "cmake/TypeSizeChecks.cmake:31 (check_type_size)"
+      - "CMakeLists.txt:93 (include)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dbtwrn"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dbtwrn"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dbtwrn'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_b2b5d
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_b2b5d.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_b2b5d.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dbtwrn\\CheckIncludeFile.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_b2b5d.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_b2b5d.dir\\CheckIncludeFile.c.obj  /out:cmTC_b2b5d.exe /implib:cmTC_b2b5d.lib /pdb:cmTC_b2b5d.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckTypeSize.cmake:147 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckTypeSize.cmake:272 (__check_type_size_impl)"
+      - "cmake/TypeSizeChecks.cmake:31 (check_type_size)"
+      - "CMakeLists.txt:93 (include)"
+    checks:
+      - "Check size of size_t"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-hy2zaq"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-hy2zaq"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SIZEOF_SIZE_T"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-hy2zaq'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_c3548
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_c3548.dir\\SIZEOF_SIZE_T.c.obj /FdCMakeFiles\\cmTC_c3548.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-hy2zaq\\SIZEOF_SIZE_T.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_c3548.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_c3548.dir\\SIZEOF_SIZE_T.c.obj  /out:cmTC_c3548.exe /implib:cmTC_c3548.lib /pdb:cmTC_c3548.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x86-windows/share/liblzma/vcpkg-cmake-wrapper.cmake:57 (find_package)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:813 (include)"
+      - "cmake/LZMACodec.cmake:29 (find_package)"
+      - "CMakeLists.txt:117 (include)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-0zfkuh"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-0zfkuh"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-0zfkuh'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_aae24
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo -DCMAKE_HAVE_LIBC_PTHREAD  /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_aae24.dir\\src.c.obj /FdCMakeFiles\\cmTC_aae24.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-0zfkuh\\src.c"
+        FAILED: CMakeFiles/cmTC_aae24.dir/src.c.obj 
+        C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo -DCMAKE_HAVE_LIBC_PTHREAD  /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_aae24.dir\\src.c.obj /FdCMakeFiles\\cmTC_aae24.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-0zfkuh\\src.c"
+        E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-0zfkuh\\src.c(1): fatal error C1083: Cannot open include file: 'pthread.h': No such file or directory
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x86-windows/share/liblzma/vcpkg-cmake-wrapper.cmake:57 (find_package)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:813 (include)"
+      - "cmake/LZMACodec.cmake:29 (find_package)"
+      - "CMakeLists.txt:117 (include)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xwxxmj"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xwxxmj"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xwxxmj'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_77930
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3 -DCHECK_FUNCTION_EXISTS=pthread_create /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_77930.dir\\CheckFunctionExists.c.obj /FdCMakeFiles\\cmTC_77930.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-xwxxmj\\CheckFunctionExists.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_77930.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_77930.dir\\CheckFunctionExists.c.obj  /out:cmTC_77930.exe /implib:cmTC_77930.lib /pdb:cmTC_77930.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  pthreads.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        FAILED: cmTC_77930.exe 
+        C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_77930.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_77930.dir\\CheckFunctionExists.c.obj  /out:cmTC_77930.exe /implib:cmTC_77930.lib /pdb:cmTC_77930.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  pthreads.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        LINK Pass 1: command "C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_77930.dir\\CheckFunctionExists.c.obj /out:cmTC_77930.exe /implib:cmTC_77930.lib /pdb:cmTC_77930.pdb /version:0.0 /machine:X86 /debug /INCREMENTAL /subsystem:console pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_77930.dir/intermediate.manifest CMakeFiles\\cmTC_77930.dir/manifest.res" failed (exit code 1104) with the following output:
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib'\x0d
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x86-windows/share/liblzma/vcpkg-cmake-wrapper.cmake:57 (find_package)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:813 (include)"
+      - "cmake/LZMACodec.cmake:29 (find_package)"
+      - "CMakeLists.txt:117 (include)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g6ut8x"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g6ut8x"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g6ut8x'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9e437
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3 -DCHECK_FUNCTION_EXISTS=pthread_create /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9e437.dir\\CheckFunctionExists.c.obj /FdCMakeFiles\\cmTC_9e437.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-g6ut8x\\CheckFunctionExists.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_9e437.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_9e437.dir\\CheckFunctionExists.c.obj  /out:cmTC_9e437.exe /implib:cmTC_9e437.lib /pdb:cmTC_9e437.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  pthread.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        FAILED: cmTC_9e437.exe 
+        C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_9e437.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_9e437.dir\\CheckFunctionExists.c.obj  /out:cmTC_9e437.exe /implib:cmTC_9e437.lib /pdb:cmTC_9e437.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  pthread.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        LINK Pass 1: command "C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_9e437.dir\\CheckFunctionExists.c.obj /out:cmTC_9e437.exe /implib:cmTC_9e437.lib /pdb:cmTC_9e437.pdb /version:0.0 /machine:X86 /debug /INCREMENTAL /subsystem:console pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_9e437.dir/intermediate.manifest CMakeFiles\\cmTC_9e437.dir/manifest.res" failed (exit code 1104) with the following output:
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib'\x0d
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:154 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.30/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/FindCMath.cmake:33 (check_symbol_exists)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "CMakeLists.txt:136 (find_package)"
+    checks:
+      - "Looking for pow"
+    directories:
+      source: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-21l5x5"
+      binary: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-21l5x5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3"
+      CMAKE_C_FLAGS_DEBUG: "/D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+      CMAKE_MODULE_PATH: "E:/Egyetem/Ny\u00e1ri miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/src/v4.6.0-cea7694842.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_APPLOCAL_DEPS: "OFF"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_TARGET_ARCHITECTURE: "x86"
+      VCPKG_TARGET_TRIPLET: "x86-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/vcpkg"
+    buildResult:
+      variable: "CMath_HAVE_LIBC_POW"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/tiff/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-21l5x5'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9728b
+        [1/2] C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /W3 /utf-8 /MP  /W3  /D_DEBUG /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9728b.dir\\CheckSymbolExists.c.obj /FdCMakeFiles\\cmTC_9728b.dir\\ /FS -c "E:\\Egyetem\\Nyári miniprojekt\\axodox-graphics-DX12-miniproject-\\vcpkg_installed\\vcpkg\\blds\\tiff\\x86-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-21l5x5\\CheckSymbolExists.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_9728b.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~2\\2022\\ENTERP~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x86\\link.exe /nologo CMakeFiles\\cmTC_9728b.dir\\CheckSymbolExists.c.obj  /out:cmTC_9728b.exe /implib:cmTC_9728b.lib /pdb:cmTC_9728b.pdb /version:0.0 /machine:X86  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+...

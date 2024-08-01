@@ -1,0 +1,10 @@
+prefix=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/debug
+exec_prefix=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/debug
+libdir=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/debug/lib
+includedir=E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/debug/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 3.0.2
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}

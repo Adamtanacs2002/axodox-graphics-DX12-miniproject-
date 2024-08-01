@@ -23,6 +23,9 @@
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
     <Image Include="image.jpeg" />
+    <Image Include="47_473_19_062_15_100_100.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -43,6 +46,9 @@
     </Filter>
     <Filter Include="Miniproject\TestInputs">
       <UniqueIdentifier>{0bf42aec-27b7-462b-b21f-6e9ae535f4ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mapfiles">
+      <UniqueIdentifier>{da5499c5-058f-494c-bf35-3d0636592719}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

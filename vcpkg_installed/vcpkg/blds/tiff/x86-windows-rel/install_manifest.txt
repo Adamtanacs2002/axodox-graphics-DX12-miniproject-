@@ -1,0 +1,11 @@
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/pkgconfig/libtiff-4.pc
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/tiff.lib
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/bin/tiff.dll
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/include/tiff.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/include/tiffio.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/include/tiffvers.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/include/tiffconf.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/cmake/tiff/TiffTargets.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/cmake/tiff/TiffTargets-release.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/cmake/tiff/TiffConfigVersion.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/tiff_x86-windows/lib/cmake/tiff/TiffConfig.cmake

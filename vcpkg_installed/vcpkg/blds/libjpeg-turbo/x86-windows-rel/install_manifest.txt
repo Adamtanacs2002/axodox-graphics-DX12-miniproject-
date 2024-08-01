@@ -1,0 +1,17 @@
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/jpeg.lib
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/bin/jpeg62.dll
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/bin/jpeg62.pdb
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/turbojpeg.lib
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/bin/turbojpeg.dll
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/bin/turbojpeg.pdb
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/include/turbojpeg.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/pkgconfig/libjpeg.pc
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/pkgconfig/libturbojpeg.pc
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/cmake/libjpeg-turbo/libjpeg-turboConfig.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/cmake/libjpeg-turbo/libjpeg-turboConfigVersion.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/cmake/libjpeg-turbo/libjpeg-turboTargets.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/lib/cmake/libjpeg-turbo/libjpeg-turboTargets-release.cmake
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/include/jconfig.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/include/jerror.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/include/jmorecfg.h
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/libjpeg-turbo_x86-windows/include/jpeglib.h

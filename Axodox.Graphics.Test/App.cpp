@@ -1,6 +1,6 @@
 #include "pch.h"
 #include <Graphics/D3D12/Meshes/Primitives.cpp>
-#include <HeightmapReader.h>
+// #include <HeightmapReader.h>
 
 using namespace std;
 using namespace winrt;
@@ -94,6 +94,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
   struct Constants
   {
     XMFLOAT4X4 WorldViewProjection;
+    float disFromEye;
   };
 
   void Run()
@@ -146,36 +147,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     };
 
     // Read height data
-    Miniproject::HeightmapReader reader{ app_folder() / L"test.txt"};
-    reader.ReadHeightmap();
-
-    float heights[64];
     // Creation of meshlets
-    int meshindex = 0;
-    std::vector<Meshlet> lst;
-    ImmutableMesh* meshlist[1024];
-
+    auto heights = ImmutableTexture::readTextureData(app_folder() / L"47_473_19_062_15_100_100.png");
+    std::vector<XMUINT2> vertices;
+    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, &vertices) };
     // Create Mesh at x,y coords
-    int meshX = 10, meshY = 10;
-    for (int i = 0; i < meshX; i++)
-    {
-      for (int j = 0; j < meshY; j++)
-      {
-        reader.GetMeshletHeigths(i, j, heights);
-        float cp[64];
-        for (int k = 0; k < 64; k++)
-        {
-          memcpy(cp, heights, sizeof(float) * 64);
-        }
-        Meshlet testMeshlet = testMeshlet.CreateTestMeshlet(i - floor(meshX / 2), j - floor(meshY / 2), cp);
-        lst.push_back(testMeshlet);
-        meshlist[meshindex] = new ImmutableMesh(immutableAllocationContext, CreateMeshlet(testMeshlet));
-        meshindex++;
-      }
-    }
-
-    ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"image.jpeg" };
-
+    ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"47_473_19_062_15_100_100.png" };
     groupedResourceAllocator.Build();
 
     auto mutableAllocationContext = immutableAllocationContext;
@@ -207,11 +184,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       auto resolution = swapChain.Resolution();
       {
         auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
-        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.003f), 1.5f * sin(i * 0.003f), 1.75f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+        auto view = XMMatrixLookAtRH(XMVectorSet(3.5f * cos(i * 0.003f), 3.5f * sin(i * 0.003f), 1.75f + 2.0f * sin(i * 0.001f + 0.25f), 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
+        XMStoreFloat(&constants.disFromEye,XMVECTOR{0.33f});
       }
 
       //Ensure depth buffer
@@ -254,16 +232,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
       //Draw objects
       {
-        for (int i = 0; i < meshindex; i++)
-        {
-          auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
-          mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
-          mask.Texture = texture;
+        auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
+        mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
+        mask.Texture = texture;
 
-          allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
-          simplePipelineState.Apply(allocator);
-          meshlist[i]->Draw(allocator);
-        }
+        allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
+        simplePipelineState.Apply(allocator);
+        mainmesh.Draw(allocator);
       }
 
       //Post processing

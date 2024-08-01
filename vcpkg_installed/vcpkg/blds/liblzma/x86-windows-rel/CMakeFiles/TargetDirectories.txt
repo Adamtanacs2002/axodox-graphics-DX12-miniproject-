@@ -1,0 +1,6 @@
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/liblzma.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/edit_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/rebuild_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/list_install_components.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/install.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/liblzma/x86-windows-rel/CMakeFiles/install/local.dir

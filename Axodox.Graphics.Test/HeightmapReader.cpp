@@ -9,7 +9,12 @@ namespace Miniproject
 	{
 
 	}
-	void HeightmapReader::ReadHeightmap()
+	std::vector<std::vector<float>> HeightmapReader::GetHeights()
+	{
+		return _heights;
+	}
+
+	void HeightmapReader::ReadHeightmapText()
 	{
 		std::string StringData;
 		std::string delimiter = "|";

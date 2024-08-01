@@ -1,0 +1,16 @@
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/sharpyuv.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpdecode.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpdspdecode.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webputilsdecode.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpdecoder.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpencode.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpdsp.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webputils.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webp.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/webpdemux.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/libwebpmux.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/edit_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/rebuild_cache.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/list_install_components.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/install.dir
+E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/blds/libwebp/x86-windows-rel/CMakeFiles/install/local.dir
