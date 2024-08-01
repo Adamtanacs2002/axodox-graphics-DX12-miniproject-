@@ -8,10 +8,16 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="imgui_impl_uwp.cpp">
+      <Filter>Miniproject</Filter>
+    </ClCompile>
     <ClCompile Include="HeightmapReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="imgui_impl_uwp.h">
+      <Filter>Miniproject</Filter>
+    </ClInclude>
     <ClInclude Include="HeightmapReader.h" />
   </ItemGroup>
   <ItemGroup>
