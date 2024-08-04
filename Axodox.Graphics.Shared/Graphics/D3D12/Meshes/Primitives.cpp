@@ -160,15 +160,15 @@ namespace Axodox::Graphics::D3D12
   {
     int subdivisionsX = heights.at(0).size();
     int subdivisionsY = heights.size();
-    float size = 10.0f;
+    XMFLOAT2 size{ subdivisionsX / 10.0f,subdivisionsY / 10.0f };
     if (subdivisionsX < 2 || subdivisionsY < 2) throw logic_error("Plane size must be at least 2!");
     if (subdivisionsX * subdivisionsY > (uint64_t)numeric_limits<uint32_t>::max() + 1) throw logic_error("Run out of indices!");
 
     MeshDescription result;
 
     //Vertices
-    float xstep = size / (subdivisionsX - 1), xtexstep = 1.f / (subdivisionsX - 1), xstart = -size / 2.f;
-    float ystep = size / (subdivisionsY - 1), ytexstep = 1.f / (subdivisionsY - 1), ystart = -size / 2.f;
+    float xstep = size.x / (subdivisionsX - 1), xtexstep = 1.f / (subdivisionsX - 1), xstart = -size.x / 2.f;
+    float ystep = size.y / (subdivisionsY - 1), ytexstep = 1.f / (subdivisionsY - 1), ystart = -size.y / 2.f;
     uint32_t vertexCount = subdivisionsX * subdivisionsY;
 
     VertexPositionNormalTexture* pVertex;
@@ -180,13 +180,13 @@ namespace Axodox::Graphics::D3D12
       for (uint32_t i = 0; i < subdivisionsX; i++)
       {
         *pVertex++ = {
-          XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(i).at(j) - 6.f},
+          XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(j).at(i) - 6.f},
           XMBYTEN4{ 0.f, 0.f, 1.f, 1.f },
           // XMUBYTEN4{ 0.0f, 0.33f, 0.33f, 1.0f}
-          XMUSHORTN2{j * ytexstep, i * xtexstep }
+          XMUSHORTN2{i * xtexstep , j * ytexstep}
         };
-        tmp.push_back(XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(i).at(j) - 8.f });
-        meshletcoords->push_back({ i / 8,j / 8 });
+        tmp.push_back(XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(j).at(i) - 8.f });
+        meshletcoords->push_back({ j / 8,i / 8 });
       }
     }
 
