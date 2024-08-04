@@ -72,9 +72,9 @@ void Camera::UpdateUV(float du, float dv)
   using namespace DirectX;
   m_u += du;
   XMVECTOR tmp_v = XMVECTOR{ m_v + dv };
-  if (tmp_v.m128_f32[0] > 3.1f || tmp_v.m128_f32[0] < -3.1f)
+  if (tmp_v.m128_f32[0] > XM_PI || tmp_v.m128_f32[0] < -XM_PI)
     tmp_v = -tmp_v;
-  m_v = XMVector3ClampLength(tmp_v , 0.1f, 3.1f).m128_f32[0];
+  m_v = XMVector3ClampLength(tmp_v , 0.1f, XM_PI).m128_f32[0];
   UpdateParams();
 }
 

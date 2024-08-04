@@ -170,12 +170,22 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     };
 
     // Read height data
+    // TODO: break down map to meshlets and distribute them in compact buffers
+    std::filesystem::path fPath =
+      //app_folder() / L"47_473_19_062_15_100_100.png";
+      //app_folder() / L"27_985_86_924_10_250_250.png";
+      //app_folder() / L"27_985_86_924_10_500_250.png";
+      app_folder() / L"27_985_86_924_10_500_500.png";
+      //app_folder() / L"27_985_86_924_10_1000_500.png";
+      //app_folder() / L"27_985_86_924_10_1000_1000.png";
+      //app_folder() / L"27_985_86_924_10_2000_1000.png";
+      //app_folder() / L"27_985_86_924_10_2000_2000.png"; LIMIT
     // Creation of meshlets
-    auto heights = ImmutableTexture::readTextureData(app_folder() / L"47_473_19_062_15_100_100.png");
+    auto heights = ImmutableTexture::readTextureData(fPath);
     std::vector<XMUINT2> vertices;
     ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, &vertices) };
     // Create Mesh at x,y coords
-    ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"47_473_19_062_15_100_100.png" };
+    ImmutableTexture texture{ immutableAllocationContext, fPath };
     groupedResourceAllocator.Build();
 
     auto mutableAllocationContext = immutableAllocationContext;
@@ -281,6 +291,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     auto i = 0u;
     static float zoom = 0.0f;
+    char path[1024] = "";
     while (!m_windowClosed)
     {
       //Process user input
@@ -304,7 +315,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         cam.SetAspect(float(resolution.x) / float(resolution.y));
         cam.Update(io.DeltaTime);
         // Látószög
-        auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
+        auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 1000.f);
         // Nézett vektorok
         auto view =//  cam.GetViewMatrix();
           XMMatrixLookAtRH(
@@ -367,6 +378,14 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
           ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
           ImGui::End();
+        }
+        {
+          // File load in
+          //if (ImGui::Begin("Open file"))
+          //{
+          //  ImGui::InputText("Path",path, sizeof(path) / sizeof(char));
+          //}
+          //ImGui::End();
         }
       }
       
