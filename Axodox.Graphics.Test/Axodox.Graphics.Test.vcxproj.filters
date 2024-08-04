@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="PostProcessingComputeShader.hlsl" />
-    <FxCompile Include="SimplePixelShader.hlsl" />
-    <FxCompile Include="SimpleVertexShader.hlsl" />
+    <FxCompile Include="PostProcessingComputeShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimplePixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleHullShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -12,6 +21,9 @@
       <Filter>Miniproject</Filter>
     </ClCompile>
     <ClCompile Include="HeightmapReader.cpp" />
+    <ClCompile Include="Camera.cpp">
+      <Filter>Miniproject\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -19,6 +31,9 @@
       <Filter>Miniproject</Filter>
     </ClInclude>
     <ClInclude Include="HeightmapReader.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>Miniproject\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -42,19 +57,19 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
-    <Text Include="..\..\heighmap data\output\test.txt">
-      <Filter>Miniproject\TestInputs</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Miniproject">
       <UniqueIdentifier>{28adcd1c-1732-4267-820d-38043866c288}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Miniproject\TestInputs">
-      <UniqueIdentifier>{0bf42aec-27b7-462b-b21f-6e9ae535f4ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Mapfiles">
       <UniqueIdentifier>{da5499c5-058f-494c-bf35-3d0636592719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{0a15f590-d674-4cfa-996b-32c4a881a471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\Utils">
+      <UniqueIdentifier>{0913ca7a-a9ee-4ce8-b6f5-18557311256b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

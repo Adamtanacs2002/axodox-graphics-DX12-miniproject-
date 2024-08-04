@@ -10,9 +10,9 @@
 #include "Windows.h"
 
 #include <winrt/Windows.Graphics.Display.h>
-
-
 // -----
+
+#include "Camera.h"
 
 using namespace std;
 using namespace winrt;
@@ -134,10 +134,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     RootSignature<SimpleRootDescription> simpleRootSignature{ device };
     VertexShader simpleVertexShader{ app_folder() / L"SimpleVertexShader.cso" };
     PixelShader simplePixelShader{ app_folder() / L"SimplePixelShader.cso" };
+    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
 
     GraphicsPipelineStateDefinition simplePipelineStateDefinition{
       .RootSignature = &simpleRootSignature,
       .VertexShader = &simpleVertexShader,
+      // .HullShader = &simpleHullShader,
       .PixelShader = &simplePixelShader,
       .RasterizerState = RasterizerFlags::CullClockwise,
       .DepthStencilState = DepthStencilMode::WriteDepth,
@@ -230,12 +232,55 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       m_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart());
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
     DirectX::XMFLOAT4 clear_color = { 0.05f, 0.25f, 0.60f, 1.00f };
     #pragma endregion
 
+    // Camera setup
+    bool firstperson = false;
+    bool& quit = m_windowClosed;
+    Camera cam;
+
+    // Event setup
+    {
+      window.KeyDown([&cam, &quit, &firstperson](CoreWindow const&,
+        KeyEventArgs const& args) {
+          if (ImGui::GetIO().WantCaptureKeyboard)
+            return;
+          switch (args.VirtualKey()) {
+          case Windows::System::VirtualKey::Escape:
+            quit = true;
+            break;
+          /*case Windows::System::VirtualKey::Space:
+            firstperson = !firstperson;
+            cam.SetFirstPerson(firstperson);
+            break;*/
+
+          default:
+            cam.KeyBoardDown(args);
+            break;
+          }
+        });
+      window.KeyUp([&cam](CoreWindow const&, KeyEventArgs const& args) {
+        if (ImGui::GetIO().WantCaptureKeyboard)
+          return;
+        cam.KeyboardUp(args);
+        });
+      window.PointerMoved([&cam](CoreWindow const&, PointerEventArgs const& args) {
+        if (ImGui::GetIO().WantCaptureMouse)
+          return;
+        cam.MouseMove(args);
+        });
+      window.PointerWheelChanged(
+        [&cam](CoreWindow const&, PointerEventArgs const& args) {
+          if (ImGui::GetIO().WantCaptureMouse)
+            return;
+          cam.MouseWheel(args);
+        });
+    }
+
+
     auto i = 0u;
+    static float zoom = 0.0f;
     while (!m_windowClosed)
     {
       //Process user input
@@ -255,10 +300,17 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         // ImGUI
         io.DisplaySize = ImVec2(resolution.x, resolution.y);
         // -----
+        // Camera
+        cam.SetAspect(float(resolution.x) / float(resolution.y));
+        cam.Update(io.DeltaTime);
         // Látószög
         auto projection = XMMatrixPerspectiveFovRH(90.f, float(resolution.x) / float(resolution.y), 0.01f, 10.f);
         // Nézett vektorok
-        auto view = XMMatrixLookAtRH(XMVectorSet(1.5f * cos(i * 0.002f), 1.5f * sin(i * 0.002f), 1.5f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+        auto view =//  cam.GetViewMatrix();
+          XMMatrixLookAtRH(
+          cam.GetEye(),
+          cam.GetAt(),
+          cam.GetWorldUp());
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
@@ -295,13 +347,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       
       // ImGui Draws
       {
-        if (show_demo_window)
-          ImGui::ShowDemoWindow(&show_demo_window);
-
         {
-          static float f = 0.0f;
           ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
           ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
           ImGui::Button("Test", { 200,20 });
           bool isHovered = ImGui::IsItemHovered();
@@ -315,10 +362,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
           ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
 
-          ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-          ImGui::Checkbox("Another Window", &show_another_window);
-
-          ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+          ImGui::SliderFloat("Zoom", &zoom, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
           ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
           ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
@@ -411,7 +455,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // ImGui Cleanup
     {
       ImGui_ImplDX12_Shutdown();
-      // ImGui_ImplUwp_Shutdown();
+      ImGui_ImplUwp_Shutdown();
       ImGui::DestroyContext();
     }
   }

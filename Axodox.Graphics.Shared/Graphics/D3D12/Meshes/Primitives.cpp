@@ -183,7 +183,7 @@ namespace Axodox::Graphics::D3D12
           XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(i).at(j) - 6.f},
           XMBYTEN4{ 0.f, 0.f, 1.f, 1.f },
           // XMUBYTEN4{ 0.0f, 0.33f, 0.33f, 1.0f}
-          XMUSHORTN2{ i * xtexstep, 1 - j * ytexstep }
+          XMUSHORTN2{j * ytexstep, i * xtexstep }
         };
         tmp.push_back(XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(i).at(j) - 8.f });
         meshletcoords->push_back({ i / 8,j / 8 });
