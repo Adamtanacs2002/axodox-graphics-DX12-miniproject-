@@ -70,11 +70,11 @@ void Camera::Update(float _deltaTime)
 void Camera::UpdateUV(float du, float dv)
 {
   using namespace DirectX;
-  // TODO: fix m_v clamping here
   m_u += du;
   XMVECTOR tmp_v = XMVECTOR{ m_v + dv };
+  if (tmp_v.m128_f32[0] > 3.1f || tmp_v.m128_f32[0] < -3.1f)
+    tmp_v = -tmp_v;
   m_v = XMVector3ClampLength(tmp_v , 0.1f, 3.1f).m128_f32[0];
-  // m_v += dv;
   UpdateParams();
 }
 
@@ -105,11 +105,11 @@ void Camera::KeyBoardDown(winrt::Windows::UI::Core::KeyEventArgs const& key)
   switch (key.VirtualKey()) {
   case VirtualKey::Shift:
   case VirtualKey::LeftShift:
-  case VirtualKey::RightShift:
     if (!m_slow) {
       m_slow = true;
     }
     break;
+  case VirtualKey::RightShift:
   case VirtualKey::Control:
   case VirtualKey::RightControl:
   case VirtualKey::LeftControl:
