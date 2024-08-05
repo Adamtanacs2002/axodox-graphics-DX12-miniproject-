@@ -156,7 +156,8 @@ namespace Axodox::Graphics::D3D12
   }
 
   MeshDescription CreateWholeMap(std::vector<std::vector<float>> heights, 
-    std::vector<XMUINT2>* meshletcoords)
+    std::vector<XMUINT2>* meshletcoords,
+    PrimitiveTopology type = PrimitiveTopology::TriangleList)
   {
     int subdivisionsX = heights.at(0).size();
     int subdivisionsY = heights.size();
@@ -211,7 +212,7 @@ namespace Axodox::Graphics::D3D12
     }
 
     //Topology
-    result.Topology = PrimitiveTopology::TriangleList;
+    result.Topology = type;
 
     return result;
   }

@@ -65,7 +65,8 @@ namespace Axodox::Graphics::D3D12
 
       //Create pipeline state
       com_ptr<ID3D12PipelineState> pipelineState;
-      check_hresult((_device.get()->*createPipeline)(&description, IID_PPV_ARGS(pipelineState.put())));
+      hresult rs = (_device.get()->*createPipeline)(&description, IID_PPV_ARGS(pipelineState.put()));
+      check_hresult(rs);
 
       //Save output to cache
       if (pipelineState && !cachedPath.empty())

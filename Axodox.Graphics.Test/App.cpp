@@ -139,13 +139,14 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     GraphicsPipelineStateDefinition simplePipelineStateDefinition{
       .RootSignature = &simpleRootSignature,
       .VertexShader = &simpleVertexShader,
-      // .HullShader = &simpleHullShader,
+      //.HullShader = &simpleHullShader,
       .PixelShader = &simplePixelShader,
       .RasterizerState = RasterizerFlags::CullClockwise,
       .DepthStencilState = DepthStencilMode::WriteDepth,
       .InputLayout = VertexPositionNormalTexture::Layout,
+      //.TopologyType = PrimitiveTopologyType::Patch,
       .RenderTargetFormats = { Format::B8G8R8A8_UNorm },
-      .DepthStencilFormat = Format::D32_Float
+      .DepthStencilFormat = Format::D32_Float,
     };
     auto simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(simplePipelineStateDefinition).get();
         
@@ -175,17 +176,20 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       //app_folder() / L"47_473_19_062_15_100_100.png";
       //app_folder() / L"27_985_86_924_10_250_250.png";
       //app_folder() / L"27_985_86_924_10_500_250.png";
-      app_folder() / L"27_985_86_924_10_500_500.png";
+      //app_folder() / L"27_985_86_924_10_500_500.png";
       //app_folder() / L"27_985_86_924_10_1000_500.png";
       //app_folder() / L"27_985_86_924_10_1000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_2000.png"; LIMIT
+      app_folder() / L"27_985_86_924_10_2000_1000.png";
+      //app_folder() / L"27_985_86_924_10_2000_2000.png"; // LIMIT
+      //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
     // Creation of meshlets
     auto heights = ImmutableTexture::readTextureData(fPath);
     std::vector<XMUINT2> vertices;
     ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, &vertices) };
     // Create Mesh at x,y coords
     ImmutableTexture texture{ immutableAllocationContext, fPath };
+    // TODO: Stuck 2k heightmaps at
+    // AllocateResources(_resources);
     groupedResourceAllocator.Build();
 
     auto mutableAllocationContext = immutableAllocationContext;
@@ -290,7 +294,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
 
     auto i = 0u;
-    static float zoom = 0.0f;
     char path[1024] = "";
     while (!m_windowClosed)
     {
@@ -361,7 +364,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         {
           ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
           ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-          ImGui::Button("Test", { 200,20 });
+          if (ImGui::Button("Reset Camera", { 200,20 }))
+          {
+            cam = Camera();
+          }
           bool isHovered = ImGui::IsItemHovered();
           bool isFocused = ImGui::IsItemFocused();
           ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
@@ -373,7 +379,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
           ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
 
-          ImGui::SliderFloat("Zoom", &zoom, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
           ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
           ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);

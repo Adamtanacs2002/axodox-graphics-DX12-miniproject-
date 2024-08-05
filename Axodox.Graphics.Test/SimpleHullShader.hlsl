@@ -1,48 +1,56 @@
+// Input control point
 struct VS_CONTROL_POINT_OUTPUT
 {
-	float3 vPosition : WORLDPOS;
+    float4 vPosition : WORLDPOS;
+    float2 vUV : TEXCOORD0;
 };
 
-struct HS_CONTROL_POINT_OUTPUT
+// Output control point
+struct BEZIER_CONTROL_POINT
 {
-	float3 vPosition : WORLDPOS; 
+    float4 vPosition : WORLDPOS;
+    float2 vUV : TEXCOORD0;
 };
 
+// Output patch constant data.
 struct HS_CONSTANT_DATA_OUTPUT
 {
-	float EdgeTessFactor[3]			: SV_TessFactor;
-	float InsideTessFactor			: SV_InsideTessFactor;
+    float Edges[3] : SV_TessFactor;
+    float Inside : SV_InsideTessFactor;
 };
 
-#define NUM_CONTROL_POINTS 3
+#define MAX_POINTS 3
 
-HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
-	InputPatch<VS_CONTROL_POINT_OUTPUT, NUM_CONTROL_POINTS> ip,
-	uint PatchID : SV_PrimitiveID)
+HS_CONSTANT_DATA_OUTPUT ConstantHS(
+    InputPatch<VS_CONTROL_POINT_OUTPUT, MAX_POINTS> ip,
+    uint PatchID : SV_PrimitiveID)
 {
-	HS_CONSTANT_DATA_OUTPUT Output;
+    HS_CONSTANT_DATA_OUTPUT Output;
+    
+    Output.Edges[0] = 4.0f;
+    Output.Edges[1] = 4.0f;
+    Output.Edges[2] = 4.0f;
+    Output.Inside = 4.0f;
+    // Insert code to compute Output here
 
-	Output.EdgeTessFactor[0] = 
-		Output.EdgeTessFactor[1] = 
-		Output.EdgeTessFactor[2] = 
-		Output.InsideTessFactor = 15;
-
-	return Output;
+    return Output;
 }
 
 [domain("tri")]
-[partitioning("fractional_odd")]
+[partitioning("fractional_even")]
 [outputtopology("triangle_cw")]
 [outputcontrolpoints(3)]
-[patchconstantfunc("CalcHSPatchConstants")]
-HS_CONTROL_POINT_OUTPUT main( 
-	InputPatch<VS_CONTROL_POINT_OUTPUT, NUM_CONTROL_POINTS> ip, 
-	uint i : SV_OutputControlPointID,
-	uint PatchID : SV_PrimitiveID )
+[patchconstantfunc("ConstantHS")]
+BEZIER_CONTROL_POINT main(
+    InputPatch<VS_CONTROL_POINT_OUTPUT, MAX_POINTS> ip,
+    uint i : SV_OutputControlPointID,
+    uint PatchID : SV_PrimitiveID)
 {
-	HS_CONTROL_POINT_OUTPUT Output;
+    VS_CONTROL_POINT_OUTPUT Output;
 
-	Output.vPosition = ip[i].vPosition;
+    Output.vPosition = ip[i].vPosition;
+    Output.vUV = ip[i].vPosition;
+    // Insert code to compute Output here.
 
-	return Output;
+    return Output;
 }
