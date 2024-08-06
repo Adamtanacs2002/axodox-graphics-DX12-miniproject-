@@ -189,9 +189,7 @@ namespace Axodox::Graphics::D3D12
         // Id - Height - Texture
         *pVertex++ = {
           j * subdivisionsY + i,
-          XMFLOAT3{NULL,heights.at(j).at(i),NULL},
-          // TODO: TEXCOORD by VERTEXUID
-          XMUSHORTN2{i * xtexstep , j * ytexstep}
+          XMFLOAT3{NULL,heights.at(j).at(i),NULL}
         };
       }
     }

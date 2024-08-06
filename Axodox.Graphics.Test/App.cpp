@@ -175,12 +175,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // TODO: break down map to meshlets and distribute them in compact buffers
     std::filesystem::path fPath =
       //app_folder() / L"47_473_19_062_15_100_100.png";
-      //app_folder() / L"27_985_86_924_10_250_250.png";
+      app_folder() / L"27_985_86_924_10_250_250.png";
       //app_folder() / L"27_985_86_924_10_500_250.png";
       //app_folder() / L"27_985_86_924_10_500_500.png";
       //app_folder() / L"27_985_86_924_10_1000_500.png";
       //app_folder() / L"27_985_86_924_10_1000_1000.png";
-      app_folder() / L"27_985_86_924_10_2000_1000.png";
+      //app_folder() / L"27_985_86_924_10_2000_1000.png";
       //app_folder() / L"27_985_86_924_10_2000_2000.png"; // LIMIT
       //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
     // Creation of meshlets
