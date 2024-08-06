@@ -4,8 +4,8 @@
 
 Camera::Camera()
 {
-  SetView(DirectX::XMVectorSet(3.0f, 7.0f, 7.0f,0.0f),
-    DirectX::XMVectorSet(0.0f, 0.0f, 3.0f,0.0f), DirectX::XMVectorSet(0.f, 0.f, 1.0f,0.0f));
+  SetView(DirectX::XMVectorSet(-2.0f, 2.0f, 2.0f,0.0f),
+    DirectX::XMVectorSet(0.0f, 0.0f, 5.0f,0.0f), DirectX::XMVectorSet(0.f, 0.f, 1.0f,0.0f));
 }
 
 Camera::Camera(DirectX::XMVECTOR _eye, DirectX::XMVECTOR _at, DirectX::XMVECTOR _worldUp)
@@ -43,7 +43,7 @@ void Camera::Update(float _deltaTime)
   {
     // deltaPosition = (m_goForward * m_forward + m_goRight * m_right + m_goUp * m_up) * m_speed * _deltaTime;
     DirectX::XMVECTOR deltaPosition = 
-      (m_forward * m_goForward + m_goRight * m_right + m_up * m_goUp) * m_speed * _deltaTime;
+      (m_forward * m_goForward + m_goRight * m_right + m_up * m_goUp) * m_speed * m_distance * _deltaTime;
     m_eye = m_eye + deltaPosition;
     m_at = m_at + deltaPosition;
     m_viewDirty = true;
@@ -72,21 +72,22 @@ void Camera::UpdateUV(float du, float dv)
   using namespace DirectX;
   m_u += du;
   XMVECTOR tmp_v = XMVECTOR{ m_v + dv };
-  if (tmp_v.m128_f32[0] > XM_PI || tmp_v.m128_f32[0] < -XM_PI)
-    tmp_v = -tmp_v;
-  m_v = XMVector3ClampLength(tmp_v , 0.1f, XM_PI).m128_f32[0];
+  m_v = XMVector3ClampLength(tmp_v , 0.1f, 3.1f).m128_f32[0];
   UpdateParams();
 }
 
 void Camera::UpdateDistance(float dDistance)
 {
-  m_distance += dDistance;
-  UpdateParams();
+  if (m_distance + dDistance > 0.1f)
+  {
+    m_distance += dDistance;
+    UpdateParams();
+  }
 }
 
 void Camera::UpdateParams()
 {
-  DirectX::XMVECTOR lookDirection{ cosf(m_u) * sinf(m_v), cosf(m_v), sinf(m_u) * sinf(m_v) };
+  DirectX::XMVECTOR lookDirection{ cosf(m_u) * sinf(m_v), sinf(m_u) * sinf(m_v), cosf(m_v)};
 
   m_eye = DirectX::XMVectorSubtract(m_at,DirectX::XMVectorScale(lookDirection,m_distance));
 
@@ -179,7 +180,7 @@ void Camera::MouseMove(winrt::Windows::UI::Core::PointerEventArgs const& mouse)
   auto point = mouse.CurrentPoint().Position();
   static CursorPos prev = point;
   if (mouse.CurrentPoint().Properties().IsLeftButtonPressed()) {
-    UpdateUV((point.Y - prev.Y) / 600.0f,(point.X - prev.X) / 600.0f);
+    UpdateUV((prev.X - point.X) / 600.0f,(point.Y - prev.Y) / 600.0f);
   }
   prev = point;
 }

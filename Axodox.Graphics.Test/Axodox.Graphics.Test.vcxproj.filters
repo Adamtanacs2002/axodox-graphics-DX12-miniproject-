@@ -47,6 +47,30 @@
     <Image Include="47_473_19_062_15_100_100.png">
       <Filter>Mapfiles</Filter>
     </Image>
+    <Image Include="27_985_86_924_10_4000_4000.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_250_250.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_500_250.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_500_500.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_1000_500.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_1000_1000.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_2000_1000.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
+    <Image Include="27_985_86_924_10_2000_2000.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -70,6 +94,9 @@
     </Filter>
     <Filter Include="Miniproject\Utils">
       <UniqueIdentifier>{0913ca7a-a9ee-4ce8-b6f5-18557311256b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\Primitives">
+      <UniqueIdentifier>{8c2c560e-6a61-4e61-b413-fb34c7fe7f21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

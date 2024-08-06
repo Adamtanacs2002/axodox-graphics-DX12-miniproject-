@@ -155,8 +155,7 @@ namespace Axodox::Graphics::D3D12
     return result;
   }
 
-  MeshDescription CreateWholeMap(std::vector<std::vector<float>> heights, 
-    std::vector<XMUINT2>* meshletcoords,
+  MeshDescription CreateWholeMap(std::vector<std::vector<float>> heights,
     PrimitiveTopology type = PrimitiveTopology::TriangleList)
   {
     int subdivisionsX = heights.at(0).size();
@@ -168,26 +167,32 @@ namespace Axodox::Graphics::D3D12
     MeshDescription result;
 
     //Vertices
-    float xstep = size.x / (subdivisionsX - 1), xtexstep = 1.f / (subdivisionsX - 1), xstart = -size.x / 2.f;
-    float ystep = size.y / (subdivisionsY - 1), ytexstep = 1.f / (subdivisionsY - 1), ystart = -size.y / 2.f;
+    float xstep = size.x / (subdivisionsX - 1), 
+      xtexstep = 1.f / (subdivisionsX - 1), 
+      xstart = -size.x / 2.f;
+    float ystep = size.y / (subdivisionsY - 1), 
+      ytexstep = 1.f / (subdivisionsY - 1), 
+      ystart = -size.y / 2.f;
     uint32_t vertexCount = subdivisionsX * subdivisionsY;
 
-    VertexPositionNormalTexture* pVertex;
+    VertexIdHeightTexture* pVertex;
+    // VertexPositionNormalTexture* pVertex;
     result.Vertices = BufferData(vertexCount, pVertex);
-
+    
+    int vertexId = 0;
     for (uint32_t j = 0; j < subdivisionsY; j++)
     {
-      std::vector<XMFLOAT3> tmp;
       for (uint32_t i = 0; i < subdivisionsX; i++)
       {
+        vertexId = j * subdivisionsX + i;
+
+        // Id - Height - Texture
         *pVertex++ = {
-          XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(j).at(i) - 6.f},
-          XMBYTEN4{ 0.f, 0.f, 1.f, 1.f },
-          // XMUBYTEN4{ 0.0f, 0.33f, 0.33f, 1.0f}
+          j * subdivisionsY + i,
+          XMFLOAT3{NULL,heights.at(j).at(i),NULL},
+          // TODO: TEXCOORD by VERTEXUID
           XMUSHORTN2{i * xtexstep , j * ytexstep}
         };
-        tmp.push_back(XMFLOAT3{ xstart + i * xstep, ystart + j * ystep, heights.at(j).at(i) - 8.f });
-        meshletcoords->push_back({ j / 8,i / 8 });
       }
     }
 

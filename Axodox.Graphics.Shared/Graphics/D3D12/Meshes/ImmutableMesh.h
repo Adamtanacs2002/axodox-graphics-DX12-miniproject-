@@ -11,6 +11,13 @@ namespace Axodox::Graphics::D3D12
 
     void Draw(CommandAllocator& allocator, uint32_t instanceCount = 1);
 
+    void LineRender(bool b) 
+    {
+      _topology = b ? 
+        D3D12_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINELIST :
+        D3D12_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+    }
+
   private:
     BufferRef _vertexBuffer;
     BufferRef _indexBuffer;

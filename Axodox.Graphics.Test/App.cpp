@@ -107,6 +107,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
   struct Constants
   {
     XMFLOAT4X4 WorldViewProjection;
+    XMUINT2 MeshletSize;
     float disFromEye;
   };
 
@@ -184,9 +185,11 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
     // Creation of meshlets
     auto heights = ImmutableTexture::readTextureData(fPath);
-    std::vector<XMUINT2> vertices;
-    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, &vertices) };
+    // Width, Height
+    XMVECTOR MeshletSize{ heights.at(0).size(), heights.size()};
+    //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
+    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights)};
     ImmutableTexture texture{ immutableAllocationContext, fPath };
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);
@@ -295,6 +298,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     auto i = 0u;
     char path[1024] = "";
+    bool isLineDraw = false;
     while (!m_windowClosed)
     {
       //Process user input
@@ -329,6 +333,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
+        XMStoreUInt2(&constants.MeshletSize,MeshletSize);
         XMStoreFloat(&constants.disFromEye,XMVECTOR{0.33f});
       }
 
@@ -367,6 +372,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           if (ImGui::Button("Reset Camera", { 200,20 }))
           {
             cam = Camera();
+          }
+          if (ImGui::Checkbox("Line view", &isLineDraw)) {
+            mainmesh.LineRender(isLineDraw);
           }
           bool isHovered = ImGui::IsItemHovered();
           bool isFocused = ImGui::IsItemFocused();

@@ -53,4 +53,14 @@ namespace Axodox::Graphics::D3D12
 
     static const VertexDefinition Layout;
   };
+
+  // Miniprojekt
+  struct AXODOX_GRAPHICS_API VertexIdHeightTexture
+  {
+    uint32_t Id;
+    DirectX::XMFLOAT3 Position;
+    DirectX::PackedVector::XMUSHORTN2 Texture;
+
+    static const VertexDefinition Layout;
+  };
 }
