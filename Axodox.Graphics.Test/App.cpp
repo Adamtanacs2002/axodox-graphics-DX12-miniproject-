@@ -13,6 +13,9 @@
 // -----
 
 #include "Camera.h"
+#include "GPUDiagnostics.h"
+
+#define _DEBUG
 
 using namespace std;
 using namespace winrt;
@@ -29,6 +32,7 @@ using namespace Axodox::Graphics::D3D12;
 using namespace Axodox::Infrastructure;
 using namespace Axodox::Storage;
 using namespace DirectX;
+using namespace Miniproject::GPUDiagnostics;
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
@@ -108,7 +112,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
   {
     XMFLOAT4X4 WorldViewProjection;
     XMUINT2 MeshletSize;
+    float MapSize;
+    float MaxHeight;
     float disFromEye;
+    float tessFactorFloat;
   };
 
   #pragma region ImGui constants
@@ -125,8 +132,15 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     CoreDispatcher dispatcher = window.Dispatcher();
     window.Activate();
 
+    // Init DRED
+    // Dred debug = Dred();
+
     #pragma region Setup
     GraphicsDevice device{};
+
+    //DRED Debug
+    // debug.frameReport(device.get());
+
     CommandQueue directQueue{ device };
     CoreSwapChain swapChain{ directQueue, window, SwapChainFlags::IsShaderResource };
 
@@ -136,19 +150,28 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     VertexShader simpleVertexShader{ app_folder() / L"SimpleVertexShader.cso" };
     PixelShader simplePixelShader{ app_folder() / L"SimplePixelShader.cso" };
     HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
+    DomainShader simpleDomainShader{ app_folder() / L"SimpleDomainShader.cso" };
+    GeometryShader simpleGeometryShader{ app_folder() / L"SimpleGeometryShader.cso" };
 
+    // TODO: Implementált-e a Hull/Domain/Geom shader
+    // CPU frustum culling 
     GraphicsPipelineStateDefinition simplePipelineStateDefinition{
       .RootSignature = &simpleRootSignature,
       .VertexShader = &simpleVertexShader,
-      //.HullShader = &simpleHullShader,
+      .DomainShader = &simpleDomainShader,
+      .HullShader = &simpleHullShader,
+      // .GeometryShader = &simpleGeometryShader,
       .PixelShader = &simplePixelShader,
       .RasterizerState = RasterizerFlags::CullClockwise,
       .DepthStencilState = DepthStencilMode::WriteDepth,
-      .InputLayout = VertexPositionNormalTexture::Layout,
-      //.TopologyType = PrimitiveTopologyType::Patch,
+      .InputLayout = VertexPosition::Layout,
+      .TopologyType = PrimitiveTopologyType::Patch,
       .RenderTargetFormats = { Format::B8G8R8A8_UNorm },
       .DepthStencilFormat = Format::D32_Float,
     };
+
+    //Init hull shader
+
     auto simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(simplePipelineStateDefinition).get();
         
     RootSignature<PostProcessingRootDescription> postProcessingRootSignature{ device };
@@ -174,10 +197,11 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // Read height data
     // TODO: break down map to meshlets and distribute them in compact buffers
     std::filesystem::path fPath =
+      //app_folder() / L"27_987_86_925_6_8_8.png";
       //app_folder() / L"47_473_19_062_15_100_100.png";
-      app_folder() / L"27_985_86_924_10_250_250.png";
+      //app_folder() / L"27_985_86_924_10_250_250.png";
       //app_folder() / L"27_985_86_924_10_500_250.png";
-      //app_folder() / L"27_985_86_924_10_500_500.png";
+      app_folder() / L"27_985_86_924_10_500_500.png";
       //app_folder() / L"27_985_86_924_10_1000_500.png";
       //app_folder() / L"27_985_86_924_10_1000_1000.png";
       //app_folder() / L"27_985_86_924_10_2000_1000.png";
@@ -186,10 +210,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // Creation of meshlets
     auto heights = ImmutableTexture::readTextureData(fPath);
     // Width, Height
-    XMVECTOR MeshletSize{ heights.at(0).size(), heights.size()};
+    float MeshletSize[2] = { heights.at(0).size(), heights.size()};
     //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
-    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights)};
+    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, PrimitiveTopology::PatchList3)};
     ImmutableTexture texture{ immutableAllocationContext, fPath };
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);
@@ -267,10 +291,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           case Windows::System::VirtualKey::Escape:
             quit = true;
             break;
-          /*case Windows::System::VirtualKey::Space:
-            firstperson = !firstperson;
-            cam.SetFirstPerson(firstperson);
-            break;*/
 
           default:
             cam.KeyBoardDown(args);
@@ -299,6 +319,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     auto i = 0u;
     char path[1024] = "";
     bool isLineDraw = false;
+    float MapWH = 10.0f;
+    float MaxHeight = 6.0f;
+    float tessFact = 2.0f;
     while (!m_windowClosed)
     {
       //Process user input
@@ -333,8 +356,11 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
-        XMStoreUInt2(&constants.MeshletSize,MeshletSize);
+        XMStoreUInt2(&constants.MeshletSize,XMVECTOR{MeshletSize[0],MeshletSize[1]});
+        XMStoreFloat(&constants.MapSize, XMVECTOR{ MapWH });
+        XMStoreFloat(&constants.MaxHeight, XMVECTOR{ MaxHeight });
         XMStoreFloat(&constants.disFromEye,XMVECTOR{0.33f});
+        XMStoreFloat(&constants.tessFactorFloat, XMVECTOR{tessFact});
       }
 
       //Ensure depth buffer
@@ -360,36 +386,58 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
       // ImGui
       ImGui_ImplDX12_NewFrame();
-      // ImGui_ImplUwp_NewFrame();
+      ImGui_ImplUwp_NewFrame();
       ImGui::NewFrame();
       // -----
       
       // ImGui Draws
       {
         {
-          ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-          ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-          if (ImGui::Button("Reset Camera", { 200,20 }))
+          if (ImGui::Begin("Hello world!"))
           {
-            cam = Camera();
+            ImGui::SetNextWindowSize(ImVec2{ 400,220 });
+            if (ImGui::Button("Reset Camera", { 200,20 }))
+            {
+              cam = Camera();
+            }
+            if (ImGui::Checkbox("Line view", &isLineDraw)) {
+              // mainmesh.LineRender(isLineDraw);
+              RasterizerFlags flag = isLineDraw ? RasterizerFlags::Wireframe : RasterizerFlags::CullClockwise;
+              
+              GraphicsPipelineStateDefinition SimplePipelineDef{
+                .RootSignature = &simpleRootSignature,
+                .VertexShader = &simpleVertexShader,
+                .DomainShader = &simpleDomainShader,
+                .HullShader = &simpleHullShader,
+                // .GeometryShader = &simpleGeometryShader,
+                .PixelShader = &simplePixelShader,
+                .RasterizerState = flag,
+                .DepthStencilState = DepthStencilMode::WriteDepth,
+                .InputLayout = VertexPosition::Layout,
+                .TopologyType = PrimitiveTopologyType::Patch,
+                .RenderTargetFormats = { Format::B8G8R8A8_UNorm },
+                .DepthStencilFormat = Format::D32_Float,
+              };
+
+              simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(SimplePipelineDef).get();
+            }
+            bool isHovered = ImGui::IsItemHovered();
+            bool isFocused = ImGui::IsItemFocused();
+            ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
+            ImVec2 screenPositionAbsolute = ImGui::GetItemRectMin();
+            ImVec2 mousePositionRelative = ImVec2(mousePositionAbsolute.x - screenPositionAbsolute.x, mousePositionAbsolute.y - screenPositionAbsolute.y);
+
+            ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
+            ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
+            ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
+            ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
+
+            ImGui::SliderFloat("Map Size", &MapWH, 1.0f, 100.0f);
+            ImGui::SliderFloat("Max Height", &MaxHeight, 0.0f, 100.0f);
+            ImGui::SliderFloat("Tess. Factor", &tessFact, 0.0f, 10.0f);
+
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
           }
-          if (ImGui::Checkbox("Line view", &isLineDraw)) {
-            mainmesh.LineRender(isLineDraw);
-          }
-          bool isHovered = ImGui::IsItemHovered();
-          bool isFocused = ImGui::IsItemFocused();
-          ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
-          ImVec2 screenPositionAbsolute = ImGui::GetItemRectMin();
-          ImVec2 mousePositionRelative = ImVec2(mousePositionAbsolute.x - screenPositionAbsolute.x, mousePositionAbsolute.y - screenPositionAbsolute.y);
-
-          ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
-          ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
-          ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
-          ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
-
-          ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-          ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
           ImGui::End();
         }
         {
@@ -424,7 +472,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         renderTargetView->Clear(allocator, clear_color);
         resources.DepthBuffer.DepthStencil()->Clear(allocator);
       }
-
 
       //Draw objects
       {

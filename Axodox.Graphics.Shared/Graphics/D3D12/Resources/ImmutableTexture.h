@@ -26,9 +26,8 @@ namespace Axodox::Graphics::D3D12
       {
         if ((cnt % 4) == 0)
         {
-          float heightLimit = 16.0f;
-          float normalized = ((e - min) / (max - min)) * 16.0f;
-          heights.at(cnt / (4 * textureData.Header().Width)).push_back(normalized - heightLimit);
+          float normalized = ((e - min) / (max - min));
+          heights.at(cnt / (4 * textureData.Header().Width)).push_back(normalized);
         }
         cnt++;
       }

@@ -39,6 +39,7 @@ void Camera::SetView(DirectX::XMVECTOR _eye, DirectX::XMVECTOR _at, DirectX::XMV
 void Camera::Update(float _deltaTime)
 {
   using namespace DirectX;
+  m_speed = 4.0f + (m_slow ? 0.0f : 6.0f) + (m_fast ? 10.0f : 0.0f);
   if (m_goForward != 0.0f || m_goRight != 0.0f || m_goUp != 0.0f)
   {
     // deltaPosition = (m_goForward * m_forward + m_goRight * m_right + m_goUp * m_up) * m_speed * _deltaTime;

@@ -46,6 +46,11 @@ namespace
     InputElement("NORMAL", 0, DXGI_FORMAT_R8G8B8A8_SNORM),
     InputElement("TEXCOORD", 0, DXGI_FORMAT_R16G16_UNORM)
   };
+
+  const D3D12_INPUT_ELEMENT_DESC VertexIdHeightTextureDefinition[] = {
+    InputElement("SV_VertexID", 0, DXGI_FORMAT_R32G32B32A32_UINT),
+    InputElement("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT)
+  };
 }
 
 namespace Axodox::Graphics::D3D12
@@ -56,4 +61,5 @@ namespace Axodox::Graphics::D3D12
   const VertexDefinition VertexPositionNormal::Layout = VertexPositionNormalDefinition;
   const VertexDefinition VertexPositionNormalColor::Layout = VertexPositionNormalColorDefinition;
   const VertexDefinition VertexPositionNormalTexture::Layout = VertexPositionNormalTextureDefinition;
+  const VertexDefinition VertexIdHeightTexture::Layout = VertexIdHeightTextureDefinition;
 }

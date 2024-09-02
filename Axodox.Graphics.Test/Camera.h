@@ -5,8 +5,8 @@
 class Camera
 {
 private:
-	bool m_slow;
-	bool m_fast;
+	bool m_slow = false;
+	bool m_fast = false;
 
 	int m_goForward = 0;
 	int m_goRight = 0;

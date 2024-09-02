@@ -176,7 +176,7 @@ namespace Axodox::Graphics::D3D12
     uint32_t vertexCount = subdivisionsX * subdivisionsY;
 
     VertexIdHeightTexture* pVertex;
-    // VertexPositionNormalTexture* pVertex;
+    //VertexPosition* pVertex;
     result.Vertices = BufferData(vertexCount, pVertex);
     
     int vertexId = 0;
@@ -186,6 +186,9 @@ namespace Axodox::Graphics::D3D12
       {
         vertexId = j * subdivisionsX + i;
 
+        /**pVertex++ = {
+          XMFLOAT3{(float)i,(float)j,heights.at(j).at(i)}
+        };*/
         // Id - Height - Texture
         *pVertex++ = {
           j * subdivisionsY + i,

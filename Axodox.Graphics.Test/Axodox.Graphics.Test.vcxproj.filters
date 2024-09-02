@@ -10,8 +10,20 @@
     <FxCompile Include="SimpleVertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="SimpleDomainShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
     <FxCompile Include="SimpleHullShader.hlsl">
       <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleGeometryShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TestVertexShader.hlsl">
+      <Filter>Shaders\Test</Filter>
+    </FxCompile>
+    <FxCompile Include="TestPixelShader.hlsl">
+      <Filter>Shaders\Test</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -24,6 +36,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Miniproject\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="GPUDiagnostics.cpp">
+      <Filter>Miniproject\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="cbt.cpp">
+      <Filter>Miniproject\Utils\CBT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -33,6 +51,15 @@
     <ClInclude Include="HeightmapReader.h" />
     <ClInclude Include="Camera.h">
       <Filter>Miniproject\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUDiagnostics.h">
+      <Filter>Miniproject\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="cbt.h">
+      <Filter>Miniproject\Utils\CBT</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Miniproject\Utils\CBT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +98,9 @@
     <Image Include="27_985_86_924_10_2000_2000.png">
       <Filter>Mapfiles</Filter>
     </Image>
+    <Image Include="27_987_86_925_6_8_8.png">
+      <Filter>Mapfiles</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -97,6 +127,12 @@
     </Filter>
     <Filter Include="Miniproject\Primitives">
       <UniqueIdentifier>{8c2c560e-6a61-4e61-b413-fb34c7fe7f21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Test">
+      <UniqueIdentifier>{b917e11b-ad71-404f-ab05-58a28e33b0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\Utils\CBT">
+      <UniqueIdentifier>{23c8f33d-17ff-49ef-b149-f68758d5dbe3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
