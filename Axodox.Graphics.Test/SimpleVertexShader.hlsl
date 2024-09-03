@@ -21,7 +21,7 @@ output_t main(input_t input)
 {
   output_t output;
   float size = 10.0f;
-  input.Position.xy = float2((input.Id % MeshletSize.x) / size, (input.Id / MeshletSize.x) / size);
+  // input.Position.xy = float2((input.Id % MeshletSize.x) / size, (input.Id / MeshletSize.x) / size);
   output.Screen = mul(float4(input.Position.xyz, 1), Transformation);
   output.Texture = input.Texture;
   return output;

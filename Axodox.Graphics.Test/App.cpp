@@ -104,11 +104,21 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     }
   };
 
+  struct CBTRootDescriptor : public RootSignatureMask
+  {
+    CBTRootDescriptor(const RootSignatureContext& context) :
+      RootSignatureMask(context)
+    {
+      Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
+    }
+  };
+
   struct Constants
   {
     XMFLOAT4X4 WorldViewProjection;
     XMUINT2 MeshletSize;
     float disFromEye;
+    XMUINT2 lineDraw;
   };
 
   #pragma region ImGui constants
@@ -157,8 +167,17 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .RootSignature = &postProcessingRootSignature,
       .ComputeShader = &postProcessingComputeShader
     };
+
+    RootSignature<CBTRootDescriptor> CBTRootSignature{ device };
+    ComputeShader CbtCS{ app_folder() / L"CbtCommon.cso" };
+    ComputePipelineStateDefinition CbtStateDef{
+      .RootSignature = &CBTRootSignature,
+      .ComputeShader = &CbtCS
+    };
+
     auto postProcessingPipelineState = pipelineStateProvider.CreatePipelineStateAsync(postProcessingStateDefinition).get();
-        
+    auto CBTPipelineState = pipelineStateProvider.CreatePipelineStateAsync(CbtStateDef).get();
+
     GroupedResourceAllocator groupedResourceAllocator{ device };
     ResourceUploader resourceUploader{ device };
     CommonDescriptorHeap commonDescriptorHeap{ device, 2 };
@@ -173,24 +192,24 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     // Read height data
     // TODO: break down map to meshlets and distribute them in compact buffers
-    std::filesystem::path fPath =
+    //std::filesystem::path fPath =
       //app_folder() / L"47_473_19_062_15_100_100.png";
       //app_folder() / L"27_985_86_924_10_250_250.png";
       //app_folder() / L"27_985_86_924_10_500_250.png";
       //app_folder() / L"27_985_86_924_10_500_500.png";
       //app_folder() / L"27_985_86_924_10_1000_500.png";
       //app_folder() / L"27_985_86_924_10_1000_1000.png";
-      app_folder() / L"27_985_86_924_10_2000_1000.png";
+      //app_folder() / L"27_985_86_924_10_2000_1000.png";
       //app_folder() / L"27_985_86_924_10_2000_2000.png"; // LIMIT
       //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
     // Creation of meshlets
-    auto heights = ImmutableTexture::readTextureData(fPath);
+    //auto heights = ImmutableTexture::readTextureData(fPath);
     // Width, Height
-    XMVECTOR MeshletSize{ heights.at(0).size(), heights.size()};
+    // XMVECTOR MeshletSize{ heights.at(0).size(), heights.size()};
     //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
-    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights)};
-    ImmutableTexture texture{ immutableAllocationContext, fPath };
+    ImmutableMesh mainmesh{ immutableAllocationContext, CreatePlane(100,{10,10})};
+    ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"image.jpeg" };
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);
     groupedResourceAllocator.Build();
@@ -297,8 +316,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
 
     auto i = 0u;
-    char path[1024] = "";
-    bool isLineDraw = false;
+    bool LineMode = false;
     while (!m_windowClosed)
     {
       //Process user input
@@ -326,14 +344,14 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         // Nézett vektorok
         auto view =//  cam.GetViewMatrix();
           XMMatrixLookAtRH(
-          cam.GetEye(),
-          cam.GetAt(),
-          cam.GetWorldUp());
+            cam.GetEye(),
+            cam.GetAt(),
+            cam.GetWorldUp());
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
-        XMStoreUInt2(&constants.MeshletSize,MeshletSize);
+        //XMStoreUInt2(&constants.MeshletSize,MeshletSize);
         XMStoreFloat(&constants.disFromEye,XMVECTOR{0.33f});
       }
 
@@ -358,12 +376,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         resources.PostProcessingBuffer.Allocate(postProcessingDefinition);
       }
 
+
       // ImGui
       ImGui_ImplDX12_NewFrame();
-      // ImGui_ImplUwp_NewFrame();
+      ImGui_ImplUwp_NewFrame();
       ImGui::NewFrame();
       // -----
-      
+
       // ImGui Draws
       {
         {
@@ -373,8 +392,20 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           {
             cam = Camera();
           }
-          if (ImGui::Checkbox("Line view", &isLineDraw)) {
-            mainmesh.LineRender(isLineDraw);
+          if (ImGui::Checkbox("Line view", &LineMode)) {
+            simplePipelineStateDefinition = {
+              .RootSignature = &simpleRootSignature,
+              .VertexShader = &simpleVertexShader,
+              //.HullShader = &simpleHullShader,
+              .PixelShader = &simplePixelShader,
+              .RasterizerState = LineMode ? RasterizerFlags::Wireframe : RasterizerFlags::CullClockwise,
+              .DepthStencilState = DepthStencilMode::WriteDepth,
+              .InputLayout = VertexPositionNormalTexture::Layout,
+              //.TopologyType = PrimitiveTopologyType::Patch,
+              .RenderTargetFormats = { Format::B8G8R8A8_UNorm },
+              .DepthStencilFormat = Format::D32_Float,
+            };
+            simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(simplePipelineStateDefinition).get();
           }
           bool isHovered = ImGui::IsItemHovered();
           bool isFocused = ImGui::IsItemFocused();
@@ -401,12 +432,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           //ImGui::End();
         }
       }
-      
+
       // ImGui Rendering
       ImGui::Render();
-
-      frames;
-      // FrameContext* frameCtx = WaitForNextFrameResources();
 
       //Begin frame command list
       auto& allocator = resources.Allocator;
@@ -425,6 +453,16 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         resources.DepthBuffer.DepthStencil()->Clear(allocator);
       }
 
+      //CBT
+      {
+        allocator.TransitionResource(*renderTargetView, ResourceStates::RenderTarget, ResourceStates::NonPixelShaderResource);
+
+        auto mask = CBTRootSignature.Set(allocator, RootSignatureUsage::Compute);
+        CBTPipelineState.Apply(allocator);
+
+        auto definition = resources.PostProcessingBuffer.Definition();
+        allocator.Dispatch(definition->Width / 16 + 1, definition->Height / 16 + 1);
+      }
 
       //Draw objects
       {
