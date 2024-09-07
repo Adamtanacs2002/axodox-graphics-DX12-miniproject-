@@ -13,6 +13,7 @@
 // -----
 
 #include "Camera.h"
+#include "CBTStructs.h"
 
 using namespace std;
 using namespace winrt;
@@ -29,6 +30,8 @@ using namespace Axodox::Graphics::D3D12;
 using namespace Axodox::Infrastructure;
 using namespace Axodox::Storage;
 using namespace DirectX;
+
+using namespace CBT::Signatures;
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
@@ -58,6 +61,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     MutableTexture DepthBuffer;
     MutableTexture PostProcessingBuffer;
+    MutableTexture UavTestTex;
+
     descriptor_ptr<ShaderResourceView> ScreenResourceView;
 
     FrameResources(const ResourceAllocationContext& context) :
@@ -66,7 +71,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       Marker(),
       DynamicBuffer(*context.Device),
       DepthBuffer(context),
-      PostProcessingBuffer(context)
+      PostProcessingBuffer(context),
+      UavTestTex(context)
     { }
   };
 
@@ -104,15 +110,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     }
   };
 
-  struct CBTRootDescriptor : public RootSignatureMask
-  {
-    CBTRootDescriptor(const RootSignatureContext& context) :
-      RootSignatureMask(context)
-    {
-      Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
-    }
-  };
-
   struct Constants
   {
     XMFLOAT4X4 WorldViewProjection;
@@ -135,7 +132,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     CoreDispatcher dispatcher = window.Dispatcher();
     window.Activate();
 
-    #pragma region Setup
+#pragma region Setup
     GraphicsDevice device{};
     CommandQueue directQueue{ device };
     CoreSwapChain swapChain{ directQueue, window, SwapChainFlags::IsShaderResource };
@@ -145,7 +142,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     RootSignature<SimpleRootDescription> simpleRootSignature{ device };
     VertexShader simpleVertexShader{ app_folder() / L"SimpleVertexShader.cso" };
     PixelShader simplePixelShader{ app_folder() / L"SimplePixelShader.cso" };
-    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
+    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso" };
 
     GraphicsPipelineStateDefinition simplePipelineStateDefinition{
       .RootSignature = &simpleRootSignature,
@@ -160,7 +157,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .DepthStencilFormat = Format::D32_Float,
     };
     auto simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(simplePipelineStateDefinition).get();
-        
+
     RootSignature<PostProcessingRootDescription> postProcessingRootSignature{ device };
     ComputeShader postProcessingComputeShader{ app_folder() / L"PostProcessingComputeShader.cso" };
     ComputePipelineStateDefinition postProcessingStateDefinition{
@@ -168,6 +165,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .ComputeShader = &postProcessingComputeShader
     };
 
+    auto postProcessingPipelineState = pipelineStateProvider.CreatePipelineStateAsync(postProcessingStateDefinition).get();
+
+#pragma region CBT CShaders
     RootSignature<CBTRootDescriptor> CBTRootSignature{ device };
     ComputeShader CbtCS{ app_folder() / L"CbtCommon.cso" };
     ComputePipelineStateDefinition CbtStateDef{
@@ -175,8 +175,16 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .ComputeShader = &CbtCS
     };
 
-    auto postProcessingPipelineState = pipelineStateProvider.CreatePipelineStateAsync(postProcessingStateDefinition).get();
+    //StreamPipelineStateDefinition StreamTest{};
+    
+    //StreamTest.AddRootSignature(CBTRootSignature);
+    //StreamTest.AddComputeShader(CbtCS);
+    // StreamTest.AddComputeShader(postProcessingComputeShader);
+
     auto CBTPipelineState = pipelineStateProvider.CreatePipelineStateAsync(CbtStateDef).get();
+    //auto StreamPipeplineState = pipelineStateProvider.CreatePipelineStateAsync(StreamTest).get();
+
+    #pragma endregion
 
     GroupedResourceAllocator groupedResourceAllocator{ device };
     ResourceUploader resourceUploader{ device };
@@ -376,6 +384,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         resources.PostProcessingBuffer.Allocate(postProcessingDefinition);
       }
 
+      // Ensure CBT Buffers
+      if (!resources.UavTestTex || TextureDefinition::AreSizeCompatible(*resources.PostProcessingBuffer.Definition(), renderTargetView->Definition()))
+      {
+        auto UavTestTexDefinition = renderTargetView->Definition().MakeSizeCompatible(Format::B8G8R8A8_UNorm, TextureFlags::UnorderedAccess);
+        resources.UavTestTex.Allocate(UavTestTexDefinition);
+      }
 
       // ImGui
       ImGui_ImplDX12_NewFrame();
@@ -460,8 +474,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         auto mask = CBTRootSignature.Set(allocator, RootSignatureUsage::Compute);
         CBTPipelineState.Apply(allocator);
 
-        auto definition = resources.PostProcessingBuffer.Definition();
-        allocator.Dispatch(definition->Width / 16 + 1, definition->Height / 16 + 1);
+        allocator.Dispatch(16,16);
       }
 
       //Draw objects
