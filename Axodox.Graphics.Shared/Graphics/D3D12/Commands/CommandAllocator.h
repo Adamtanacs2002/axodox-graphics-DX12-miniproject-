@@ -39,6 +39,8 @@ namespace Axodox::Graphics::D3D12
     void TransitionResource(ResourceArgument resource, ResourceStates from, ResourceStates to);
     void TransitionResources(std::initializer_list<ResourceTransition> resources);
     
+    void UavBarrier(ResourceArgument resource);
+
     void CopyResource(ResourceArgument source, ResourceArgument destination);
 
     void SetRenderTargets(std::initializer_list<const RenderTargetView*> renderTargets, const DepthStencilView* depthStencilView = nullptr);

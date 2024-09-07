@@ -67,6 +67,15 @@ namespace Axodox::Graphics::D3D12
     _recorder->_signalers.push_back(marker);
   }
 
+  void CommandAllocator::UavBarrier(ResourceArgument resource)
+  {
+    D3D12_RESOURCE_BARRIER barrier = {};
+    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+    barrier.UAV.pResource = resource.Pointer;
+    (*this)->ResourceBarrier(1, &barrier);
+  }
+
   void CommandAllocator::TransitionResource(ResourceArgument resource, ResourceStates from, ResourceStates to)
   {
     D3D12_RESOURCE_BARRIER barrier{
