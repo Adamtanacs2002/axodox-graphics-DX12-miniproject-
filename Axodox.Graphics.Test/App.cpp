@@ -14,6 +14,12 @@
 
 #include "Camera.h"
 
+#define CBT_IMPLEMENTATION
+#include "cbtlib/cbt.h"
+
+#define LEB_IMPLEMENTATION
+#include "leblib/leb.h"
+
 using namespace std;
 using namespace winrt;
 
@@ -29,6 +35,382 @@ using namespace Axodox::Graphics::D3D12;
 using namespace Axodox::Infrastructure;
 using namespace Axodox::Storage;
 using namespace DirectX;
+
+#pragma region CBT common
+
+enum {
+  BUFFER_CBT,
+  BUFFER_CBT_DISPATCHER,
+  BUFFER_LEB_DISPATCHER,
+  BUFFER_TRIANGLE_COUNT,
+
+  BUFFER_COUNT
+};
+
+enum {
+  CLOCK_DISPATCHER,
+  CLOCK_SUBDIVISION_SPLIT,
+  CLOCK_SUBDIVISION_MERGE,
+  CLOCK_SUM_REDUCTION,
+
+  CLOCK_COUNT
+};
+
+MeshDescription basePlane;
+
+ComputeShader* triprog = nullptr;
+ComputeShader* target = nullptr;
+ComputeShader* sumreductionPrepass = nullptr;
+ComputeShader* sumreduction = nullptr;
+ComputeShader* cbtDispatch = nullptr;
+ComputeShader* LEBDispatch = nullptr;
+ComputeShader* subdivision = nullptr;
+
+struct LebRootSignature : public RootSignatureMask
+{
+  LebRootSignature(const RootSignatureContext& context) :
+    RootSignatureMask(context)
+  {
+    Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
+  }
+};
+
+#pragma endregion
+
+#pragma region CBT Methods
+
+bool LoadQueries()
+{
+  return true;
+}
+
+BufferRef CreateVertexBuffer(const ResourceAllocationContext& context, MeshDescription& description)
+{
+  return BufferRef(context.ResourceAllocator->CreateBuffer(BufferDefinition(description.Vertices)));
+}
+
+BufferRef CreateIndexBuffer(const ResourceAllocationContext& context, MeshDescription& description)
+{
+  return BufferRef(context.ResourceAllocator->CreateBuffer(BufferDefinition(description.Indices)));
+}
+
+bool LoadBuffers()
+{
+  return true;
+}
+
+bool LoadVertexIndexArray()
+{
+  VertexPositionNormalTexture* pVertex;
+  basePlane.Vertices = BufferData(4, pVertex);
+
+  auto size = 100.f;
+
+  *pVertex++ = { {0.f, 0.f, 0.f}, { 0.f, 0.f, 1.f, 1.f }, {0.f,0.f} };
+  *pVertex++ = { {size , 0.f, 0.f}, { 0.f, 0.f, 1.f, 1.f }, { 0.f,1.f } };
+  *pVertex++ = { {0.f, size , 0.f}, { 0.f, 0.f, 1.f, 1.f }, { 1.f,0.f } };
+  *pVertex++ = { {size , size , 0.f}, { 0.f, 0.f, 1.f, 1.f }, { 1.f,1.f } };
+
+  uint32_t* pIndex;
+  basePlane.Indices = BufferData(6, pIndex);
+
+  *pIndex++ = 0; *pIndex++ = 1; *pIndex++ = 2;
+  *pIndex++ = 2; *pIndex++ = 1; *pIndex++ = 3;
+
+  basePlane.Topology = PrimitiveTopology::TriangleList;
+
+  return true;
+}
+
+bool LoadPrograms()
+{
+
+  triprog = new ComputeShader(app_folder() / L"TriProg.cso");
+  target = new ComputeShader(app_folder() / L"Target.cso");
+  sumreductionPrepass = new ComputeShader(app_folder() / L"SumReductionPrepass.cso");
+  sumreduction = new ComputeShader(app_folder() / L"SumReduction.cso");
+  cbtDispatch = new ComputeShader(app_folder() / L"CBTDispatch.cso");
+  LEBDispatch = new ComputeShader(app_folder() / L"LEBDispatch.cso");
+  subdivision = new ComputeShader(app_folder() / L"Subdivision.cso");
+
+  return true;
+}
+
+bool Load()
+{
+  bool success = true;
+
+  success = success && LoadPrograms();
+  success = success && LoadVertexIndexArray();
+  success = success && LoadBuffers();
+  success = success && LoadQueries();
+
+  return success;
+}
+
+#define CBT_INIT_MAX_DEPTH 1
+#define CBT_MAX_DEPTH 20
+enum { MODE_TRIANGLE, MODE_SQUARE };
+enum { BACKEND_CPU, BACKEND_GPU };
+struct LongestEdgeBisection {
+  cbt_Tree* cbt;
+  struct {
+    int mode;
+    int backend;
+    struct {
+      float x, y;
+    } target;
+  } params;
+  int32_t triangleCount;
+} g_leb = {
+    cbt_CreateAtDepth(CBT_MAX_DEPTH, CBT_INIT_MAX_DEPTH),
+    {
+        MODE_TRIANGLE,
+        BACKEND_CPU,
+        {0.49951f, 0.41204f}
+    },
+    0
+};
+
+float Wedge(const float* a, const float* b)
+{
+  return a[0] * b[1] - a[1] * b[0];
+}
+
+
+bool IsInside(const float faceVertices[][3])
+{
+  float target[2] = { g_leb.params.target.x, g_leb.params.target.y };
+  float v1[2] = { faceVertices[0][0], faceVertices[1][0] };
+  float v2[2] = { faceVertices[0][1], faceVertices[1][1] };
+  float v3[2] = { faceVertices[0][2], faceVertices[1][2] };
+  float x1[2] = { v2[0] - v1[0], v2[1] - v1[1] };
+  float x2[2] = { v3[0] - v2[0], v3[1] - v2[1] };
+  float x3[2] = { v1[0] - v3[0], v1[1] - v3[1] };
+  float y1[2] = { target[0] - v1[0], target[1] - v1[1] };
+  float y2[2] = { target[0] - v2[0], target[1] - v2[1] };
+  float y3[2] = { target[0] - v3[0], target[1] - v3[1] };
+  float w1 = Wedge(x1, y1);
+  float w2 = Wedge(x2, y2);
+  float w3 = Wedge(x3, y3);
+
+  return (w1 >= 0.0f) && (w2 >= 0.0f) && (w3 >= 0.0f);
+}
+
+bool LoadCbtBuffer(CommandAllocator& resources)
+{
+  /*bool success = true;
+
+  D3D12_CPU_DESCRIPTOR_HANDLE cbtBuffer;
+
+  cbtBuffer.ByteWidth = 
+  GLuint* buffer = &g_gl.buffers[BUFFER_CBT];
+
+  if (glIsBuffer(*buffer))
+    glDeleteBuffers(1, buffer);
+
+  glGenBuffers(1, buffer);
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, *buffer);
+  glBufferStorage(GL_SHADER_STORAGE_BUFFER,
+    cbt_HeapByteSize(g_leb.cbt),
+    cbt_GetHeap(g_leb.cbt),
+    0);
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+  glBindBufferBase(GL_SHADER_STORAGE_BUFFER, BUFFER_CBT, *buffer);
+
+  return glGetError() == GL_NO_ERROR;*/
+  return true;
+}
+
+void UpdateSubdivisionCpuCallback_Split(
+  cbt_Tree* cbt,
+  const cbt_Node node,
+  const void* userData
+) {
+  (void)userData;
+  float faceVertices[][3] = {
+      {0.0f, 0.0f, 1.0f},
+      {1.0f, 0.0f, 0.0f}
+  };
+
+  if (g_leb.params.mode == MODE_TRIANGLE) {
+    leb_DecodeNodeAttributeArray(node, 2, faceVertices);
+
+    if (IsInside(faceVertices)) {
+      leb_SplitNode(cbt, node);
+    }
+  }
+  else {
+    leb_DecodeNodeAttributeArray_Square(node, 2, faceVertices);
+
+    if (IsInside(faceVertices)) {
+      leb_SplitNode_Square(cbt, node);
+    }
+  }
+}
+
+void UpdateSubdivisionCpuCallback_Merge(
+  cbt_Tree* cbt,
+  const cbt_Node node,
+  const void* userData
+) {
+  (void)userData;
+  float baseFaceVertices[][3] = {
+      {0.0f, 0.0f, 1.0f},
+      {1.0f, 0.0f, 0.0f}
+  };
+  float topFaceVertices[][3] = {
+      {0.0f, 0.0f, 1.0f},
+      {1.0f, 0.0f, 0.0f}
+  };
+
+  if (g_leb.params.mode == MODE_TRIANGLE) {
+    leb_DiamondParent diamondParent = leb_DecodeDiamondParent(node);
+
+    leb_DecodeNodeAttributeArray(diamondParent.base, 2, baseFaceVertices);
+    leb_DecodeNodeAttributeArray(diamondParent.top, 2, topFaceVertices);
+
+    if (!IsInside(baseFaceVertices) && !IsInside(topFaceVertices)) {
+      leb_MergeNode(cbt, node, diamondParent);
+    }
+  }
+  else {
+    leb_DiamondParent diamondParent = leb_DecodeDiamondParent_Square(node);
+
+    leb_DecodeNodeAttributeArray_Square(diamondParent.base, 2, baseFaceVertices);
+    leb_DecodeNodeAttributeArray_Square(diamondParent.top, 2, topFaceVertices);
+
+    if (!IsInside(baseFaceVertices) && !IsInside(topFaceVertices)) {
+      leb_MergeNode_Square(cbt, node, diamondParent);
+    }
+  }
+}
+
+void CPUUpdateSubdivision()
+{
+  static int pingPong = 0;
+
+  if (g_leb.params.backend == BACKEND_CPU) {
+
+    // djgc_start(g_gl.clocks[CLOCK_SUBDIVISION_SPLIT + pingPong]);
+    if (pingPong == 0) {
+      cbt_Update(g_leb.cbt, &UpdateSubdivisionCpuCallback_Split, NULL);
+    }
+    else {
+      cbt_Update(g_leb.cbt, &UpdateSubdivisionCpuCallback_Merge, NULL);
+    }
+    // djgc_stop(g_gl.clocks[CLOCK_SUBDIVISION_SPLIT + pingPong]);
+
+    //LoadCbtBuffer();
+  }
+
+  pingPong = 1 - pingPong;
+}
+#undef CBT_MAX_DEPTH
+
+void DrawLeb(CommandAllocator& allocator, RootSignature<LebRootSignature> rootsignature)
+{
+  // prepare indirect draw command
+
+  //glUseProgram(g_gl.programs[PROGRAM_LEB_DISPATCH]);
+  //glDispatchCompute(1, 1, 1);
+  //glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+  //// draw
+  //glEnable(GL_CULL_FACE);
+  //glBindBuffer(GL_DRAW_INDIRECT_BUFFER, g_gl.buffers[BUFFER_LEB_DISPATCHER]);
+  //glUseProgram(g_gl.programs[PROGRAM_TRIANGLES]);
+  //glUniform2f(glGetUniformLocation(g_gl.programs[PROGRAM_TRIANGLES],
+  //  "u_ScreenResolution"),
+  //  g_window.width, g_window.height);
+  //glBindVertexArray(g_gl.vertexarrays[VERTEXARRAY_EMPTY]);
+  //glDrawArraysIndirect(GL_TRIANGLES, 0);
+  //glBindVertexArray(0);
+  //glUseProgram(0);
+  //glDisable(GL_CULL_FACE);
+
+  //RetrieveNodeCount();
+}
+
+#pragma endregion
+
+#pragma region Loop Sections
+
+struct FrameResources
+{
+  CommandAllocator Allocator;
+  CommandFence Fence;
+  CommandFenceMarker Marker;
+  DynamicBufferManager DynamicBuffer;
+
+  MutableTexture DepthBuffer;
+  MutableTexture PostProcessingBuffer;
+  descriptor_ptr<ShaderResourceView> ScreenResourceView;
+
+  FrameResources(const ResourceAllocationContext& context) :
+    Allocator(*context.Device),
+    Fence(*context.Device),
+    Marker(),
+    DynamicBuffer(*context.Device),
+    DepthBuffer(context),
+    PostProcessingBuffer(context)
+  { }
+};
+
+#pragma region Constants
+
+struct Constants
+{
+  XMFLOAT4X4 WorldViewProjection;
+  XMUINT2 MeshletSize;
+  float disFromEye;
+  XMUINT2 lineDraw;
+};
+
+#pragma endregion
+
+#pragma region RootSignatures
+
+struct SimpleRootDescription : public RootSignatureMask
+{
+  RootDescriptor<RootDescriptorType::ConstantBuffer> ConstantBuffer;
+  RootDescriptorTable<1> Texture;
+  StaticSampler Sampler;
+
+  SimpleRootDescription(const RootSignatureContext& context) :
+    RootSignatureMask(context),
+    ConstantBuffer(this, { 0 }, ShaderVisibility::Vertex),
+    Texture(this, { DescriptorRangeType::ShaderResource }, ShaderVisibility::Pixel),
+    Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp, ShaderVisibility::Pixel)
+  {
+    Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
+  }
+};
+
+#pragma endregion
+
+
+void DrawImmutableMesh(
+  CommandAllocator& allocator,
+  RootSignature<SimpleRootDescription> rootsignature,
+  FrameResources& resources,
+  Constants constants,
+  ImmutableTexture* texture,
+  ImmutableMesh* mainmesh,
+  const RenderTargetView* renderTargetView,
+  PipelineState& simplePipelineState)
+{
+  auto mask = rootsignature.Set(allocator, RootSignatureUsage::Graphics);
+  mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
+  mask.Texture = *texture;
+
+  allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
+  simplePipelineState.Apply(allocator);
+  mainmesh->Draw(allocator);
+}
+
+#pragma endregion
+
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
@@ -48,43 +430,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
   void Uninitialize()
   {
   }
-
-  struct FrameResources
-  {
-    CommandAllocator Allocator;
-    CommandFence Fence;
-    CommandFenceMarker Marker;
-    DynamicBufferManager DynamicBuffer;
-
-    MutableTexture DepthBuffer;
-    MutableTexture PostProcessingBuffer;
-    descriptor_ptr<ShaderResourceView> ScreenResourceView;
-
-    FrameResources(const ResourceAllocationContext& context) :
-      Allocator(*context.Device),
-      Fence(*context.Device),
-      Marker(),
-      DynamicBuffer(*context.Device),
-      DepthBuffer(context),
-      PostProcessingBuffer(context)
-    { }
-  };
-
-  struct SimpleRootDescription : public RootSignatureMask
-  {
-    RootDescriptor<RootDescriptorType::ConstantBuffer> ConstantBuffer;
-    RootDescriptorTable<1> Texture;
-    StaticSampler Sampler;
-
-    SimpleRootDescription(const RootSignatureContext& context) :
-      RootSignatureMask(context),
-      ConstantBuffer(this, { 0 }, ShaderVisibility::Vertex),
-      Texture(this, { DescriptorRangeType::ShaderResource }, ShaderVisibility::Pixel),
-      Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp, ShaderVisibility::Pixel)
-    {
-      Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
-    }
-  };
 
   struct PostProcessingRootDescription : public RootSignatureMask
   {
@@ -113,14 +458,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     }
   };
 
-  struct Constants
-  {
-    XMFLOAT4X4 WorldViewProjection;
-    XMUINT2 MeshletSize;
-    float disFromEye;
-    XMUINT2 lineDraw;
-  };
-
   #pragma region ImGui constants
   static int const NUM_BACK_BUFFERS = 3;
   static const int NUM_FRAMES_IN_FLIGHT = 3;
@@ -145,7 +482,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     RootSignature<SimpleRootDescription> simpleRootSignature{ device };
     VertexShader simpleVertexShader{ app_folder() / L"SimpleVertexShader.cso" };
     PixelShader simplePixelShader{ app_folder() / L"SimplePixelShader.cso" };
-    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
+    // HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
 
     GraphicsPipelineStateDefinition simplePipelineStateDefinition{
       .RootSignature = &simpleRootSignature,
@@ -208,8 +545,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // XMVECTOR MeshletSize{ heights.at(0).size(), heights.size()};
     //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
-    ImmutableMesh mainmesh{ immutableAllocationContext, CreatePlane(100,{10,10})};
+
+    LoadVertexIndexArray();
+
+    ImmutableMesh mainmesh{ immutableAllocationContext, basePlane };
     ImmutableTexture texture{ immutableAllocationContext, app_folder() / L"image.jpeg" };
+    
+    
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);
     groupedResourceAllocator.Build();
@@ -314,6 +656,11 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         });
     }
 
+#pragma region CBT INIT
+
+
+
+#pragma endregion
 
     auto i = 0u;
     bool LineMode = false;
@@ -349,6 +696,19 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             cam.GetWorldUp());
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
+
+        XMMATRIX model = XMMatrixTranslation(-100.f / 2.0f, 20.0f, +100.f / 2.0f);
+
+        /*for (int i = 0; i < 3; ++i)
+          for (int j = 0; j < 2; ++j) 
+          {
+            cam.frustum[i * 2 + j].x = mvp[0][3] + (j == 0 ? mvp[0][i] : -mvp[0][i]);
+            cam.frustum[i * 2 + j].y = mvp[1][3] + (j == 0 ? mvp[1][i] : -mvp[1][i]);
+            cam.frustum[i * 2 + j].z = mvp[2][3] + (j == 0 ? mvp[2][i] : -mvp[2][i]);
+            cam.frustum[i * 2 + j].w = mvp[3][3] + (j == 0 ? mvp[3][i] : -mvp[3][i]);
+            XMFLOAT4 tmp = cam.frustum[i * 2 + j];
+            cam.frustum[i * 2 + j] *= XMVector3Normalize(XMVECTOR(tmp.x, tmp.y, tmp.z));
+          }*/
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
         //XMStoreUInt2(&constants.MeshletSize,MeshletSize);
@@ -423,14 +783,6 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
           ImGui::End();
         }
-        {
-          // File load in
-          //if (ImGui::Begin("Open file"))
-          //{
-          //  ImGui::InputText("Path",path, sizeof(path) / sizeof(char));
-          //}
-          //ImGui::End();
-        }
       }
 
       // ImGui Rendering
@@ -460,22 +812,19 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         auto mask = CBTRootSignature.Set(allocator, RootSignatureUsage::Compute);
         CBTPipelineState.Apply(allocator);
 
-        auto definition = resources.PostProcessingBuffer.Definition();
-        allocator.Dispatch(definition->Width / 16 + 1, definition->Height / 16 + 1);
+        // auto definition = resources.PostProcessingBuffer.Definition();
+        allocator.Dispatch(1, 1);
       }
 
       //Draw objects
       {
-        auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
-        mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(constants);
-        mask.Texture = texture;
-
-        allocator.SetRenderTargets({ renderTargetView }, resources.DepthBuffer.DepthStencil());
-        simplePipelineState.Apply(allocator);
-        mainmesh.Draw(allocator);
-
-        ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), allocator.operator->());
+        DrawImmutableMesh(
+          allocator, simpleRootSignature,
+          resources, constants, &texture,
+          &mainmesh, renderTargetView, simplePipelineState);
       }
+
+      ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), allocator.operator->());
 
       //Post processing
       {

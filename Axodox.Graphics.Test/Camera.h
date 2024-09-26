@@ -56,6 +56,8 @@ public:
 	inline DirectX::XMMATRIX GetViewProj() const { return m_matViewProj; }
 #pragma endregion
 
+	DirectX::XMFLOAT4 frustum[6];
+
 #pragma region Constructors
 	Camera();
 	Camera(DirectX::XMVECTOR _eye, DirectX::XMVECTOR _at, DirectX::XMVECTOR _worldUp);

@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Axodox::Graphics::D3D12
 {
-  ImmutableMesh::ImmutableMesh(const ResourceAllocationContext& context, MeshDescription&& description) :
+  ImmutableMesh::ImmutableMesh(const ResourceAllocationContext& context, MeshDescription& description) :
     _vertexBuffer(context.ResourceAllocator->CreateBuffer(BufferDefinition(description.Vertices))),
     _indexBuffer(context.ResourceAllocator->CreateBuffer(BufferDefinition(description.Indices))),
     _topology(D3D12_PRIMITIVE_TOPOLOGY(description.Topology)),
