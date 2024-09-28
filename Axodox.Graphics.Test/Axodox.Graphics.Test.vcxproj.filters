@@ -42,6 +42,30 @@
     <ClCompile Include="cbt.cpp">
       <Filter>Miniproject\Utils\CBT</Filter>
     </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_impl_dx12.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_impl_uwp.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGUI\pch.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -60,6 +84,39 @@
     </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Miniproject\Utils\CBT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imgui_impl_dx12.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imgui_impl_uwp.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\Includes\includes.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\pch.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGUI\targetver.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +190,9 @@
     </Filter>
     <Filter Include="Miniproject\Utils\CBT">
       <UniqueIdentifier>{23c8f33d-17ff-49ef-b149-f68758d5dbe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{a3a05483-7579-44cb-b943-26271d4fe946}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

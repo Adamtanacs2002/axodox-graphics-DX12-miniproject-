@@ -1,2 +1,0 @@
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/zlib_x86-windows/debug/lib/zlibd.lib
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/zlib_x86-windows/debug/bin/zlibd1.dll

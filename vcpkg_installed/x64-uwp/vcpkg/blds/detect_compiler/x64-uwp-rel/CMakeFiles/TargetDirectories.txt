@@ -1,2 +1,0 @@
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/detect_compiler/x64-uwp-rel/CMakeFiles/edit_cache.dir
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/x64-uwp/vcpkg/blds/detect_compiler/x64-uwp-rel/CMakeFiles/rebuild_cache.dir

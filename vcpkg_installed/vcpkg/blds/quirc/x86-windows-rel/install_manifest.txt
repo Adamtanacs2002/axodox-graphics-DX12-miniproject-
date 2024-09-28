@@ -1,4 +1,0 @@
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/quirc_x86-windows/lib/quirc.lib
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/quirc_x86-windows/include/quirc.h
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/quirc_x86-windows/share/quirc/quirc-config.cmake
-E:/Egyetem/Nyári miniprojekt/axodox-graphics-DX12-miniproject-/vcpkg_installed/vcpkg/pkgs/quirc_x86-windows/share/quirc/quirc-config-release.cmake

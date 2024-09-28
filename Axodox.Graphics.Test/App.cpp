@@ -1,11 +1,9 @@
-#include "pch.h"
+#include <pch.h>
 #include <Graphics/D3D12/Meshes/Primitives.cpp>
 // #include <HeightmapReader.h>
 
 // ImGUI
-#include "imgui.h"
-#include "imgui_impl_uwp.h"
-#include <imgui_impl_dx12.h>
+#include "../ImGUI/Includes/includes.h"
 
 #include "Windows.h"
 
