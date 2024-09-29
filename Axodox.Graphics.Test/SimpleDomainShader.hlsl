@@ -29,6 +29,10 @@ DS_OUTPUT main(
 	Output.vPosition = float4(
 		patch[0].vPosition*domain.x+patch[1].vPosition*domain.y+patch[2].vPosition*domain.z);
 	
+ // Output.vPosition.y = _texture.SampleLevel(_sampler,
+	//patch[0].vPosition.xz * domain.x + patch[1].vPosition.xz * domain.y + patch[2].vPosition.xz * domain.z,
+	//0);
+	
   Output.tex = patch[0].Texture;
 
 	return Output;

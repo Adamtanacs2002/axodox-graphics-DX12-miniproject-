@@ -81,8 +81,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     SimpleRootDescription(const RootSignatureContext& context) :
       RootSignatureMask(context),
       ConstantBuffer(this, { 0 }, ShaderVisibility::Vertex),
-      Texture(this, { DescriptorRangeType::ShaderResource }, ShaderVisibility::Pixel),
-      Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp, ShaderVisibility::Pixel)
+      Texture(this, { DescriptorRangeType::ShaderResource }, ShaderVisibility::All),
+      Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp, ShaderVisibility::All)
     {
       Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
     }
@@ -162,7 +162,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .PixelShader = &simplePixelShader,
       .RasterizerState = RasterizerFlags::CullClockwise,
       .DepthStencilState = DepthStencilMode::WriteDepth,
-      .InputLayout = VertexPosition::Layout,
+      .InputLayout = VertexId::Layout,
       .TopologyType = PrimitiveTopologyType::Patch,
       .RenderTargetFormats = { Format::B8G8R8A8_UNorm },
       .DepthStencilFormat = Format::D32_Float,
@@ -211,7 +211,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     float MeshletSize[2] = { heights.at(0).size(), heights.size()};
     //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
-    ImmutableMesh mainmesh{ immutableAllocationContext, CreateWholeMap(heights, PrimitiveTopology::PatchList3)};
+    ImmutableMesh mainmesh{
+      immutableAllocationContext,
+      //CreatePlane(1,{20,20},PrimitiveTopology::PatchList3)};
+      CreateWholeMap(heights, PrimitiveTopology::PatchList3)};
     ImmutableTexture texture{ immutableAllocationContext, fPath };
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);

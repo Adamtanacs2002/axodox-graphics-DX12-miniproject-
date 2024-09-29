@@ -102,7 +102,7 @@ namespace Axodox::Graphics::D3D12
     return result;
   }
 
-  MeshDescription CreatePlane(float size, DirectX::XMUINT2 subdivisions)
+  MeshDescription CreatePlane(float size, DirectX::XMUINT2 subdivisions, PrimitiveTopology topology = PrimitiveTopology::TriangleList)
   {
     if (subdivisions.x < 2 || subdivisions.y < 2) throw logic_error("Plane size must be at least 2!");
     if (subdivisions.x * subdivisions.y > (uint64_t)numeric_limits<uint32_t>::max() + 1) throw logic_error("Run out of indices!");
@@ -150,7 +150,7 @@ namespace Axodox::Graphics::D3D12
     }
 
     //Topology
-    result.Topology = PrimitiveTopology::TriangleList;
+    result.Topology = topology;
 
     return result;
   }
@@ -175,7 +175,7 @@ namespace Axodox::Graphics::D3D12
       ystart = -size.y / 2.f;
     uint32_t vertexCount = subdivisionsX * subdivisionsY;
 
-    VertexIdHeightTexture* pVertex;
+    VertexId* pVertex;
     //VertexPosition* pVertex;
     result.Vertices = BufferData(vertexCount, pVertex);
     
@@ -190,10 +190,10 @@ namespace Axodox::Graphics::D3D12
           XMFLOAT3{(float)i,(float)j,heights.at(j).at(i)}
         };*/
         // Id - Height - Texture
-        *pVertex++ = {
+        /**pVertex++ = {
           j * subdivisionsY + i,
           XMFLOAT3{NULL,heights.at(j).at(i),NULL}
-        };
+        };*/
       }
     }
 
