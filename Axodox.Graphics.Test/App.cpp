@@ -80,7 +80,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     SimpleRootDescription(const RootSignatureContext& context) :
       RootSignatureMask(context),
-      ConstantBuffer(this, { 0 }, ShaderVisibility::Vertex),
+      ConstantBuffer(this, { 0 }, ShaderVisibility::All),
       Texture(this, { DescriptorRangeType::ShaderResource }, ShaderVisibility::All),
       Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp, ShaderVisibility::All)
     {
@@ -320,7 +320,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     auto i = 0u;
     char path[1024] = "";
     bool isLineDraw = false;
-    float MapWH = 10.0f;
+    float MapWH = 100.0f;
     float MaxHeight = 6.0f;
     float tessFact = 2.0f;
     while (!m_windowClosed)

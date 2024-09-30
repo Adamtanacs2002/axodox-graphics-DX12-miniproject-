@@ -17,7 +17,7 @@ struct input_t
 
 struct output_t
 {
-  float4 Screen : WORLDPOS;
+  float3 Coords : WORLDPOS;
   //float4 Screen : SV_Position;
   float2 Texture : TEXCOORD;
 };
@@ -33,7 +33,8 @@ output_t main(input_t input)
   float2(
     (input.Id % MeshletSize.x) * (MapSize / 100.0f),
     (input.Id / MeshletSize.x) * (MapSize / 100.0f));
-  output.Screen = mul(float4(PositionData.xy, PositionData.z * 6 * _texture.SampleLevel(_sampler, calcTex, 0).x, 1), Transformation);
+  output.Coords = float3(PositionData.xy, 0);
+  // mul(float4(PositionData.xy, PositionData.z * 6 * _texture.SampleLevel(_sampler, calcTex, 0).x, 1), Transformation);
   output.Texture = calcTex;
   return output;
 }
