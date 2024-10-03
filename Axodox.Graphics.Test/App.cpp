@@ -3,6 +3,8 @@
 // #include <HeightmapReader.h>
 
 // ImGUI
+#include "DrawPrimitivesUtil.h"
+#include "cbt_helper.h"
 #include "../ImGUI/Includes/includes.h"
 
 #include "Windows.h"
@@ -31,6 +33,11 @@ using namespace Axodox::Infrastructure;
 using namespace Axodox::Storage;
 using namespace DirectX;
 using namespace Miniproject::GPUDiagnostics;
+
+
+// CBT
+
+// ---
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
@@ -279,12 +286,15 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     // Camera setup
     bool firstperson = false;
+    bool divideTry = false;
+    bool mergeTry = false;
+    bool resetTri = false;
     bool& quit = m_windowClosed;
     Camera cam;
 
     // Event setup
     {
-      window.KeyDown([&cam, &quit, &firstperson](CoreWindow const&,
+      window.KeyDown([&cam, &quit, &firstperson, &divideTry, &resetTri](CoreWindow const&,
         KeyEventArgs const& args) {
           if (ImGui::GetIO().WantCaptureKeyboard)
             return;
@@ -293,6 +303,10 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             quit = true;
             break;
 
+          case Windows::System::VirtualKey::R:
+            resetTri = true;
+            break;
+          
           default:
             cam.KeyBoardDown(args);
             break;
@@ -314,6 +328,15 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             return;
           cam.MouseWheel(args);
         });
+      window.PointerPressed(
+        [&divideTry, &mergeTry](CoreWindow const&, PointerEventArgs const& args)
+        {
+          auto props = args.CurrentPoint().Properties();
+          if (props.IsLeftButtonPressed())
+            divideTry = true;
+          if (props.IsRightButtonPressed())
+            mergeTry = true;
+        });
     }
 
 
@@ -323,8 +346,33 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     float MapWH = 100.0f;
     float MaxHeight = 6.0f;
     float tessFact = 2.0f;
+    std::vector<ColoredTri> triList;
+    ColoredTri pos = {
+      .p0 = ImVec2(50.0f,100.0f),
+      .p1 = ImVec2(50.0f,250.0f),
+      .p2 = ImVec2(200.0f,250.0f),
+      .col = ImColor(ImVec4(0.323f,0.475f,0.615f,1.0f))
+    };
+    int focusedTriId = -1;
+    triList.push_back(pos);
+
     while (!m_windowClosed)
     {
+      // Event Handlers
+      if (divideTry)
+      {
+        divideTry = false;
+        if (focusedTriId != -1)
+          triList.push_back(subdivide(triList[focusedTriId]));
+      }
+
+      if (resetTri)
+      {
+        resetTri = false;
+
+      }
+      //
+
       //Process user input
       dispatcher.ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
 
@@ -393,6 +441,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       
       // ImGui Draws
       {
+        ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
         {
           if (ImGui::Begin("Hello world!"))
           {
@@ -404,7 +453,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             if (ImGui::Checkbox("Line view", &isLineDraw)) {
               // mainmesh.LineRender(isLineDraw);
               RasterizerFlags flag = isLineDraw ? RasterizerFlags::Wireframe : RasterizerFlags::CullClockwise;
-              
+
               GraphicsPipelineStateDefinition SimplePipelineDef{
                 .RootSignature = &simpleRootSignature,
                 .VertexShader = &simpleVertexShader,
@@ -424,9 +473,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             }
             bool isHovered = ImGui::IsItemHovered();
             bool isFocused = ImGui::IsItemFocused();
-            ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
-            ImVec2 screenPositionAbsolute = ImGui::GetItemRectMin();
-            ImVec2 mousePositionRelative = ImVec2(mousePositionAbsolute.x - screenPositionAbsolute.x, mousePositionAbsolute.y - screenPositionAbsolute.y);
+            ImVec2 wpos = ImGui::GetWindowPos();
+            ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y};
 
             ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
             ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
@@ -441,13 +489,51 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           }
           ImGui::End();
         }
+
+
+        ImGui::SetNextWindowSize(ImVec2{300,300});
+        if (ImGui::Begin("CBT Demo Window"))
         {
-          // File load in
-          //if (ImGui::Begin("Open file"))
-          //{
-          //  ImGui::InputText("Path",path, sizeof(path) / sizeof(char));
-          //}
-          //ImGui::End();
+          ImVec2 wpos = ImGui::GetWindowPos();
+          ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
+
+          // ImGui::Text("Position: %f %f", mousePositionRelative.x, mousePositionRelative.y);
+          // ImGui::Text("Is screen focused? %s", PointInTriangle(mousePositionRelative, pos) ? "Yes" : "No");
+          if (ImGui::Button("Reset Triangle"))
+          {
+            ColoredTri pos = {
+              .p0 = ImVec2(50.0f,100.0f),
+              .p1 = ImVec2(50.0f,250.0f),
+              .p2 = ImVec2(200.0f,250.0f),
+              .col = ImColor(ImVec4(0.323f,0.475f,0.615f,1.0f))
+            };
+            triList.clear();
+            triList.push_back(pos);
+          }
+          ImDrawList *drawlist = ImGui::GetWindowDrawList();
+          {
+            focusedTriId = -1;
+            for (int i = 0; i < triList.size(); i++)
+            {
+              auto tri = triList.at(i);
+              if (PointInTriangle(mousePositionRelative, tri))
+              {
+                drawlist->AddTriangleFilled(
+                  tri.p0 + wpos,
+                  tri.p1 + wpos,
+                  tri.p2 + wpos, tri.col);
+                focusedTriId = i;
+              }
+              else
+              {
+                drawlist->AddTriangle(
+                  tri.p0 + wpos,
+                  tri.p1 + wpos,
+                  tri.p2 + wpos, tri.col);
+              }
+            }
+          }
+          ImGui::End();
         }
       }
       
@@ -467,6 +553,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         committedResourceAllocator.Build();
         depthStencilDescriptorHeap.Build();
 
+        
         commonDescriptorHeap.Build();
         commonDescriptorHeap.Set(allocator);
 

@@ -119,13 +119,15 @@
     <ClInclude Include="..\ImGUI\targetver.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="cbt.h" />
+    <ClInclude Include="DrawPrimitivesUtil.h" />
     <ClInclude Include="GPUDiagnostics.h" />
+    <ClInclude Include="cbt_helper.h" />
     <ClInclude Include="HeightmapReader.h" />
     <ClInclude Include="imgui_impl_uwp.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="leb.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -163,7 +165,6 @@
     <ClCompile Include="..\ImGUI\pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="cbt.cpp" />
     <ClCompile Include="GPUDiagnostics.cpp" />
     <ClCompile Include="imgui_impl_uwp.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

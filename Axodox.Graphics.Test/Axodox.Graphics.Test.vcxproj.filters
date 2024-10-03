@@ -39,9 +39,6 @@
     <ClCompile Include="GPUDiagnostics.cpp">
       <Filter>Miniproject\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="cbt.cpp">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClCompile>
     <ClCompile Include="..\ImGUI\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -79,12 +76,6 @@
     <ClInclude Include="GPUDiagnostics.h">
       <Filter>Miniproject\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="cbt.h">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClInclude>
     <ClInclude Include="..\ImGUI\imconfig.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -117,6 +108,18 @@
     </ClInclude>
     <ClInclude Include="..\ImGUI\targetver.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawPrimitivesUtil.h">
+      <Filter>Miniproject\Utils\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="cbt_helper.h">
+      <Filter>Miniproject\Utils\CBT</Filter>
+    </ClInclude>
+    <ClInclude Include="leb.h">
+      <Filter>Miniproject\Utils\CBT</Filter>
+    </ClInclude>
+    <ClInclude Include="cbt.h">
+      <Filter>Miniproject\Utils\CBT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +196,9 @@
     </Filter>
     <Filter Include="ImGui">
       <UniqueIdentifier>{a3a05483-7579-44cb-b943-26271d4fe946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\Utils\ImGui">
+      <UniqueIdentifier>{20d91b55-8322-4adf-8765-d465a468deb1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
