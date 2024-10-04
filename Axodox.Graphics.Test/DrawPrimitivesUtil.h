@@ -30,14 +30,20 @@ ImVec2 operator/(ImVec2 const a, float const d)
 	return ImVec2(a.x / d, a.y / d);
 }
 
+static ImColor depthColor[5] = {
+	ImColor(ImVec4(0.970f, 0.0582f, 0.058f, 1.0f)),
+	ImColor(ImVec4(0.104f, 0.0582f, 0.970f, 1.0f)),
+	ImColor(ImVec4(0.304f, 0.2582f, 0.670f, 1.0f)),
+	ImColor(ImVec4(0.904f, 0.6582f, 0.670f, 1.0f)),
+	ImColor(ImVec4(0.104f, 0.9270f, 0.058f, 1.0f))
+};
+
+static int depth = 0;
 // Divide input tri into left and right tri
 ColoredTri subdivide(ColoredTri& input)
 {
-	ImColor col = ImColor(
-		1.0f - input.col.Value.z,
-		1.0f - input.col.Value.x,
-		1.0f - input.col.Value.y,
-		1.0f);
+	ImColor col = depthColor[depth % 5];
+	depth++;
 
 	// p0 : A; p1 : B; p2 : C
 	float distA = sqrt(powf(input.p0.x - input.p1.x,2) + 
@@ -63,6 +69,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p0 + input.p1) / 2.0f };
 		out = ColoredTri{
+			.id = input.id * 2,
 			.p0 = p3,
 			.p1 = input.p1,
 			.p2 = input.p2,
@@ -75,6 +82,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p0 + input.p2) / 2.0f };
 		out = ColoredTri{
+			.id = input.id * 2,
 			.p0 = input.p0,
 			.p1 = input.p1,
 			.p2 = p3,
@@ -87,6 +95,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p1 + input.p2) / 2.0f };
 		out = ColoredTri{
+			.id = input.id * 2,
 			.p0 = input.p0,
 			.p1 = p3,
 			.p2 = input.p2,
@@ -95,5 +104,7 @@ ColoredTri subdivide(ColoredTri& input)
 		input.p2 = p3;
 
 	}
+
+	input.id = input.id * 2 + 1;
 	return out;
 }

@@ -7,6 +7,10 @@
 #include "cbt_helper.h"
 #include "../ImGUI/Includes/includes.h"
 
+#include <string>
+#include <string_view>
+#include <format>
+
 #include "Windows.h"
 
 #include <winrt/Windows.Graphics.Display.h>
@@ -14,6 +18,11 @@
 
 #include "Camera.h"
 #include "GPUDiagnostics.h"
+
+#define CBT_IMPLEMENTATION
+#include "cbt.h"
+#define LEB_IMPLEMENTATION
+#include "leb.h"
 
 #define _DEBUG
 
@@ -36,7 +45,130 @@ using namespace Miniproject::GPUDiagnostics;
 
 
 // CBT
+struct
+{
+  // CBT TREE
+  cbt_Tree* cbt;
+  // LIST OF ID'S THAT CHANGED (MERGED OR SPLIT)
+  std::vector<ColoredTri> id_list;
+  ImVec2 target;
+  Tri tri;
+  std::stringstream cbt_console;
+} cbt_manager = {
+    cbt_CreateAtDepth(6,0),
+    std::vector<ColoredTri>(),ImVec2(0,0),
+    {
+      ImVec2(50.0f, 100.0f),
+      ImVec2(50.0f, 250.0f),
+      ImVec2(200.0f, 250.0f)
+    }
+};
 
+void CpuSubdivisionCallback(cbt_Tree* cbt, const cbt_Node node, const void* userData)
+{
+  (void)userData;
+  float faceVertices[][3] = {
+      {cbt_manager.tri.p0.x, cbt_manager.tri.p1.x, cbt_manager.tri.p2.x},
+      {cbt_manager.tri.p0.y, cbt_manager.tri.p1.y, cbt_manager.tri.p2.y}
+  };
+
+  leb_DecodeNodeAttributeArray(node, 2, faceVertices);
+
+  if (PointInTriangle(cbt_manager.target,cbt_manager.tri)) {
+    leb_SplitNode(cbt, node);
+  }
+}
+
+void CpuMergeCallback(cbt_Tree* cbt, const cbt_Node node, const void* userData)
+{
+  (void)userData;
+  float baseFaceVertices[][3] = 
+  {
+      {cbt_manager.tri.p0.x, cbt_manager.tri.p1.x, cbt_manager.tri.p2.x},
+      {cbt_manager.tri.p0.y, cbt_manager.tri.p1.y, cbt_manager.tri.p2.y}
+  };
+  float topFaceVertices[][3] = 
+  {
+      {cbt_manager.tri.p0.x, cbt_manager.tri.p1.x, cbt_manager.tri.p2.x},
+      {cbt_manager.tri.p0.y, cbt_manager.tri.p1.y, cbt_manager.tri.p2.y}
+  };
+
+  leb_DiamondParent diamondParent = leb_DecodeDiamondParent(node);
+
+  leb_DecodeNodeAttributeArray(diamondParent.base, 2, baseFaceVertices);
+  leb_DecodeNodeAttributeArray(diamondParent.top, 2, topFaceVertices);
+
+  if (!PointInTriangle(cbt_manager.target,baseFaceVertices) && 
+      !PointInTriangle(cbt_manager.target,topFaceVertices)) 
+  {
+    leb_MergeNode(cbt, node ,diamondParent);
+  }
+}
+
+void UpdateSubdivision()
+{
+  static int pingPong = 0;
+
+  if (pingPong == 0) {
+    cbt_Update(cbt_manager.cbt, &CpuSubdivisionCallback, NULL);
+  }
+  else {
+    cbt_Update(cbt_manager.cbt, &CpuMergeCallback, NULL);
+  }
+
+  pingPong = 1 - pingPong;
+}
+
+//static ImColor depthColor[3] = {
+//  ImColor(ImVec4(0.970f, 0.0582f, 0.0582f, 1.0f)),
+//  ImColor(ImVec4(0.104f, 0.0582f, 0.970f, 1.0f)),
+//  ImColor(ImVec4(0.104f, 0.970f, 0.0582f,1.0f))
+//};
+
+void PreOrderCBTRun(cbt_Node node)
+{
+  float faceVertices[][3] = {
+      {cbt_manager.tri.p0.x, cbt_manager.tri.p1.x, cbt_manager.tri.p2.x},
+      {cbt_manager.tri.p0.y, cbt_manager.tri.p1.y, cbt_manager.tri.p2.y}
+  };
+
+  // OWN
+  leb_DecodeNodeAttributeArray(node, 2, faceVertices);
+  ColoredTri tmp =
+  {
+    .p0 = ImVec2(faceVertices[0][0],faceVertices[1][0]),
+    .p1 = ImVec2(faceVertices[0][1],faceVertices[1][1]),
+    .p2 = ImVec2(faceVertices[0][2],faceVertices[1][2]),
+    .col = depthColor[node.depth % 3]
+  };
+
+  // cbt_manager.cbt_console << std::format("Node {} : \n", (int)node.id);
+
+  // LEFT
+  // cbt_manager.cbt_console << std::format("(");
+  if (cbt_IsLeafNode(cbt_manager.cbt, cbt_LeftChildNode(node)))
+  {
+    // PreOrderCBTRun(cbt_LeftChildNode(node));
+    // cbt_manager.cbt_console << std::format("Node {}\n", (int)cbt_LeftChildNode(node).id);
+  }
+  // cbt_manager.cbt_console << std::format(")");
+
+  // RIGHT
+  // cbt_manager.cbt_console << std::format("(");
+  if (cbt_IsLeafNode(cbt_manager.cbt, cbt_RightChildNode(node)))
+  {
+    // PreOrderCBTRun(cbt_RightChildNode(node));
+    // cbt_manager.cbt_console << std::format("Node {}\n", (int)cbt_RightChildNode(node).id);
+  }
+  // cbt_manager.cbt_console << std::format(")\n");
+}
+
+void CreateTriList()
+{
+  auto root = cbt_DecodeNode(cbt_manager.cbt, 0);
+
+  PreOrderCBTRun(root);
+}
 // ---
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
@@ -492,11 +624,12 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
 
         ImGui::SetNextWindowSize(ImVec2{300,300});
-        if (ImGui::Begin("CBT Demo Window"))
+        if (ImGui::Begin("LEB Demo Window"))
         {
           ImVec2 wpos = ImGui::GetWindowPos();
           ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
-
+          cbt_manager.target = mousePositionRelative;
+          UpdateSubdivision();
           // ImGui::Text("Position: %f %f", mousePositionRelative.x, mousePositionRelative.y);
           // ImGui::Text("Is screen focused? %s", PointInTriangle(mousePositionRelative, pos) ? "Yes" : "No");
           if (ImGui::Button("Reset Triangle"))
@@ -512,6 +645,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           }
           ImDrawList *drawlist = ImGui::GetWindowDrawList();
           {
+            // CreateTriList();
             focusedTriId = -1;
             for (int i = 0; i < triList.size(); i++)
             {
@@ -535,6 +669,15 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           }
           ImGui::End();
         }
+
+        //ImGui::SetNextWindowSize(ImVec2{ 400,200 });
+        //// ImGui::SetNextWindowPos(ImVec2{ 200,0 });
+        //if (ImGui::Begin("CBT Console"))
+        //{
+        //  ImGui::TextUnformatted(cbt_manager.cbt_console.str().c_str());
+        //  ImGui::End();
+        //}
+        //cbt_manager.cbt_console.str("");
       }
       
       // ImGui Rendering
