@@ -7,6 +7,13 @@ using namespace Axodox::Infrastructure;
 using namespace std;
 
 namespace {
+  /// <summary>
+  /// Creates a pre-set BlendType description.
+  /// </summary>
+  /// <param name="type">- Blendtype enum for blend state.</param>
+  /// <returns>
+  /// Return render target blend state description.
+  /// </returns>
   D3D12_RENDER_TARGET_BLEND_DESC GetRenderTargetBlendDescription(BlendType type)
   {
     D3D12_RENDER_TARGET_BLEND_DESC result;

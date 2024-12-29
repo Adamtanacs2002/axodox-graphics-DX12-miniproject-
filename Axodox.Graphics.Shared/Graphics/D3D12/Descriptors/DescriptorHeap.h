@@ -29,7 +29,6 @@ namespace Axodox::Graphics::D3D12
     void Build();
     void Clean();
 
-  protected:
     GraphicsDevice _device;
 
     template<typename T, typename... TArgs>
@@ -43,6 +42,7 @@ namespace Axodox::Graphics::D3D12
       _isDirty = true;
       return handle;
     }
+  protected:
 
     virtual void OnHeapBuilt(ID3D12DescriptorHeap* heap, uint32_t descriptorCount);
     int64_t GetHandleOffset(D3D12_CPU_DESCRIPTOR_HANDLE handle) const;

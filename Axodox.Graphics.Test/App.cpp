@@ -23,6 +23,7 @@
 #include "cbt.h"
 #define LEB_IMPLEMENTATION
 #include "leb.h"
+#include <WrapperAddons/BufferWithView.h>
 
 #define _DEBUG
 
@@ -227,9 +228,21 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     }
   };
 
+  struct ConcurrentBinaryTreeRootDesc : public RootSignatureMask
+  {
+      RootDescriptorTable<1> uavTest;
+      ConcurrentBinaryTreeRootDesc(const RootSignatureContext& context) :
+      RootSignatureMask(context),
+  	  uavTest(this, { DescriptorRangeType::UnorderedAccess, 1 })
+      {
+          Flags = RootSignatureFlags::AllowInputAssemblerInputLayout;
+      }
+  };
+
   struct PostProcessingRootDescription : public RootSignatureMask
   {
     RootDescriptor<RootDescriptorType::ConstantBuffer> ConstantBuffer;
+    RootDescriptorTable<1> uavTest;
     RootDescriptorTable<1> InputTexture;
     RootDescriptorTable<1> OutputTexture;
     StaticSampler Sampler;
@@ -237,6 +250,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     PostProcessingRootDescription(const RootSignatureContext& context) :
       RootSignatureMask(context),
       ConstantBuffer(this, { 0 }),
+      uavTest(this, {DescriptorRangeType::UnorderedAccess, 1}),
       InputTexture(this, { DescriptorRangeType::ShaderResource }),
       OutputTexture(this, { DescriptorRangeType::UnorderedAccess }),
       Sampler(this, { 0 }, Filter::Linear, TextureAddressMode::Clamp)
@@ -272,7 +286,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     // Init DRED
     // Dred debug = Dred();
 
-    #pragma region Setup
+#pragma region Setup
     GraphicsDevice device{};
 
     //DRED Debug
@@ -286,7 +300,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     RootSignature<SimpleRootDescription> simpleRootSignature{ device };
     VertexShader simpleVertexShader{ app_folder() / L"SimpleVertexShader.cso" };
     PixelShader simplePixelShader{ app_folder() / L"SimplePixelShader.cso" };
-    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso"};
+    HullShader simpleHullShader{ app_folder() / L"SimpleHullShader.cso" };
     DomainShader simpleDomainShader{ app_folder() / L"SimpleDomainShader.cso" };
     GeometryShader simpleGeometryShader{ app_folder() / L"SimpleGeometryShader.cso" };
 
@@ -307,10 +321,34 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .DepthStencilFormat = Format::D32_Float,
     };
 
-    //Init hull shader
-
     auto simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(simplePipelineStateDefinition).get();
-        
+    //Init CBT CShaders
+
+    RootSignature<ConcurrentBinaryTreeRootDesc> DispatcherKernelSignature{ device };
+    ComputeShader DispatcherKernelCS { app_folder() / L"DispatcherKernel.cso" };
+    ComputePipelineStateDefinition DispatcherKernelStateDef{
+        .RootSignature = &DispatcherKernelSignature,
+        .ComputeShader = &DispatcherKernelCS
+    };
+    auto DispatcherKernel = pipelineStateProvider.CreatePipelineStateAsync(DispatcherKernelStateDef).get();
+
+    RootSignature<ConcurrentBinaryTreeRootDesc> SubdivisionSignature{ device };
+    ComputeShader SubdivisionKernelCS{ app_folder() / L"SubdivisionKernel.cso" };
+    ComputePipelineStateDefinition SubdivisionKernelStateDef{
+        .RootSignature = &SubdivisionSignature,
+        .ComputeShader = &SubdivisionKernelCS
+    };
+    auto SubdivisionKernel = pipelineStateProvider.CreatePipelineStateAsync(SubdivisionKernelStateDef).get();
+
+    RootSignature<ConcurrentBinaryTreeRootDesc> SumReductionSignature{ device };
+    ComputeShader SumReductionKernelCS{ app_folder() / L"SumReductionKernel.cso" };
+    ComputePipelineStateDefinition SumReductionKernelStateDef{
+        .RootSignature = &SumReductionSignature,
+        .ComputeShader = &SumReductionKernelCS
+    };
+    auto SumReductionKernel = pipelineStateProvider.CreatePipelineStateAsync(SumReductionKernelStateDef).get();
+  	//Init hull shader
+
     RootSignature<PostProcessingRootDescription> postProcessingRootSignature{ device };
     ComputeShader postProcessingComputeShader{ app_folder() / L"PostProcessingComputeShader.cso" };
     ComputePipelineStateDefinition postProcessingStateDefinition{
@@ -318,7 +356,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       .ComputeShader = &postProcessingComputeShader
     };
     auto postProcessingPipelineState = pipelineStateProvider.CreatePipelineStateAsync(postProcessingStateDefinition).get();
-        
+
     GroupedResourceAllocator groupedResourceAllocator{ device };
     ResourceUploader resourceUploader{ device };
     CommonDescriptorHeap commonDescriptorHeap{ device, 2 };
@@ -339,21 +377,21 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       //app_folder() / L"27_985_86_924_10_250_250.png";
       //app_folder() / L"27_985_86_924_10_500_250.png";
       app_folder() / L"27_985_86_924_10_500_500.png";
-      //app_folder() / L"27_985_86_924_10_1000_500.png";
-      //app_folder() / L"27_985_86_924_10_1000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_2000.png"; // LIMIT
-      //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
-    // Creation of meshlets
+    //app_folder() / L"27_985_86_924_10_1000_500.png";
+    //app_folder() / L"27_985_86_924_10_1000_1000.png";
+    //app_folder() / L"27_985_86_924_10_2000_1000.png";
+    //app_folder() / L"27_985_86_924_10_2000_2000.png"; // LIMIT
+    //app_folder() / L"27_985_86_924_10_4000_4000.png"; // ERROR
+  // Creation of meshlets
     auto heights = ImmutableTexture::readTextureData(fPath);
     // Width, Height
-    float MeshletSize[2] = { heights.at(0).size(), heights.size()};
+    float MeshletSize[2] = { heights.at(0).size(), heights.size() };
     //std::vector<XMUINT2> vertices;
     // Create Mesh at x,y coords
     ImmutableMesh mainmesh{
       immutableAllocationContext,
       //CreatePlane(1,{20,20},PrimitiveTopology::PatchList3)};
-      CreateWholeMap(heights, PrimitiveTopology::PatchList3)};
+      CreateWholeMap(heights, PrimitiveTopology::PatchList3) };
     ImmutableTexture texture{ immutableAllocationContext, fPath };
     // TODO: Stuck 2k heightmaps at
     // AllocateResources(_resources);
@@ -370,9 +408,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       commonDescriptorHeap.Clean();
       });
 
-    #pragma endregion
-    
-    #pragma region ImGui Setup
+#pragma endregion
+
+#pragma region ImGui Setup
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -414,7 +452,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
     // Our state
     DirectX::XMFLOAT4 clear_color = { 0.05f, 0.25f, 0.60f, 1.00f };
-    #pragma endregion
+#pragma endregion
 
     // Camera setup
     bool firstperson = false;
@@ -423,6 +461,48 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     bool resetTri = false;
     bool& quit = m_windowClosed;
     Camera cam;
+
+    // Create Buffer for bitfield
+  	BufferRef buffer = mutableAllocationContext
+      .ResourceAllocator->CreateBuffer(BufferDefinition(4 * sizeof(UINT32), BufferFlags::UnorderedAccess));
+
+    D3D12_BUFFER_SRV srvbufDesc = {};
+    srvbufDesc.NumElements = 4;
+    srvbufDesc.StructureByteStride = sizeof(UINT32);
+    srvbufDesc.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+
+    D3D12_SHADER_RESOURCE_VIEW_DESC srvdesc = {};
+    srvdesc.Format = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
+    srvdesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+    srvdesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    srvdesc.Buffer = srvbufDesc;
+
+    D3D12_BUFFER_UAV uavbufDesc = {};
+    uavbufDesc.CounterOffsetInBytes = 0;
+    uavbufDesc.NumElements = 4;
+    uavbufDesc.StructureByteStride = sizeof(UINT32);
+    uavbufDesc.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+
+    D3D12_UNORDERED_ACCESS_VIEW_DESC uavdesc = {};
+    uavdesc.Format = DXGI_FORMAT_UNKNOWN;
+    uavdesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+    uavdesc.Buffer = uavbufDesc;
+
+
+    StructuredObjectViews objview{ mutableAllocationContext,buffer.get(), BufferViewDefinitions{
+        .ShaderResource = srvdesc,
+        .UnorderedAccess = uavdesc // Behelyetesítendõ
+    } };
+
+    UINT32* tempData;
+    BufferData bufData = { 4,tempData };
+    *tempData++ = 0;
+    *tempData++ = 1;
+    *tempData++ = 2;
+    *tempData++ = 3;
+
+    // buffer->get()->;
+    // immutableAllocationContext.ResourceUploader->EnqueueUploadTask(buffer.get(),&bufData);
 
     // Event setup
     {
@@ -438,7 +518,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
           case Windows::System::VirtualKey::R:
             resetTri = true;
             break;
-          
+
           default:
             cam.KeyBoardDown(args);
             break;
@@ -530,18 +610,18 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         // Nézett vektorok
         auto view =//  cam.GetViewMatrix();
           XMMatrixLookAtRH(
-          cam.GetEye(),
-          cam.GetAt(),
-          cam.GetWorldUp());
+            cam.GetEye(),
+            cam.GetAt(),
+            cam.GetWorldUp());
         auto world = XMMatrixIdentity();
         auto worldViewProjection = XMMatrixTranspose(world * view * projection);
 
         XMStoreFloat4x4(&constants.WorldViewProjection, worldViewProjection);
-        XMStoreUInt2(&constants.MeshletSize,XMVECTOR{MeshletSize[0],MeshletSize[1]});
+        XMStoreUInt2(&constants.MeshletSize, XMVECTOR{ MeshletSize[0],MeshletSize[1] });
         XMStoreFloat(&constants.MapSize, XMVECTOR{ MapWH });
         XMStoreFloat(&constants.MaxHeight, XMVECTOR{ MaxHeight });
-        XMStoreFloat(&constants.disFromEye,XMVECTOR{0.33f});
-        XMStoreFloat(&constants.tessFactorFloat, XMVECTOR{tessFact});
+        XMStoreFloat(&constants.disFromEye, XMVECTOR{ 0.33f });
+        XMStoreFloat(&constants.tessFactorFloat, XMVECTOR{ tessFact });
       }
 
       //Ensure depth buffer
@@ -570,7 +650,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
       ImGui_ImplUwp_NewFrame();
       ImGui::NewFrame();
       // -----
-      
+
       // ImGui Draws
       {
         ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
@@ -606,7 +686,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             bool isHovered = ImGui::IsItemHovered();
             bool isFocused = ImGui::IsItemFocused();
             ImVec2 wpos = ImGui::GetWindowPos();
-            ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y};
+            ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
+
+            ImGui::Text("Test UAV read : {}");
 
             ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
             ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
@@ -623,7 +705,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         }
 
 
-        ImGui::SetNextWindowSize(ImVec2{300,300});
+        ImGui::SetNextWindowSize(ImVec2{ 300,300 });
         if (ImGui::Begin("LEB Demo Window"))
         {
           ImVec2 wpos = ImGui::GetWindowPos();
@@ -643,7 +725,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             triList.clear();
             triList.push_back(pos);
           }
-          ImDrawList *drawlist = ImGui::GetWindowDrawList();
+          ImDrawList* drawlist = ImGui::GetWindowDrawList();
           {
             // CreateTriList();
             focusedTriId = -1;
@@ -679,7 +761,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         //}
         //cbt_manager.cbt_console.str("");
       }
-      
+
       // ImGui Rendering
       ImGui::Render();
 
@@ -696,7 +778,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         committedResourceAllocator.Build();
         depthStencilDescriptorHeap.Build();
 
-        
+
         commonDescriptorHeap.Build();
         commonDescriptorHeap.Set(allocator);
 
@@ -704,6 +786,39 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         resources.DepthBuffer.DepthStencil()->Clear(allocator);
       }
 
+      //CBT steps
+      {
+	      //DispatcherKernel
+	      {
+	        auto mask = DispatcherKernelSignature.Set(allocator, RootSignatureUsage::Compute);
+	        mask.uavTest = *objview.UnorderedAccess();
+	        DispatcherKernel.Apply(allocator);
+
+	        allocator.Dispatch();
+          
+          allocator.UAVResourceBarrier(buffer.get()->get());
+	      }
+	      //SubdivisionKernel
+	      {
+	        auto mask = SubdivisionSignature.Set(allocator, RootSignatureUsage::Compute);
+	        mask.uavTest = *objview.UnorderedAccess();
+	        SubdivisionKernel.Apply(allocator);
+
+	        allocator.Dispatch();
+
+          allocator.UAVResourceBarrier(buffer.get()->get());
+	      }
+	      //SumReductionKernel
+	      {
+	        auto mask = SumReductionSignature.Set(allocator, RootSignatureUsage::Compute);
+	        mask.uavTest = *objview.UnorderedAccess();
+	        SumReductionKernel.Apply(allocator);
+
+	        allocator.Dispatch();
+
+          allocator.UAVResourceBarrier(buffer.get()->get());
+	      }
+      }
       //Draw objects
       {
         auto mask = simpleRootSignature.Set(allocator, RootSignatureUsage::Graphics);
@@ -719,12 +834,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
       //Post processing
       {
-        allocator.TransitionResource(*renderTargetView, ResourceStates::RenderTarget, ResourceStates::NonPixelShaderResource);
+        /*allocator.TransitionResource(*renderTargetView, ResourceStates::RenderTarget, ResourceStates::NonPixelShaderResource);
 
         auto mask = postProcessingRootSignature.Set(allocator, RootSignatureUsage::Compute);
         mask.ConstantBuffer = resources.DynamicBuffer.AddBuffer(i * 0.02f);
         mask.InputTexture = *resources.ScreenResourceView;
         mask.OutputTexture = *resources.PostProcessingBuffer.UnorderedAccess();
+        mask.uavTest = *objview.UnorderedAccess();
         postProcessingPipelineState.Apply(allocator);
 
         auto definition = resources.PostProcessingBuffer.Definition();
@@ -740,7 +856,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         allocator.TransitionResources({
           { resources.PostProcessingBuffer, ResourceStates::CopySource, ResourceStates::UnorderedAccess },
           { *renderTargetView, ResourceStates::CopyDest, ResourceStates::RenderTarget }
-        });
+        });*/
       }
 
       //End frame command list

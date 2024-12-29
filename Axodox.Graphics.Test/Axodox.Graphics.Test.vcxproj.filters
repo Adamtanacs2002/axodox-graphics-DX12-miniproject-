@@ -25,6 +25,21 @@
     <FxCompile Include="TestPixelShader.hlsl">
       <Filter>Shaders\Test</Filter>
     </FxCompile>
+    <FxCompile Include="CBTCommon.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Docs\ConcurrentBinaryTree.hlsl">
+      <Filter>Docs</Filter>
+    </FxCompile>
+    <FxCompile Include="DispatcherKernel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SubdivisionKernel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SumReductionKernel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -62,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="..\ImGUI\pch.cpp">
       <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="WrapperAddons\BufferWithView.cpp">
+      <Filter>WrapperAddons</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceHandler.cpp">
+      <Filter>WrapperAddons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +141,12 @@
     </ClInclude>
     <ClInclude Include="cbt.h">
       <Filter>Miniproject\Utils\CBT</Filter>
+    </ClInclude>
+    <ClInclude Include="WrapperAddons\BufferWithView.h">
+      <Filter>WrapperAddons</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceHandler.h">
+      <Filter>WrapperAddons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +226,12 @@
     </Filter>
     <Filter Include="Miniproject\Utils\ImGui">
       <UniqueIdentifier>{20d91b55-8322-4adf-8765-d465a468deb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WrapperAddons">
+      <UniqueIdentifier>{f745a44a-4452-4177-87cd-3d88127555ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Docs">
+      <UniqueIdentifier>{9dae2289-65ca-41f8-bf42-fbe8193cec11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

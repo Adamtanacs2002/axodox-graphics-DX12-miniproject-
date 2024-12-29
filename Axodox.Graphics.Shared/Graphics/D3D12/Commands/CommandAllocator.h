@@ -35,6 +35,7 @@ namespace Axodox::Graphics::D3D12
 
     void AddAwaiter(CommandFenceMarker marker);
     void AddSignaler(CommandFenceMarker marker);
+    void UAVResourceBarrier(ResourceArgument resource);
 
     void TransitionResource(ResourceArgument resource, ResourceStates from, ResourceStates to);
     void TransitionResources(std::initializer_list<ResourceTransition> resources);

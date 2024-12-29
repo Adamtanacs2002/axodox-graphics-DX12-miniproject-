@@ -48,6 +48,12 @@ namespace Axodox::Graphics::D3D12
     void operator()(Resource* resource);
   };
 
+  /// <summary>
+  /// Non-copyable pointer to a T Resource object.
+  /// </summary>
+  /// <typeparam name="T">
+  /// Class inherited from Resource class.
+  /// </typeparam>
   template<typename T>
   using resource_ptr = std::unique_ptr<T, ResourceDeleter>;
 
