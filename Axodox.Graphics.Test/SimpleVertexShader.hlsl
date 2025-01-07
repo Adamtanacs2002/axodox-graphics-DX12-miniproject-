@@ -9,10 +9,17 @@ cbuffer Constants : register(b0)
   float MaxHeight;
 };
 
+// VertexID
+//struct input_t
+//{
+//  uint Id : SV_VertexID;
+//  // float3 Position : POSITION;
+//};
+
 struct input_t
 {
-  uint Id : SV_VertexID;
-  // float3 Position : POSITION;
+    float3 Position : POSITION;
+    float2 Texture : TEXCOORD;
 };
 
 struct output_t
@@ -24,17 +31,11 @@ struct output_t
 
 output_t main(input_t input)
 {
-  float3 PositionData = float3(1, 1, 1);
-  output_t output;
-  float2 calcTex = float2((
-    input.Id % MeshletSize.x) / float(MeshletSize.x - 1),
-    (input.Id / MeshletSize.x) % MeshletSize.y / float(MeshletSize.y - 1));
-  PositionData.xy =
-  float2(
-    (input.Id % MeshletSize.x) * (MapSize / 100.0f),
-    (input.Id / MeshletSize.x) * (MapSize / 100.0f));
-  output.Coords = float3(PositionData.xy, 0);
-  // mul(float4(PositionData.xy, PositionData.z * 6 * _texture.SampleLevel(_sampler, calcTex, 0).x, 1), Transformation);
-  output.Texture = calcTex;
-  return output;
+	output_t output;
+
+	// Transfer data
+	output.Coords = float3(input.Position.xy * MapSize,0);
+	output.Texture = input.Position;
+
+	return output;
 }

@@ -117,6 +117,8 @@
     <ClInclude Include="..\ImGUI\Includes\includes.h" />
     <ClInclude Include="..\ImGUI\pch.h" />
     <ClInclude Include="..\ImGUI\targetver.h" />
+    <ClInclude Include="BisectorMesh.h" />
+    <ClInclude Include="MutableMeshBase.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="cbt.h" />
     <ClInclude Include="DrawPrimitivesUtil.h" />
@@ -168,6 +170,7 @@
     <ClCompile Include="..\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\ImGUI\pch.cpp" />
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="BisectorMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GPUDiagnostics.cpp" />
     <ClCompile Include="imgui_impl_uwp.cpp">

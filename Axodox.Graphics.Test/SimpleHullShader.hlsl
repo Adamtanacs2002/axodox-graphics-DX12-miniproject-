@@ -1,6 +1,11 @@
 Texture2D _texture : register(t0);
 SamplerState _sampler : register(s0);
 
+cbuffer Constants : register(b0)
+{
+    float tessFact;
+};
+
 struct VS_CONTROL_POINT_OUTPUT
 {
   float3 vPosition : WORLDPOS;
@@ -10,7 +15,7 @@ struct VS_CONTROL_POINT_OUTPUT
 struct HS_CONTROL_POINT_OUTPUT
 {
 	float3 vPosition : WORLDPOS;
-  float2 Texture : TEXCOORD;
+	float2 Texture : TEXCOORD;
 };
 
 struct HS_CONSTANT_DATA_OUTPUT
@@ -26,11 +31,11 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 	uint PatchID : SV_PrimitiveID)
 {
 	HS_CONSTANT_DATA_OUTPUT Output;
-
-  Output.EdgeTessFactor[0] =
+    float sharedFactor = 400.0f;
+	Output.EdgeTessFactor[0] =
 	Output.EdgeTessFactor[1] =
-	Output.EdgeTessFactor[2] = 3;
-	Output.InsideTessFactor = 2;
+	Output.EdgeTessFactor[2] = sharedFactor;
+	Output.InsideTessFactor = sharedFactor;
 
 	return Output;
 }
@@ -48,9 +53,9 @@ HS_CONTROL_POINT_OUTPUT main(
 	HS_CONTROL_POINT_OUTPUT Output;
 
 	Output.vPosition = ip[i].vPosition;
-  Output.Texture = ip[i].Texture;
+	Output.Texture = ip[i].Texture;
 
-  Output.vPosition.z = 10 * _texture.SampleLevel(_sampler, Output.Texture, 0).x;
+    Output.vPosition.z = 10 * _texture.SampleLevel(_sampler, Output.Texture, 0).x;
 	
 	return Output;
 }
