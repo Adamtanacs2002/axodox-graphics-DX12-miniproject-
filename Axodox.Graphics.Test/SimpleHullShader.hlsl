@@ -31,11 +31,11 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 	uint PatchID : SV_PrimitiveID)
 {
 	HS_CONSTANT_DATA_OUTPUT Output;
-    float sharedFactor = 400.0f;
+    float sharedFactor = 10.0f;
 	Output.EdgeTessFactor[0] =
 	Output.EdgeTessFactor[1] =
 	Output.EdgeTessFactor[2] = sharedFactor;
-	Output.InsideTessFactor = sharedFactor;
+	Output.InsideTessFactor = sharedFactor + sharedFactor/2.0f;
 
 	return Output;
 }
@@ -55,7 +55,7 @@ HS_CONTROL_POINT_OUTPUT main(
 	Output.vPosition = ip[i].vPosition;
 	Output.Texture = ip[i].Texture;
 
-    Output.vPosition.z = 10 * _texture.SampleLevel(_sampler, Output.Texture, 0).x;
+    Output.vPosition.z = 100 * _texture.SampleLevel(_sampler, Output.Texture, 0).x;
 	
 	return Output;
 }

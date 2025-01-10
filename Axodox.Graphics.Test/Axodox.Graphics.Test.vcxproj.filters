@@ -42,7 +42,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="imgui_impl_uwp.cpp">
       <Filter>Miniproject</Filter>
@@ -87,6 +86,7 @@
     <ClCompile Include="BisectorMesh.cpp">
       <Filter>Miniproject</Filter>
     </ClCompile>
+    <ClCompile Include="App.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -157,6 +157,7 @@
     <ClInclude Include="BisectorMesh.h">
       <Filter>Miniproject</Filter>
     </ClInclude>
+    <ClInclude Include="BinUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -241,6 +242,9 @@
     </Filter>
     <Filter Include="Docs">
       <UniqueIdentifier>{9dae2289-65ca-41f8-bf42-fbe8193cec11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miniproject\BinUtils">
+      <UniqueIdentifier>{d60bff83-7700-4cd5-89ac-b5ac81d8cc63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

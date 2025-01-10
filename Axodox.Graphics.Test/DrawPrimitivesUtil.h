@@ -1,19 +1,16 @@
 #pragma once
 #include "../ImGUI/imgui.h"
+#include "BinUtil.h"
 
 #define min(a,b) a<b?a:b
 #define max(a,b) a>b?a:b
 #define sqpow(a) a*a
 
-struct Tri {
-	ImVec2 p0;
-	ImVec2 p1;
-	ImVec2 p2;
-};
+using namespace BinUtilLib;
 
 struct ColoredTri
 {
-	int id = 1;
+	uint32_t id = 1;
 	ImVec2 p0;
 	ImVec2 p1;
 	ImVec2 p2;
@@ -39,6 +36,70 @@ static ImColor depthColor[5] = {
 };
 
 static int depth = 0;
+
+ColoredTri* getById(int id, std::vector<ColoredTri>& tris)
+{
+	ColoredTri* res = nullptr;
+	for (int i = 0; i < tris.size(); i++)
+	{
+		if (tris[i].id == id)
+		{
+			res = &tris[i];
+		}
+	}
+	return res;
+}
+
+ColoredTri* getParent(uint32_t id, std::vector<ColoredTri>& tris)
+{
+	return getById(floor(id / 2.0f),tris);
+}
+
+ColoredTri* getLeftChild(uint32_t id, std::vector<ColoredTri>& tris)
+{
+	return getById(id*2, tris);
+}
+
+ColoredTri* getRightChild(uint32_t id, std::vector<ColoredTri>& tris)
+{
+	return getById(id * 2 + 1, tris);
+}
+
+ColoredTri* GetNeighbours(uint32_t id, std::vector<ColoredTri>& tris)
+{
+	int n[4] = {0,0,0,1};
+	uint32_t d = BinUtil::FindMSB(id);
+
+	if (d <= 0)
+		return nullptr;
+
+	for (int bitMask = d >> 1; bitMask > 0; bitMask = bitMask >> 1)
+	{
+		uint32_t b = (id & bitMask);
+
+		// G0
+		int tmp[4] = {n[0],n[1],n[2],n[3]};
+		if (b == 0)
+		{
+			tmp[0] = 2 * n[3] + 1;
+			tmp[1] = 2 * n[2] + 1;
+			tmp[2] = 2 * n[1] + 1;
+			tmp[3] = 2 * n[3];
+		}
+		// G1
+		else
+		{
+			tmp[0] = 2 * n[2];
+			tmp[1] = 2 * n[3];
+			tmp[2] = 2 * n[0];
+			tmp[3] = 2 * n[3] + 1;
+		}
+		for (int i = 0; i < 4; i++) n[i] = std::move(tmp[i]);
+	}
+
+	return nullptr;
+}
+
 // Divide input tri into left and right tri
 ColoredTri subdivide(ColoredTri& input)
 {
@@ -55,13 +116,8 @@ ColoredTri subdivide(ColoredTri& input)
 
 	float max = max(max(distA, distB), distC);
 
-	//          o
-	//			   /|\
-	//		   /  |  \
-	//		 /		|    \
-	//	 /		  |      \
-	//	o-------o-------o
-	//         p3
+	uint32_t nID = input.id * 2;
+	if (input.id % 2 == 0) nID++;
 
 	ImVec2 p3;
 	ColoredTri out;
@@ -69,7 +125,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p0 + input.p1) / 2.0f };
 		out = ColoredTri{
-			.id = input.id * 2,
+			.id = nID,
 			.p0 = p3,
 			.p1 = input.p1,
 			.p2 = input.p2,
@@ -82,7 +138,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p0 + input.p2) / 2.0f };
 		out = ColoredTri{
-			.id = input.id * 2,
+			.id = nID,
 			.p0 = input.p0,
 			.p1 = input.p1,
 			.p2 = p3,
@@ -95,7 +151,7 @@ ColoredTri subdivide(ColoredTri& input)
 	{
 		p3 = { (input.p1 + input.p2) / 2.0f };
 		out = ColoredTri{
-			.id = input.id * 2,
+			.id = nID,
 			.p0 = input.p0,
 			.p1 = p3,
 			.p2 = input.p2,
@@ -105,6 +161,8 @@ ColoredTri subdivide(ColoredTri& input)
 
 	}
 
-	input.id = input.id * 2 + 1;
+	if (input.id % 2 == 0) input.id = --nID;
+	else input.id = ++nID;
+
 	return out;
 }

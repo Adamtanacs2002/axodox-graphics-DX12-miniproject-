@@ -30,6 +30,13 @@ public:
 		}
 	}
 
+	void UpdateBuffers(const ResourceAllocationContext& context, MeshDescription&& description)
+	{
+		// TODO: Make function that updates buffers
+		/* Specifically the data inside buffer
+		 */
+	}
+
 	void DrawBase(CommandAllocator& allocator, uint32_t instanceCount = 1)
 	{
 		if (bool(_vertexBuffer) != bool(_vertexBufferView) || bool(_indexBuffer) != bool(_indexBufferView) || !instanceCount) return;

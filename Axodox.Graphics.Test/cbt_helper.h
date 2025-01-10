@@ -39,13 +39,3 @@ bool PointInTriangle(ImVec2 pt, const float tri[][3])
       .p2 = ImVec2(tri[0][2],tri[1][2]),
     });
 }
-
-bool PointInTriangle(ImVec2 pt, Tri triangle)
-{
-  return PointInTriangle(pt, 
-    ColoredTri{
-      .p0 = triangle.p0,
-      .p1 = triangle.p1,
-      .p2 = triangle.p2
-    });
-}

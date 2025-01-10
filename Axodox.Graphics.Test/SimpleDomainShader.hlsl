@@ -3,20 +3,19 @@ SamplerState _sampler : register(s0);
 
 cbuffer Constants : register(b0)
 {
-	float4x4 Transformation;
     float MaxHeight;
     float tessFact;
 };
 
 struct DS_OUTPUT
 {
-	float4 vPosition: SV_POSITION;
+	float3 pos: WORLDPOS;
 	float2 tex : TEXCOORD;
 };
 
 struct HS_CONTROL_POINT_OUTPUT
 {
-	float3 vPosition : WORLDPOS;
+	float3 pos : WORLDPOS;
 	float2 Texture : TEXCOORD;
 };
 
@@ -35,14 +34,12 @@ DS_OUTPUT main(
 	const OutputPatch<HS_CONTROL_POINT_OUTPUT, NUM_CONTROL_POINTS> patch)
 {
 	DS_OUTPUT Output;
-
-    Output.vPosition.xy = (patch[0].vPosition * domain.x + patch[1].vPosition * domain.y + patch[2].vPosition * domain.z).xy;
+	
+    Output.pos.xy = (patch[0].pos * domain.x + patch[1].pos * domain.y + patch[2].pos * domain.z).xy;
 
 	Output.tex = patch[0].Texture * domain.x + patch[1].Texture * domain.y + patch[2].Texture * domain.z;
 
-    Output.vPosition.z = 10 * _texture.SampleLevel(_sampler, Output.tex, 0).x;
-
-	Output.vPosition = mul(float4(Output.vPosition.xyz,1), Transformation);
+    Output.pos.z = 10 * _texture.SampleLevel(_sampler, Output.tex, 0).x;
 
 
 	return Output;
