@@ -1,21 +1,12 @@
 #pragma once
-#include "../ImGUI/imgui.h"
+
 #include "BinUtil.h"
 
-#define min(a,b) a<b?a:b
-#define max(a,b) a>b?a:b
-#define sqpow(a) a*a
+#define MIN(a,b) a<b?a:b
+#define MAX(a,b) a>b?a:b
+#define SQPOW(a) a*a
 
 using namespace BinUtilLib;
-
-struct ColoredTri
-{
-	uint32_t id = 1;
-	ImVec2 p0;
-	ImVec2 p1;
-	ImVec2 p2;
-	ImColor col;
-};
 
 ImVec2 operator+(ImVec2 const a, ImVec2 const b)
 {
@@ -26,16 +17,6 @@ ImVec2 operator/(ImVec2 const a, float const d)
 {
 	return ImVec2(a.x / d, a.y / d);
 }
-
-static ImColor depthColor[5] = {
-	ImColor(ImVec4(0.970f, 0.0582f, 0.058f, 1.0f)),
-	ImColor(ImVec4(0.104f, 0.0582f, 0.970f, 1.0f)),
-	ImColor(ImVec4(0.304f, 0.2582f, 0.670f, 1.0f)),
-	ImColor(ImVec4(0.904f, 0.6582f, 0.670f, 1.0f)),
-	ImColor(ImVec4(0.104f, 0.9270f, 0.058f, 1.0f))
-};
-
-static int depth = 0;
 
 ColoredTri* getById(int id, std::vector<ColoredTri>& tris)
 {
@@ -101,9 +82,8 @@ ColoredTri* GetNeighbours(uint32_t id, std::vector<ColoredTri>& tris)
 }
 
 // Divide input tri into left and right tri
-ColoredTri subdivide(ColoredTri& input)
+ColoredTri subdivide(ColoredTri& input,int& depth, ImColor col)
 {
-	ImColor col = depthColor[depth % 5];
 	depth++;
 
 	// p0 : A; p1 : B; p2 : C
@@ -114,7 +94,7 @@ ColoredTri subdivide(ColoredTri& input)
 	float distC = sqrt(powf(input.p1.x - input.p2.x, 2) +
 		powf(input.p1.y - input.p2.y, 2));
 
-	float max = max(max(distA, distB), distC);
+	float max = MAX(MAX(distA, distB), distC);
 
 	uint32_t nID = input.id * 2;
 	if (input.id % 2 == 0) nID++;

@@ -38,5 +38,7 @@ namespace Axodox::Graphics::D3D12
 
     template<typename StateDescription, typename StateDefinition>
     std::future<PipelineState> CreatePipelineStateAsync(StateDefinition definition, winrt::guid id, CreatePipelineFunc<StateDescription> createPipeline);
+
+    void Release() {}
   };
 }

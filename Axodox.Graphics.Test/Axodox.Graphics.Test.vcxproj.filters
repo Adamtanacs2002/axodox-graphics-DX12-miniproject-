@@ -50,9 +50,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Miniproject\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="GPUDiagnostics.cpp">
-      <Filter>Miniproject\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\ImGUI\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -87,6 +84,7 @@
       <Filter>Miniproject</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -95,9 +93,6 @@
     </ClInclude>
     <ClInclude Include="HeightmapReader.h" />
     <ClInclude Include="Camera.h">
-      <Filter>Miniproject\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="GPUDiagnostics.h">
       <Filter>Miniproject\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\ImGUI\imconfig.h">
@@ -136,15 +131,6 @@
     <ClInclude Include="DrawPrimitivesUtil.h">
       <Filter>Miniproject\Utils\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="cbt_helper.h">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClInclude>
-    <ClInclude Include="leb.h">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClInclude>
-    <ClInclude Include="cbt.h">
-      <Filter>Miniproject\Utils\CBT</Filter>
-    </ClInclude>
     <ClInclude Include="WrapperAddons\BufferWithView.h">
       <Filter>WrapperAddons</Filter>
     </ClInclude>
@@ -158,6 +144,7 @@
       <Filter>Miniproject</Filter>
     </ClInclude>
     <ClInclude Include="BinUtil.h" />
+    <ClInclude Include="App.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

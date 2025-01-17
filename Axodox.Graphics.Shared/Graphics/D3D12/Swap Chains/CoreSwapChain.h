@@ -11,7 +11,7 @@ namespace Axodox::Graphics::D3D12
   public:
     CoreSwapChain(const CommandQueue& queue, const CoreWindow& window, SwapChainFlags flags = SwapChainFlags::Default);
 
-  protected:
+protected:
     virtual DirectX::XMUINT2 GetSize() const override;
     virtual DXGI_MATRIX_3X2_F GetTransformation() const override;
 

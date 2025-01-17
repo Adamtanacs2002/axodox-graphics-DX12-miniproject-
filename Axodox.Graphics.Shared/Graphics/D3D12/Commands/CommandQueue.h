@@ -10,6 +10,7 @@ namespace Axodox::Graphics::D3D12
   {
   public:
     explicit CommandQueue(const GraphicsDevice& device, CommandKind type = CommandKind::Direct);
+    CommandQueue() {}
 
     GraphicsDevice Device() const;
     CommandKind Type() const;
