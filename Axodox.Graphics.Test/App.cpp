@@ -430,6 +430,15 @@ void App::Run()
             }
         }
 
+        if (mergeTry)
+        {
+            mergeTry = false;
+            if (focusedTriId != -1)
+            {
+                mergeBisectors(bisectorIDs, focusedTriId);
+            }
+        }
+
         if (highlightTry)
         {
             highlightID = GetNeighbours(focusedTriId);

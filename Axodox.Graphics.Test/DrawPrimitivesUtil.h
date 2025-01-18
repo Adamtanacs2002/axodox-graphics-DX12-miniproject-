@@ -32,19 +32,19 @@ ColoredTri* getById(int id, std::vector<ColoredTri>& tris)
 	return res;
 }
 
-ColoredTri* getParent(uint32_t id, std::vector<ColoredTri>& tris)
+uint32_t getParent(uint32_t id)
 {
-	return getById(floor(id / 2.0f),tris);
+	return floor(id / 2.0f);
 }
 
-ColoredTri* getLeftChild(uint32_t id, std::vector<ColoredTri>& tris)
+uint32_t getLeftChild(uint32_t id)
 {
-	return getById(id*2, tris);
+	return id*2;
 }
 
-ColoredTri* getRightChild(uint32_t id, std::vector<ColoredTri>& tris)
+uint32_t getRightChild(uint32_t id)
 {
-	return getById(id * 2 + 1, tris);
+	return id * 2 + 1;
 }
 
 // Return a list of for IDs of neighbouring triangles.
@@ -139,6 +139,38 @@ static std::vector<ColoredTri> PopulateList(
 	}
 
 	return triangles;
+}
+
+static void mergeBisectors(std::vector<uint32_t>& ids, uint32_t& in)
+{
+	auto parent = getParent(in);
+
+
+	// TODO: Fix errors
+	/* find leftChild -> delete leftChild if found
+	 * find rightChild -> delete rightChild
+	 * if not found : reverse leftChild deletion
+	 */
+	auto leftChild = std::find(
+		ids.begin(), ids.end(), getLeftChild(parent));
+
+	if (leftChild != ids.end()) 
+	{
+		uint32_t tmp = *leftChild;
+		ids.erase(leftChild);
+
+		auto rightChild = std::find(
+			ids.begin(), ids.end(), getRightChild(parent));
+		if (rightChild != ids.end())
+		{
+			ids.erase(rightChild);
+			ids.push_back(parent);
+		}
+		else
+		{
+			ids.push_back(tmp);
+		}
+	}
 }
 
 static void divideBisector(std::vector<uint32_t>& ids,uint32_t& in)
