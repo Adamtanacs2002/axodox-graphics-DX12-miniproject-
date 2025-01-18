@@ -17,20 +17,151 @@
 
 #include "BisectorMesh.h"
 
+void App::ImGuiCommands(
+Camera& cam,
+GraphicsPipelineStateDefinition& simplePipelineStateDefinition,
+GraphicsPipelineStateDefinition& wireFrameStateDefinition,
+PipelineState& simplePipelineState,
+PipelineStateProvider pipelineStateProvider)
+{
+    // ImGui Draws
+    
+    ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
+
+    triList = PopulateList(bisectorIDs, BaseTri,{255,255,255});
+
+    ImGui::SetNextWindowSize(ImVec2{ 300,300 });
+
+	if (ImGui::Begin("LEB Demo Window"))
+    {
+		ImDrawList* drawlist = ImGui::GetWindowDrawList();
+		ImVec2 wpos = ImGui::GetWindowPos();
+        ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
+
+        if (ImGui::Button("Reset Triangle"))
+        {
+            bisectorIDs.clear();
+            bisectorIDs.push_back(1);
+        }
+
+
+    	// CreateTriList();
+        focusedTriId = -1;
+        for (int i = 0; i < triList.size(); i++)
+        {
+            auto tri = triList.at(i);
+
+            if (std::find(highlightID.begin(), highlightID.end(), tri.id) != highlightID.end())
+            {
+            	if (tri.id == highlightID[2])
+                {
+                    drawlist->AddTriangleFilled(
+                        *tri.p0 + wpos,
+                        *tri.p1 + wpos,
+                        *tri.p2 + wpos, ImColor{ 0,255,100,255 });
+                }
+                else
+                {
+                    drawlist->AddTriangleFilled(
+                        *tri.p0 + wpos,
+                        *tri.p1 + wpos,
+                        *tri.p2 + wpos, tri.col);
+                }
+            }
+
+            if (PointInTriangle(mousePositionRelative, tri))
+            {
+                focusedTriId = tri.id;
+                {
+                    ImColor color = tri.id == highlightID[3] ?
+                        ImColor{ 255,100,100,255 } : tri.col;
+                    drawlist->AddTriangleFilled(
+                        *tri.p0 + wpos,
+                        *tri.p1 + wpos,
+                        *tri.p2 + wpos, color);
+                    drawlist->AddCircleFilled(
+                        *tri.p0 + wpos, 5.0f, tri.col);
+                    drawlist->AddCircleFilled(
+                        *tri.p1 + wpos, 5.0f, tri.col);
+                    drawlist->AddCircleFilled(
+                        *tri.p2 + wpos, 5.0f, tri.col);
+                }
+            }
+            else
+            {
+                drawlist->AddTriangle(
+                    *tri.p0 + wpos,
+                    *tri.p1 + wpos,
+                    *tri.p2 + wpos, tri.col);
+            }
+        }
+    }
+    ImGui::End();
+
+    ImGui::SetNextWindowSize(ImVec2{ 400,200 });
+    if (ImGui::Begin("Triangle Data"))
+    {
+        if (ImGui::BeginListBox("Triangles"))
+        {
+            for (auto tri : triList)
+            {
+                if (ImGui::TreeNode(
+                    ("Triangle" + std::to_string(tri.id) + " data").c_str()))
+                {
+
+                    ImGui::Text("Vertex Positions");
+                    ImGui::Text("%d (%f,%f)", 0, tri.p0->x, tri.p0->y);
+                    ImGui::Text("%d (%f,%f)", 1, tri.p1->x, tri.p1->y);
+                	ImGui::Text("%d (%f,%f)", 2, tri.p2->x, tri.p2->y);
+
+                    ImGui::Text("Vertex Indices: %d %d %d", 0, 1, 2);
+
+                    std::array<int,4> otherTris= GetNeighbours(tri.id);
+
+                    ImGui::Text("Neighbours : %d %d %d",
+                        otherTris[0], otherTris[1], otherTris[2]);
+
+                    // TODO: change tri generation
+                    /* make triGeneration based on paper
+                     * user matrix to translate vertex positions
+                     */
+
+                    ImGui::TreePop();
+                }
+            }
+        }
+
+        ImGui::EndListBox();
+    }
+
+    ImGui::End();
+
+    triList.clear();
+}
+
+App::App() :
+window(nullptr),
+dispatcher(nullptr)
+{
+	directQueue = make_shared<CommandQueue>(CommandQueue{ device });
+}
+
+void App::InitWindow()
+{
+    window = CoreWindow::GetForCurrentThread();
+    dispatcher = window.Dispatcher();
+    window.Activate();
+}
+
 void App::Run()
 {
-    CoreWindow window = CoreWindow::GetForCurrentThread();
-    CoreDispatcher dispatcher = window.Dispatcher();
-    window.Activate();
+    InitWindow();
 
 #pragma region Setup
     // Get graphics device in header
-    GraphicsDevice device = GraphicsDevice{};
-
-    CommandQueue directQueue = CommandQueue{device};
+    auto swapChain = CoreSwapChain{ *directQueue.get(), window, SwapChainFlags::IsShaderResource };
 
     // Setup Core SwapChain for display frames
-    CoreSwapChain swapChain = CoreSwapChain{ directQueue, window, SwapChainFlags::IsShaderResource };
 
     // Setup Required pipelines
     PipelineStateProvider pipelineStateProvider = PipelineStateProvider{ device };
@@ -114,12 +245,12 @@ void App::Run()
         //app_folder() / L"47_473_19_062_15_100_100.png";
         //app_folder() / L"27_985_86_924_10_250_250.png";
         //app_folder() / L"27_985_86_924_10_500_250.png";
-        //app_folder() / L"27_985_86_924_10_500_500.png";
-      //app_folder() / L"27_985_86_924_10_1000_500.png";
-      //app_folder() / L"27_985_86_924_10_1000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_1000.png";
-      //app_folder() / L"27_985_86_924_10_2000_2000.png";
-        app_folder() / L"27_985_86_924_10_4000_4000.png";
+        app_folder() / L"27_985_86_924_10_500_500.png";
+        //app_folder() / L"27_985_86_924_10_1000_500.png";
+        //app_folder() / L"27_985_86_924_10_1000_1000.png";
+        //app_folder() / L"27_985_86_924_10_2000_1000.png";
+        //app_folder() / L"27_985_86_924_10_2000_2000.png";
+        ////app_folder() / L"27_985_86_924_10_4000_4000.png";
     // Creation of meshlets
     auto heights = ImmutableTexture::readTextureData(fPath);
 
@@ -187,9 +318,6 @@ void App::Run()
         DXGI_FORMAT_R8G8B8A8_UNORM, m_pd3dSrvDescHeap.get(),
         m_pd3dSrvDescHeap->GetCPUDescriptorHandleForHeapStart(),
         m_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart());
-
-    // Our state
-    DirectX::XMFLOAT4 clear_color = { 0.05f, 0.25f, 0.60f, 1.00f };
 #pragma endregion
 
 #pragma region BitField Buffer
@@ -233,6 +361,7 @@ void App::Run()
     bool firstperson = false;
     bool divideTry = false;
     bool mergeTry = false;
+    bool highlightTry = false;
     bool resetTri = false;
     bool& quit = m_windowClosed;
     Camera cam;
@@ -274,16 +403,20 @@ void App::Run()
             cam.MouseWheel(args);
         });
     window.PointerPressed(
-        [&divideTry, &mergeTry](CoreWindow const&, PointerEventArgs const& args)
+        [&divideTry, &mergeTry, &highlightTry](CoreWindow const&, PointerEventArgs const& args)
         {
             auto props = args.CurrentPoint().Properties();
             if (props.IsLeftButtonPressed())
                 divideTry = true;
             if (props.IsRightButtonPressed())
                 mergeTry = true;
+            if (props.IsMiddleButtonPressed())
+            {
+	            highlightTry = !highlightTry;
+            }
         });
 
-    triList.push_back(BaseTri);
+    bisectorIDs.push_back(1);
 
     while (!m_windowClosed)
     {
@@ -293,15 +426,17 @@ void App::Run()
             divideTry = false;
             if (focusedTriId != -1)
             {
-                ColoredTri* tri = nullptr;
-                for (int j = 0; j < triList.size(); j++)
-                {
-                    if (focusedTriId == triList[j].id)
-                        tri = &triList[j];
-                }
-                triList.push_back(subdivide(*tri,depth, depthColor[depth % 5]));
-                GetNeighbours(20, triList);
+                divideBisector(bisectorIDs,focusedTriId);
             }
+        }
+
+        if (highlightTry)
+        {
+            highlightID = GetNeighbours(focusedTriId);
+        }
+        else
+        {
+            highlightID = { 0,0,0,0 };
         }
 
         if (resetTri)
@@ -326,98 +461,7 @@ void App::Run()
         ImGui::NewFrame();
         // -----
 
-        // ImGui Draws
-        {
-            ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
-            {
-                if (ImGui::Begin("Hello world!"))
-                {
-                    ImGui::SetNextWindowSize(ImVec2{ 400,220 });
-                    if (ImGui::Button("Reset Camera", { 200,20 }))
-                    {
-                        cam = Camera();
-                    }
-                    if (ImGui::Checkbox("Line view", &isLineDraw)) {
-                        // mainmesh.LineRender(isLineDraw);
-                        auto NewPipelineDef = isLineDraw ? wireFrameStateDefinition : simplePipelineStateDefinition;
-
-                        simplePipelineState = pipelineStateProvider.CreatePipelineStateAsync(NewPipelineDef).get();
-                    }
-                    bool isHovered = ImGui::IsItemHovered();
-                    bool isFocused = ImGui::IsItemFocused();
-                    ImVec2 wpos = ImGui::GetWindowPos();
-                    ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
-
-                    ImGui::Text("Test UAV read : {}");
-
-                    ImGui::Text("Is mouse over screen? %s", isHovered ? "Yes" : "No");
-                    ImGui::Text("Is screen focused? %s", isFocused ? "Yes" : "No");
-                    ImGui::Text("Position: %f, %f", mousePositionRelative.x, mousePositionRelative.y);
-                    ImGui::Text("Mouse clicked: %s", ImGui::IsMouseDown(ImGuiMouseButton_Left) ? "Yes" : "No");
-
-                    ImGui::SliderFloat("Map Size", &MapWH, 1.0f, 100.0f);
-                    ImGui::SliderFloat("Max Height", &MaxHeight, 0.0f, 100.0f);
-                    static float TessFactSl = 1.0f;
-                    if (ImGui::SliderFloat("Tess. Factor", &TessFactSl, 0.0f, 10.0f))
-                    {
-                        tessFact = TessFactSl;
-                    }
-
-                    ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-                }
-            }
-            ImGui::End();
-
-
-            ImGui::SetNextWindowSize(ImVec2{ 300,300 });
-            if (ImGui::Begin("LEB Demo Window"))
-            {
-                // TODO: make leb demo show more data
-                /* Vertex ids
-                 *
-                 */
-                ImVec2 wpos = ImGui::GetWindowPos();
-                ImVec2 mousePositionRelative = { mousePositionAbsolute.x - wpos.x, mousePositionAbsolute.y - wpos.y };
-
-            	if (ImGui::Button("Reset Triangle"))
-                {
-                    ColoredTri pos = {
-                      .p0 = ImVec2(50.0f,100.0f),
-                      .p1 = ImVec2(50.0f,250.0f),
-                      .p2 = ImVec2(200.0f,250.0f),
-                      .col = ImColor(ImVec4(0.323f,0.475f,0.615f,1.0f))
-                    };
-                    triList.clear();
-                    triList.push_back(pos);
-                }
-
-                ImDrawList* drawlist = ImGui::GetWindowDrawList();
-                {
-                    // CreateTriList();
-                    focusedTriId = -1;
-                    for (int i = 0; i < triList.size(); i++)
-                    {
-                        auto tri = triList.at(i);
-                        if (PointInTriangle(mousePositionRelative, tri))
-                        {
-                            drawlist->AddTriangleFilled(
-                                tri.p0 + wpos,
-                                tri.p1 + wpos,
-                                tri.p2 + wpos, tri.col);
-                            focusedTriId = tri.id;
-                        }
-                        else
-                        {
-                            drawlist->AddTriangle(
-                                tri.p0 + wpos,
-                                tri.p1 + wpos,
-                                tri.p2 + wpos, tri.col);
-                        }
-                    }
-                }
-            }
-            ImGui::End();
-        }
+        ImGuiCommands(cam, simplePipelineStateDefinition, wireFrameStateDefinition, simplePipelineState, pipelineStateProvider);
 
         // ImGui Rendering
         ImGui::Render();
@@ -545,9 +589,9 @@ void App::Run()
             resourceUploader.UploadResourcesAsync(allocator);
             auto initCommandList = allocator.EndList();
 
-            directQueue.Execute(initCommandList);
-            directQueue.Execute(drawCommandList);
-            resources.Marker = resources.Fence.EnqueueSignal(directQueue);
+            directQueue.get()->Execute(initCommandList);
+            directQueue.get()->Execute(drawCommandList);
+            resources.Marker = resources.Fence.EnqueueSignal(*directQueue.get());
         }
 
         //Present frame

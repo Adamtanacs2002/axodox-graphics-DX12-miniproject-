@@ -14,9 +14,9 @@ float sign(ImVec2 p1, ImVec2 p2, ImVec2 p3)
 
 bool PointInTriangle(ImVec2 pt, ColoredTri triangle)
 {
-  ImVec2 v1 = triangle.p0;
-  ImVec2 v2 = triangle.p1;
-  ImVec2 v3 = triangle.p2;
+  ImVec2 v1 = *triangle.p0;
+  ImVec2 v2 = *triangle.p1;
+  ImVec2 v3 = *triangle.p2;
   float d1, d2, d3;
   bool has_neg, has_pos;
 
@@ -34,8 +34,8 @@ bool PointInTriangle(ImVec2 pt, const float tri[][3])
 {
   return PointInTriangle(pt,
     ColoredTri{
-      .p0 = ImVec2(tri[0][0],tri[1][1]),
-      .p1 = ImVec2(tri[0][1],tri[1][1]),
-      .p2 = ImVec2(tri[0][2],tri[1][2]),
+      .p0 = new ImVec2(tri[0][0],tri[1][1]),
+      .p1 = new ImVec2(tri[0][1],tri[1][1]),
+      .p2 = new ImVec2(tri[0][2],tri[1][2]),
     });
 }

@@ -6,9 +6,9 @@ namespace BinUtilLib {
 	struct ColoredTri
 	{
 		uint32_t id = 1;
-		ImVec2 p0;
-		ImVec2 p1;
-		ImVec2 p2;
+		ImVec2* p0;
+		ImVec2* p1;
+		ImVec2* p2;
 		ImColor col;
 	};
 

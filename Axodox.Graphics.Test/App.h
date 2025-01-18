@@ -98,23 +98,51 @@ struct FrameResources
 
 #pragma endregion
 
+struct vertexDemo
+{
+    ImVec2 pos;
+    int index;
+};
+
 struct App : public implements<App, IFrameworkViewSource, IFrameworkView>
 {
 private:
+
+	#pragma region UWP
+
+    CoreWindow window;
+    CoreDispatcher dispatcher;
+
+	#pragma endregion
+
+	#pragma region DX12
+
+    GraphicsDevice device{};
+    shared_ptr<CommandQueue> directQueue;
+
+	#pragma endregion
+
     unsigned int i = 0u;
     int depth = 0;
     bool isLineDraw = false;
     float MapWH = 100.0f;
     float MaxHeight = 6.0f;
     float tessFact = 2.0f;
-    std::vector<BinUtilLib::ColoredTri> triList;
+
+    // ImGui
+    bool highlighted = false;
+    std::array<int, 4> highlightID = { 0,0,0,0 };
+    uint32_t focusedTriId = 0;
+    std::vector<uint32_t> bisectorIDs = {};
+    std::vector<vertexDemo> vertexBuffer = {};
+    std::vector<BinUtilLib::ColoredTri> triList = {};
     BinUtilLib::ColoredTri BaseTri = {
-      .p0 = ImVec2(50.0f,100.0f),
-      .p1 = ImVec2(50.0f,250.0f),
-      .p2 = ImVec2(200.0f,250.0f),
+      .p0 = new ImVec2(50.0f,100.0f),
+      .p1 = new ImVec2(50.0f,250.0f),
+      .p2 = new ImVec2(200.0f,250.0f),
       .col = ImColor(ImVec4(0.323f,0.475f,0.615f,1.0f))
     };
-    int focusedTriId = -1;
+    DirectX::XMFLOAT4 clear_color = { 0.05f, 0.25f, 0.60f, 1.00f };
     ImColor depthColor[5] = {
     ImColor(ImVec4(0.970f, 0.0582f, 0.058f, 1.0f)),
     ImColor(ImVec4(0.104f, 0.0582f, 0.970f, 1.0f)),
@@ -125,7 +153,8 @@ private:
 
 public:
 
-    App() {}
+    App();
+    void InitWindow();
 
     IFrameworkView CreateView()
     {
@@ -148,6 +177,8 @@ public:
     {
     }
 
+    void ImGuiCommands(Camera& cam, GraphicsPipelineStateDefinition& simplePipelineStateDefinition, GraphicsPipelineStateDefinition&
+                       wireFrameStateDefinition, PipelineState& simplePipelineState, PipelineStateProvider pipelineStateProvider);
     void Run();
 
     struct Constants
