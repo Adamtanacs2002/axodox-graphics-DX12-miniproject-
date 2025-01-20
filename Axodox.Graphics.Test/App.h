@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 // ImGUI
+#include "DrawPrimitivesUtil.h"
 #include <format>
 
 
@@ -8,7 +9,7 @@
 // -----
 
 #include "Camera.h"
-#include "BinUtil.h"
+#include "CbtCPU.h"
 
 using namespace std;
 using namespace winrt;
@@ -129,14 +130,17 @@ private:
     float MaxHeight = 6.0f;
     float tessFact = 2.0f;
 
+    // CBT
+    CbtCPU cbt = {};
+
     // ImGui
     bool highlighted = false;
     std::array<int, 4> highlightID = { 0,0,0,0 };
     uint32_t focusedTriId = 0;
-    std::vector<uint32_t> bisectorIDs = {};
     std::vector<vertexDemo> vertexBuffer = {};
-    std::vector<BinUtilLib::ColoredTri> triList = {};
-    BinUtilLib::ColoredTri BaseTri = {
+    vector<uint32_t> idList = {};
+    std::vector<ColoredTri> triList = {};
+    ColoredTri BaseTri = {
       .p0 = new ImVec2(50.0f,100.0f),
       .p1 = new ImVec2(50.0f,250.0f),
       .p2 = new ImVec2(200.0f,250.0f),

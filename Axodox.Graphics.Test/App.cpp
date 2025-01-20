@@ -2,7 +2,6 @@
 #include <App.h>
 
 // ImGUI
-#include "BinUtil.h"
 #include "cbt_helper.h"
 #include "../ImGUI/Includes/includes.h"
 
@@ -17,6 +16,8 @@
 
 #include "BisectorMesh.h"
 
+using namespace DrawPrimitivesUtil;
+
 void App::ImGuiCommands(
 Camera& cam,
 GraphicsPipelineStateDefinition& simplePipelineStateDefinition,
@@ -28,9 +29,36 @@ PipelineStateProvider pipelineStateProvider)
     
     ImVec2 mousePositionAbsolute = ImGui::GetMousePos();
 
-    triList = PopulateList(bisectorIDs, BaseTri,{255,255,255});
+    idList = cbt.PopulateListCbt();
+
+    triList = PopulateList(idList, BaseTri,{255,255,255});
+
+    if (ImGui::Begin("Concurrent Binary Tree Demo"))
+    {
+        ImGui::Text("Depth : ");
+        ImGui::SameLine();
+        ImGui::TextColored(ImColor{ 250,250,50 }, 
+            std::to_string((cbt.depth)).c_str());
+
+    	ImGui::Text("Bitfield values: ");
+        ImGui::SameLine();
+        ImGui::TextColored(ImColor{ 250,250,50 },
+            cbt.DisplayBinField().c_str());
+
+        ImGui::Text("Decoded :");
+        for (auto tmp : idList)
+        {
+            ImGui::SameLine();
+            if (tmp == focusedTriId)
+				ImGui::TextColored(ImColor{ 255,150,50 }, std::to_string(tmp).c_str());
+            else
+                ImGui::Text(std::to_string(tmp).c_str());
+        }
+    }
+    ImGui::End();
 
     ImGui::SetNextWindowSize(ImVec2{ 300,300 });
+    ImGui::SetNextWindowPos({60,150});
 
 	if (ImGui::Begin("LEB Demo Window"))
     {
@@ -40,16 +68,30 @@ PipelineStateProvider pipelineStateProvider)
 
         if (ImGui::Button("Reset Triangle"))
         {
-            bisectorIDs.clear();
-            bisectorIDs.push_back(1);
+            cbt.Reset();
         }
 
 
-    	// CreateTriList();
         focusedTriId = -1;
         for (int i = 0; i < triList.size(); i++)
         {
             auto tri = triList.at(i);
+
+            if (PointInTriangle(mousePositionRelative, tri))
+            {
+                ImColor vtCols[3] = {
+                        ImColor{255,100,100},
+                        ImColor{100,255,100},
+                        ImColor{120,120,255}
+                };
+
+                drawlist->AddCircleFilled(
+                    *tri.p0 + wpos, 5.0f, vtCols[0]);
+                drawlist->AddCircleFilled(
+                    *tri.p1 + wpos, 5.0f, vtCols[1]);
+                drawlist->AddCircleFilled(
+                    *tri.p2 + wpos, 5.0f, vtCols[2]);
+            }
 
             if (std::find(highlightID.begin(), highlightID.end(), tri.id) != highlightID.end())
             {
@@ -74,17 +116,11 @@ PipelineStateProvider pipelineStateProvider)
                 focusedTriId = tri.id;
                 {
                     ImColor color = tri.id == highlightID[3] ?
-                        ImColor{ 255,100,100,255 } : tri.col;
+                        ImColor{ 255,150,150 } : tri.col;
                     drawlist->AddTriangleFilled(
                         *tri.p0 + wpos,
                         *tri.p1 + wpos,
                         *tri.p2 + wpos, color);
-                    drawlist->AddCircleFilled(
-                        *tri.p0 + wpos, 5.0f, tri.col);
-                    drawlist->AddCircleFilled(
-                        *tri.p1 + wpos, 5.0f, tri.col);
-                    drawlist->AddCircleFilled(
-                        *tri.p2 + wpos, 5.0f, tri.col);
                 }
             }
             else
@@ -99,7 +135,9 @@ PipelineStateProvider pipelineStateProvider)
     ImGui::End();
 
     ImGui::SetNextWindowSize(ImVec2{ 400,200 });
-    if (ImGui::Begin("Triangle Data"))
+    ImGui::SetNextWindowPos({ 60,475 });
+
+	if (ImGui::Begin("Triangle Data"))
     {
         if (ImGui::BeginListBox("Triangles"))
         {
@@ -121,11 +159,6 @@ PipelineStateProvider pipelineStateProvider)
                     ImGui::Text("Neighbours : %d %d %d",
                         otherTris[0], otherTris[1], otherTris[2]);
 
-                    // TODO: change tri generation
-                    /* make triGeneration based on paper
-                     * user matrix to translate vertex positions
-                     */
-
                     ImGui::TreePop();
                 }
             }
@@ -137,6 +170,7 @@ PipelineStateProvider pipelineStateProvider)
     ImGui::End();
 
     triList.clear();
+    idList.clear();
 }
 
 App::App() :
@@ -416,8 +450,6 @@ void App::Run()
             }
         });
 
-    bisectorIDs.push_back(1);
-
     while (!m_windowClosed)
     {
         // Event Handlers
@@ -426,7 +458,8 @@ void App::Run()
             divideTry = false;
             if (focusedTriId != -1)
             {
-                divideBisector(bisectorIDs,focusedTriId);
+                // TODO: Propagate splitting
+                cbt.ConformingSplit(focusedTriId);
             }
         }
 
@@ -435,13 +468,14 @@ void App::Run()
             mergeTry = false;
             if (focusedTriId != -1)
             {
-                mergeBisectors(bisectorIDs, focusedTriId);
+                // TODO: Propagate merging
+                cbt.ConformingMerge(focusedTriId);
             }
         }
 
         if (highlightTry)
         {
-            highlightID = GetNeighbours(focusedTriId);
+            highlightID = cbt.GetTrueNeighbour(focusedTriId);
         }
         else
         {

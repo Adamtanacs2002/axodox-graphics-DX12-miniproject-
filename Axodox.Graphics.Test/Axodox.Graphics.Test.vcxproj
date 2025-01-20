@@ -118,8 +118,8 @@
     <ClInclude Include="..\ImGUI\pch.h" />
     <ClInclude Include="..\ImGUI\targetver.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="BinUtil.h" />
     <ClInclude Include="BisectorMesh.h" />
+    <ClInclude Include="CbtCPU.h" />
     <ClInclude Include="MutableMeshBase.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawPrimitivesUtil.h" />
@@ -170,6 +170,8 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BisectorMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CbtCPU.cpp" />
+    <ClCompile Include="DrawPrimitivesUtil.cpp" />
     <ClCompile Include="imgui_impl_uwp.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
