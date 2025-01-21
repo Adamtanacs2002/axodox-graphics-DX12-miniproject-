@@ -184,8 +184,11 @@ std::array<int, 4> CbtCPU::GetTrueNeighbour(uint32_t nodeID)
 void CbtCPU::ConformingSplit(int nodeID)
 {
 	SplitNode(nodeID);
+	auto dr = FindMSBIndex(nodeID);
 	nodeID = DrawPrimitivesUtil::GetNeighbours(nodeID)[2];
-	while (nodeID > 1)
+	auto dn = FindMSBIndex(nodeID);
+	while (nodeID > 1 &&
+		   dn == dr)
 	{
 		SplitNode(nodeID);
 		nodeID = nodeID / 2;
@@ -216,7 +219,8 @@ void CbtCPU::ConformingMerge(int nodeID)
 
 	if (IsLeafNode(siblingID))
 	{
-		// TODO: Fix merging problem.
+		PropagateMergeToChildren(nodeID);
+		PropagateMergeToChildren(siblingID);
 		MergeNode(nodeID);
 	}
 
@@ -227,7 +231,26 @@ void CbtCPU::ConformingMerge(int nodeID)
 		IsLeafNode(rightID) &&
 		dr == dn)
 	{
-		MergeNode(rightID);
+		PropagateMergeToChildren(leftID);
+		PropagateMergeToChildren(rightID);
+		ConformingMerge(rightID);
+	}
+}
+
+void CbtCPU::PropagateMergeToChildren(int nodeID)
+{
+	int leftID = NodeLeftChild(nodeID);
+	int rightID = NodeRightChild(nodeID);
+	auto dl = FindMSBIndex(leftID);
+	if (dl <= depth) 
+	{
+		if (IsLeafNode(leftID) &&
+			IsLeafNode(rightID))
+		{
+			PropagateMergeToChildren(leftID);
+			PropagateMergeToChildren(rightID);
+		}
+		ConformingMerge(rightID);
 	}
 }
 

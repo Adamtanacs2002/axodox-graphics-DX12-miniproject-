@@ -458,7 +458,6 @@ void App::Run()
             divideTry = false;
             if (focusedTriId != -1)
             {
-                // TODO: Propagate splitting
                 cbt.ConformingSplit(focusedTriId);
             }
         }
@@ -468,7 +467,6 @@ void App::Run()
             mergeTry = false;
             if (focusedTriId != -1)
             {
-                // TODO: Propagate merging
                 cbt.ConformingMerge(focusedTriId);
             }
         }

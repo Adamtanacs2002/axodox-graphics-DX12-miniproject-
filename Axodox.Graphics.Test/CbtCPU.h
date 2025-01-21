@@ -47,6 +47,7 @@ public:
 	void ConformingSplit(int nodeID);
 	void SplitNode(int nodeID);
 	void ConformingMerge(int nodeID);
+	void PropagateMergeToChildren(int nodeID);
 	void MergeNode(int nodeID);
 
 	std::string DisplayBinField();
